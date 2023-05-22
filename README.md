@@ -42,11 +42,8 @@
 #### Status Management
 <img src="https://img.shields.io/badge/-Redux Toolkit-764ABC?logo=redux&logoColor=white">
 
-#### UI Kit
-<img src="https://img.shields.io/badge/-React Icons-61DAFB?logo=react&logoColor=white">
-
-#### Styling
-<img src="https://img.shields.io/badge/-Tailwind 3.3.2-06B6D4?logo=tailwindcss&logoColor=white">
+#### UI Kit / Styling
+<img src="https://img.shields.io/badge/-Tailwind 3.3.2-06B6D4?logo=tailwindcss&logoColor=white">  <img src="https://img.shields.io/badge/-React Icons-61DAFB?logo=react&logoColor=white">
 
 #### Testing
 <img src="https://img.shields.io/badge/-Jest-C21325?logo=jest&logoColor=white">
