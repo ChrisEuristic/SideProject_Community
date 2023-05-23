@@ -415,6 +415,6 @@ $RECYCLE.BIN/
 *.lnk
 
 # Custom ignore
-/document
+
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,linux,nextjs,react,reactnative,node
