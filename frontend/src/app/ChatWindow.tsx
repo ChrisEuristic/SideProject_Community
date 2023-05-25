@@ -1,5 +1,6 @@
 "use client";
 
+import { toggle } from "@/redux/features/chattoggle/chattoggleSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useEffect, useState } from "react";
 import { BsFillPinAngleFill, BsFillPinFill } from "react-icons/bs";
@@ -11,16 +12,25 @@ export default function ChatWindow() {
   const [navClassName, setNavClassName] = useState("");
 
   useEffect(() => {
+    document.addEventListener("click", (e) => {
+      if (e.target instanceof HTMLElement && isOnChatting) {
+        if (e.target.id !== "chat-window") {
+          setIsOnChatting(toggle());
+        }
+      }
+    });
     if (isOnChatting) {
+      // 채팅창이 토글ON인 상태
       setNavClassName("toggle-on");
     } else {
+      // 채팅창이 토글OFF인 상태
       if (navClassName) setNavClassName("toggle-off");
     }
-  }, [isOnChatting, navClassName]);
+  }, [isOnChatting, navClassName, setIsOnChatting]);
 
   return (
     <>
-      <nav className={navClassName}>
+      <nav id="chat-window" className={navClassName}>
         <BsFillPinAngleFill /> <BsFillPinFill />
       </nav>
       <style jsx>{`
