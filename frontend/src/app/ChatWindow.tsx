@@ -2,26 +2,27 @@
 
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useEffect, useState } from "react";
+import { AiFillPushpin, AiOutlinePushpin } from "react-icons/ai";
 
 export default function ChatWindow() {
-
   const isOnChatting = useAppSelector((state) => state.chattoggleReducer.value);
   const setIsOnChatting = useAppDispatch();
 
   const [navClassName, setNavClassName] = useState("");
 
   useEffect(() => {
-    if(isOnChatting){
+    if (isOnChatting) {
       setNavClassName("toggle-on");
     } else {
-      if(navClassName)
-        setNavClassName("toggle-off");
+      if (navClassName) setNavClassName("toggle-off");
     }
-  },[isOnChatting, navClassName]);
+  }, [isOnChatting, navClassName]);
 
   return (
     <>
-      <nav className={navClassName}></nav>
+      <nav className={navClassName}>
+        <AiOutlinePushpin /> <AiFillPushpin />
+      </nav>
       <style jsx>{`
         nav {
           position: fixed;
