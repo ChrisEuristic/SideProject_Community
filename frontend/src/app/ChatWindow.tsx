@@ -2,7 +2,7 @@
 
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useEffect, useState } from "react";
-import { AiFillPushpin, AiOutlinePushpin } from "react-icons/ai";
+import { BsFillPinAngleFill, BsFillPinFill } from "react-icons/bs";
 
 export default function ChatWindow() {
   const isOnChatting = useAppSelector((state) => state.chattoggleReducer.value);
@@ -21,7 +21,7 @@ export default function ChatWindow() {
   return (
     <>
       <nav className={navClassName}>
-        <AiOutlinePushpin /> <AiFillPushpin />
+        <BsFillPinAngleFill /> <BsFillPinFill />
       </nav>
       <style jsx>{`
         nav {
