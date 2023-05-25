@@ -1,5 +1,4 @@
 'use client';
-import Link from "next/link";
 
 export default function FriendBar () {
   return (
@@ -10,6 +9,7 @@ export default function FriendBar () {
       <style jsx>{`
         nav {
           border: solid 1px #000000;
+          border-radius: 0 0.5rem 0 0;
           width: 20rem;
           height: 100%;
         }

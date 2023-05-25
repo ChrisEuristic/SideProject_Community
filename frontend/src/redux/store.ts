@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "./features/counter/counterSlice";
+import chattoggleReducer from "./features/chattoggle/chattoggleSlice";
 
 export const store = configureStore({
   reducer: {
     counterReducer,
+    chattoggleReducer,
   },
 });
 

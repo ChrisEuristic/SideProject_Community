@@ -8,15 +8,15 @@ export default function TitleBar () {
           <article><Link href={"/dashboard"}><button>로고 영역</button></Link></article>
         </section>
         <section className="flex w-fil" aria-label="Menu Area">
-          <article className="ml-96 mr-20 text-xl font-bold"><button>소개</button></article>
+          <article className="ml-96 mr-20 text-xl font-bold"><Link href={"/intro"}><button>소개</button></Link></article>
           <article className="mx-20 text-xl font-bold"><Link href={"/notice"}><button>공지사항</button></Link></article>
-          <article className="ml-20 mr-72 text-xl font-bold"><button>이슈 피드</button></article>
+          <article className="ml-20 mr-72 text-xl font-bold"><Link href={"/issue"}><button>이슈피드</button></Link></article>
         </section>
         <section className="flex m" aria-label="Personal Area">
-          <article className="mx-2 font-bold"><button>마켓</button></article>
-          <article className="mx-2 font-bold"><button>충전하기</button></article>
-          <article className="mx-2 font-bold"><button>닉네임다섯 [TYPE]</button></article>
-          <article className="ml-2 mr-5"><button>프로필 사진</button></article>
+          <article className="mx-2 font-bold"><Link href={"/shop"}><button>마켓</button></Link></article>
+          <article className="mx-2 font-bold"><Link href={"/payment"}><button>충전하기</button></Link></article>
+          <article className="mx-2 font-bold"><Link href={"/profile"}><button>닉네임다섯 [TYPE]</button></Link></article>
+          <article className="ml-2 mr-5"><Link href={"/profile"}><button>프로필</button></Link></article>
         </section>
       </nav>
     </>
