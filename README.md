@@ -86,3 +86,81 @@
 
 #### Deploying
 <img src="https://img.shields.io/badge/-Vercel-000000?logo=vercel&logoColor=white">
+
+---
+
+## 프로젝트 컨벤션
+```javascript
+/* Camel Case */
+/* variable, function */
+/* No var, No let */
+/* 반드시 세미콜론으로 라인 마감 */
+const varName = "camelCase";
+function funcName () {...};
+
+/* Pascal Case */
+/* Component, interface, type */
+export default function Component () {...};
+interface InterfaceName = {...};
+type TypeName = {...};
+
+/* Dir, File Name */
+/* directory : Lower case */
+/* exportFunction.ts : Camel Case */
+/* ExportComponent.tsx : Pascal Case */
+/* style.css : Camel Case */
+```
+
+
+## 프로젝트 구조 및 기능 명세
+
+Frontend
+src(root)
+  - app
+      - api
+          - (private)
+        - dashboard
+        - page.tsx
+      - intro
+        - page.tsx (SSR)
+      - issue
+        - page.tsx (SSR + CSR)
+      - notice
+        - [slug]
+          - page.tsx (SSR)
+        - page.tsx (SSR)
+      - payment
+        - page.tsx (SSR + CSR)
+      - profile
+        - page.tsx
+      - shop
+        - [...slug]
+          - page.tsx (SSR + CSR)
+        - page.tsx (SSR + CSR)
+      - test
+        - page.tsx (SSR + CSR)
+      - page.tsx (SSR)
+      - layout.tsx (SSR)
+      - loading.tsx (CSR)
+      - error.tsx (CSR)
+      - TitleBar.tsx (SSR)
+      - FriendBar.tsx (CSR)
+      - ChatWindow.tsx (CSR)
+      - ChatNaviButton.tsx (CSR)
+  - function
+      - database
+          - getConnection.ts
+              - ```@returns - Promise<Connection>```
+          - killConnection.ts
+              - ```@params - Connection```
+      - gpt
+          - chat.ts
+      - util
+  
+  - redux
+      - features
+          - chattoggle
+              - chattoggleSlice.ts
+      - hooks.ts
+      - provider.tsx
+      - store.ts
