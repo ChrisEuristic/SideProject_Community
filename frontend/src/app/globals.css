@@ -7,6 +7,14 @@ body {
   height: 90vh;
 }
 
+textarea {
+  resize: none;
+}
+
+input[type="text"], textarea {
+  outline: none;
+}
+
 #id {
   animation-name: button-off;
   animation-duration: 0.5s;
@@ -26,4 +34,28 @@ body {
     opacity: 0;
     display: none;
   }
+}
+
+.w-192 {
+  width: 48rem;
+}
+
+.w-50vw {
+  width: 50vw;
+}
+
+.h-192 {
+  height: 48rem;
+}
+
+.h-50vh {
+  width: 50vh;
+}
+
+.w-full-1 {
+  width: 95%;
+}
+
+.h-full-1 {
+  height: 95%;
 }
