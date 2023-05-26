@@ -26,9 +26,9 @@
 >> - [ ] 프로필에서 닉네임, 비밀번호 수정 기능
 >> - [ ] 회원 탈퇴(회원 데이터 삭제)
 > - [ ] 포스팅 / 뷰 기능
->> - [ ] 게시판 기능(공지사항 전용)
+>> - [x] 게시판 뷰 기능(공지사항 전용)
 >> - [ ] 게시물 검색 기능(공지사항 전용)
->> - [ ] 게시글 포스팅(공지사항 전용)
+>> - [x] 게시글 포스팅(공지사항 전용)
 >> - [ ] 게시글 수정/삭제(공지사항 전용)
 >> - [ ] MarkDown 에디터로 만들기(공지사항 전용)
 > - [ ] 댓글 기능(공지사항 전용)
@@ -126,7 +126,9 @@ src(root)
       - issue
         - page.tsx (SSR + CSR)
       - notice
-        - [slug]
+        - writing
+          - page.tsx (CSR)
+        - no/[slug]
           - page.tsx (SSR)
         - page.tsx (SSR)
       - payment
@@ -148,14 +150,12 @@ src(root)
       - ChatWindow.tsx (CSR)
       - ChatNaviButton.tsx (CSR)
   - function
-      - database
-          - getConnection.ts
-              - ```@returns - Promise<Connection>```
-          - killConnection.ts
-              - ```@params - Connection```
       - gpt
           - chat.ts
       - util
+          - database.ts
+              - ```getConnection(): Promise<Connection>```
+              - ```killConnection(Connection): Promise<void>```
   
   - redux
       - features
