@@ -1,5 +1,5 @@
 import { Connection, createConnection } from "mysql2/promise";
-import { addNoticePosting, getConnection, getNoticeAll, killConnection } from './notice';
+import { addNoticePosting, getConnection, getNoticeAll, killConnection } from '../function/database/notice';
 
 jest.mock('mysql2/promise');
 

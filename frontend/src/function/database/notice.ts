@@ -1,5 +1,3 @@
-/* notice.test.ts 통과 */
-
 import { RowDataPacket } from "mysql2";
 import { Connection, createConnection } from "mysql2/promise";
 
