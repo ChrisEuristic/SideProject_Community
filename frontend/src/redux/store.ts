@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "./features/counter/counterSlice";
 import chattoggleReducer from "./features/chattoggle/chattoggleSlice";
+import counterReducer from "./features/counter/counterSlice";
+import friendsToggleReducer from "./features/friends/friendsToggleSlice";
 
 export const store = configureStore({
   reducer: {
     counterReducer,
     chattoggleReducer,
+    friendsToggleReducer,
   },
 });
 

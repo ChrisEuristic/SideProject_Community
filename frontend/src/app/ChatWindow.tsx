@@ -70,10 +70,10 @@ export default function ChatWindow() {
       <style jsx>{`
         nav {
           position: fixed;
-          right: -20rem;
+          right: -30rem;
           border: solid 1px #000000;
           border-radius: 0.5rem 0 0 0;
-          width: 20rem;
+          width: 30rem;
           height: 100%;
           background: white;
         }
@@ -94,7 +94,7 @@ export default function ChatWindow() {
 
         @keyframes chattingOn {
           from {
-            right: -20rem;
+            right: -30rem;
           }
           to {
             right: 0rem;
@@ -106,7 +106,7 @@ export default function ChatWindow() {
             right: 0rem;
           }
           to {
-            right: -20rem;
+            right: -30rem;
           }
         }
 
