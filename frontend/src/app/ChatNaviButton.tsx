@@ -1,6 +1,6 @@
 "use client";
 
-import { setTrue } from "@/redux/features/chattoggle/chattoggleSlice";
+import { setOpen } from "@/redux/features/chattoggle/chattoggleSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useEffect, useState } from "react";
 import { TbBrandHipchat } from "react-icons/tb";
@@ -24,7 +24,7 @@ export default function ChatNaviButton() {
       <button
         className={buttonDisplay}
         onClick={() => {
-          setIsOnChatting(setTrue());
+          setIsOnChatting(setOpen());
         }}
       >
         <TbBrandHipchat />
@@ -51,7 +51,7 @@ export default function ChatNaviButton() {
         }
         .button-display-on {
           animation-name: button-on;
-          animation-duration: 1.25s;
+          animation-duration: 0.5s;
           animation-timing-function: ease;
           animation-fill-mode: forwards;
         }

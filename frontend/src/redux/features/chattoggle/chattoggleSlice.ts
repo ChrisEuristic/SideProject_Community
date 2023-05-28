@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 type ChattoggleState = {
-  value: boolean;
+  value: number;
 };
 
 const initialState = {
-  value: false,
+  value: 0,
 } as ChattoggleState;
 
 export const chattoggle = createSlice({
@@ -13,14 +13,14 @@ export const chattoggle = createSlice({
   initialState,
   reducers: {
     reset: () => initialState,
-    setTrue: (state) => {
-      state.value = true;
+    setOpen: (state) => {
+      state.value = 1;
+    },
+    setOpenFix: (state) => {
+      state.value = 2;
     },
   },
 });
 
-export const {
-  setTrue,
-  reset,
-} = chattoggle.actions;
+export const { setOpen, setOpenFix, reset } = chattoggle.actions;
 export default chattoggle.reducer;
