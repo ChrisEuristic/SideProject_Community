@@ -1,6 +1,6 @@
 "use client";
 
-import { toggle } from "@/redux/features/chattoggle/chattoggleSlice";
+import { reset } from "@/redux/features/chattoggle/chattoggleSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useEffect, useState } from "react";
 import { BsFillPinAngleFill, BsFillPinFill } from "react-icons/bs";
@@ -15,7 +15,7 @@ export default function ChatWindow() {
     document.addEventListener("click", (e) => {
       if (e.target instanceof HTMLElement && isOnChatting) {
         if (e.target.id !== "chat-window") {
-          setIsOnChatting(toggle());
+          setIsOnChatting(reset());
         }
       }
     });
@@ -45,15 +45,15 @@ export default function ChatWindow() {
 
         .toggle-on {
           animation-name: chattingOn;
-          animation-duration: 1s;
-          animation-timing-function: ease-in-out;
+          animation-duration: 0.5s;
+          animation-timing-function: ease;
           animation-fill-mode: forwards;
         }
 
         .toggle-off {
           animation-name: chattingOff;
-          animation-duration: 1s;
-          animation-timing-function: ease-in-out;
+          animation-duration: 0.5s;
+          animation-timing-function: ease;
           animation-fill-mode: forwards;
         }
 
