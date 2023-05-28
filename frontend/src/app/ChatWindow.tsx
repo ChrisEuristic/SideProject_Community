@@ -75,6 +75,7 @@ export default function ChatWindow() {
           border-radius: 0.5rem 0 0 0;
           width: 20rem;
           height: 100%;
+          background: white;
         }
 
         .toggle-on {
