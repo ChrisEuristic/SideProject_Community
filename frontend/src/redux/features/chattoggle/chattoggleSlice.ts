@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 type ChattoggleState = {
   value: boolean;
@@ -13,14 +13,14 @@ export const chattoggle = createSlice({
   initialState,
   reducers: {
     reset: () => initialState,
-    toggle: (state) => {
-      state.value = !state.value;
+    setTrue: (state) => {
+      state.value = true;
     },
   },
 });
 
 export const {
-  toggle,
+  setTrue,
   reset,
 } = chattoggle.actions;
 export default chattoggle.reducer;
