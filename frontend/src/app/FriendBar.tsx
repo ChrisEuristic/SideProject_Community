@@ -24,7 +24,6 @@ export default function FriendBar() {
   }
 
   useEffect(() => {
-    console.log("isOnFriendsWindow >> ", isOnFriendsWindow);
     if (isOnFriendsWindow === 1) {
       // 채팅창이 토글ON인 상태
       setNavClassName("toggle-on-friends");

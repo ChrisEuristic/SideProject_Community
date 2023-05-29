@@ -58,3 +58,13 @@ export async function addNoticePosting(value: {
 
   killConnection(connection);
 }
+
+export async function deleteNoticePosting(noticeId: string) {
+  const connection = await getConnection();
+
+  await connection.execute<RowDataPacket[]>(
+    `DELETE FROM NOTICE WHERE ID = ${parseInt(noticeId)}`
+  );
+
+  killConnection(connection);
+}
