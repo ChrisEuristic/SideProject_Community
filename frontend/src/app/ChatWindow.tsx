@@ -28,7 +28,6 @@ export default function ChatWindow() {
   }
 
   useEffect(() => {
-    console.log("isOnChatting >> ", isOnChatting);
     if (isOnChatting === 1) {
       // 채팅창이 토글ON인 상태
       setNavClassName("toggle-on");
@@ -43,7 +42,6 @@ export default function ChatWindow() {
       if (e.target instanceof HTMLElement) {
         if (!(e.target.id === "chat-window" || e.target.tagName === "path")) {
           if (isOnChatting === 1) {
-            console.log(isOnChatting, isOnChatting === 1);
             setIsOnChatting(reset());
           }
         }

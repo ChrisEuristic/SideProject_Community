@@ -58,3 +58,35 @@ export async function addNoticePosting(value: {
 
   killConnection(connection);
 }
+
+export async function updateNoticePosting(value: {
+  postingNo: string;
+  title: string;
+  content: string;
+}) {
+  const connection = await getConnection();
+
+  console.log("SQL >> ", `UPDATE NOTICE SET TITLE = "${value.title}", CONTENT = "${value.content}" WHERE ID = ${parseInt(value.postingNo)}`);
+
+  await connection.execute<RowDataPacket[]>(
+    `UPDATE NOTICE SET TITLE = "${value.title}", CONTENT = "${value.content}" WHERE ID = ${parseInt(value.postingNo)}`
+  );
+
+  killConnection(connection);
+}
+
+export async function deleteNoticePosting(noticeId: string) {
+  const connection = await getConnection();
+
+  try {
+    await connection.execute<RowDataPacket[]>(
+      `DELETE FROM NOTICE WHERE ID = ${parseInt(noticeId)}`
+    );
+
+  } catch(e){
+    console.log("deleteNoticePosting SQL Error");
+    console.error(e);
+  }
+
+  killConnection(connection);
+}
