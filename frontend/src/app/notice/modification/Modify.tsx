@@ -1,30 +1,15 @@
 "use client";
 
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { useRef } from "react";
 
-export default function ModifyPage() {
-  const searchParams = useSearchParams().get("no");
-  let contents;
-  const contentsRef = useRef(contents);
-  
-  useEffect(() => {
-    fetch("/api/posting", {
-      method: "PUT",
-      body: JSON.stringify({
-        no: searchParams,
-      }),
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        contentsRef.current = result.content;
-        console.log(contentsRef.current);
-      });
+export default function Modify({ content, postingNo }: any) {
+  const titleBox = useRef<HTMLSpanElement>(null);
+  const contentBox = useRef<HTMLTextAreaElement>(null);
+  const router = useRouter();
 
-  },[searchParams]);
-  
- return <></>
   return (
     <main style={{ width: "100vw", display: "flex", justifyContent: "center" }}>
       <div
@@ -56,7 +41,13 @@ export default function ModifyPage() {
             padding: "0 0.5rem",
           }}
         >
-          <span style={{ fontWeight: "bold" }}>{contents.title}</span>
+          <span
+            ref={titleBox}
+            contentEditable="true"
+            style={{ fontWeight: "bold", outline: "none", width: "60vw" }}
+          >
+            {content.title}
+          </span>
           <span
             style={{ display: "inline-block", width: "10vw", textAlign: "end" }}
           >
@@ -69,7 +60,7 @@ export default function ModifyPage() {
                 fontSize: "0.9rem",
               }}
             >
-              조회 {contents.visit}
+              조회 {content.visit}
             </span>
             <span
               style={{
@@ -94,9 +85,10 @@ export default function ModifyPage() {
             margin: "1rem 0",
           }}
         ></div>
-        <div style={{ padding: "0 0.5rem" }}>
-          <textarea value={contents.content}></textarea>
-          {contents.content}
+        <div style={{ padding: "0 0.5rem", height: "60vh" }}>
+          <textarea ref={contentBox} style={{ width: "100%", height: "100%" }}>
+            {content.content}
+          </textarea>
         </div>
         <div
           style={{
@@ -123,22 +115,58 @@ export default function ModifyPage() {
             </Link>
           </div>
           <div>
-            <Link href={"/notice/writing"}>
-              <button
-                style={{
-                  backgroundColor: "#282828",
-                  borderRadius: "0.3rem",
-                  margin: "0.5rem 0 0 0.5rem",
-                  padding: "0.4rem 0.7rem",
-                  color: "white",
-                }}
-              >
-                수정 완료
-              </button>
-            </Link>
+            <button
+              onClick={() => {
+                submitNotice(
+                  titleBox.current?.textContent as string,
+                  contentBox.current?.value as string,
+                  router,
+                  postingNo as string
+                );
+              }}
+              style={{
+                backgroundColor: "#282828",
+                borderRadius: "0.3rem",
+                margin: "0.5rem 0 0 0.5rem",
+                padding: "0.4rem 0.7rem",
+                color: "white",
+              }}
+            >
+              수정 완료
+            </button>
           </div>
         </div>
       </div>
     </main>
   );
+}
+
+/**
+ * 작성된 공지사항을 api server로 전송하는 함수.
+ * 완료시 /notice로 리다이렉트.
+ * @param title 공지사항의 제목
+ * @param content 공지사항 내용
+ * @param router 리다이렉트를 위한 라우터
+ */
+async function submitNotice(
+  title: string,
+  content: string,
+  router: AppRouterInstance,
+  postingNo: string
+) {
+  const res = await fetch("/api/posting", {
+    method: "PUT",
+    body: JSON.stringify({
+      postingNo: postingNo,
+      title: title,
+      content: content,
+    }),
+  });
+
+  if (res.status === 200) {
+    console.log("공지사항 수정 완료");
+    
+    router.push(res.url);
+    router.refresh();
+  }
 }

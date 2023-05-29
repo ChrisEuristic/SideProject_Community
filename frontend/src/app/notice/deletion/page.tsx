@@ -16,7 +16,9 @@ export default function DeletePage(){
       router.push("/notice");
       router.refresh();
     })
-    .catch(console.error)
+    .catch((error) => {
+      console.log("delete Page error!");
+    })
   },[searchParams, router]);
   
 }

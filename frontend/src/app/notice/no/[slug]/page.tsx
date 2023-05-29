@@ -122,10 +122,7 @@ export default async function NoticePostingPage({
             </Link>
           </div>
           <div>
-            <Link href={{
-              pathname: "/notice/modification",
-              query: {no: params.slug}
-              }} prefetch={false}>
+            <Link href={"/notice/modification/" + params.slug} prefetch={false}>
             <button
               style={{
                 backgroundColor: "#282828",
