@@ -1,7 +1,6 @@
 import {
   addNoticePosting,
   deleteNoticePosting,
-  getNoticeOne,
   updateNoticePosting,
 } from "@/function/database/notice";
 import { NextResponse } from "next/server";
