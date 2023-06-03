@@ -1,7 +1,5 @@
 import {
   addNoticePosting,
-  deleteNoticePosting,
-  getNoticeOne,
   updateNoticePosting,
 } from "@/function/database/notice";
 import { NextResponse } from "next/server";
@@ -22,18 +20,7 @@ export async function PUT(request: Request) {
   const inReader = await reader?.read();
   const { done, value } = inReader ?? { done: true, value: null };
 
-  updateNoticePosting(JSON.parse(value as string))
+  updateNoticePosting(JSON.parse(value as string));
 
   return NextResponse.redirect(new URL("/notice", request.url));
-}
-
-export async function DELETE(request: Request) {
-  const value = request.headers.get("no");
-
-  try {
-    await deleteNoticePosting(value as string);
-  } catch (error) {
-    console.log("/api/posting DELETE request Error");
-    console.error(error);
-  }
 }

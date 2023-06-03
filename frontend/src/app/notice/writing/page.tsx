@@ -99,6 +99,7 @@ export default function WritingPage() {
  */
 async function submitNotice(title: string, content: string, router: any) {
   const res = await fetch("/api/posting", {
+    mode: "cors",
     method: "POST",
     body: JSON.stringify({
       title: title,
