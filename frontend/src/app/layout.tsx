@@ -20,7 +20,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <section>
+        <section id="layout">
           <RecoilRoot>
             <TitleBar />
             <FriendBar />
@@ -29,13 +29,18 @@ export default function RootLayout(props: { children: React.ReactNode }) {
             <ChatNaviButton />
           </RecoilRoot>
         </section>
-        {props.children}
+        <section id="body">{props.children}</section>
       </body>
       <style jsx>{`
-        section {
+        #layout {
           display: flex;
           width: 100vw;
           height: 10vh;
+        }
+
+        #body {
+          display:flex;
+          justify-content: center;
         }
       `}</style>
     </html>

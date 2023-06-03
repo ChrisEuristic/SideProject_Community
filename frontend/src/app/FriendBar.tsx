@@ -64,11 +64,12 @@ export default function FriendBar() {
       <style jsx>{`
         nav {
           position: fixed;
-          left: -20rem;
+          bottom: 0;
+          left: -20vw;
           border: solid 1px #000000;
           border-radius: 0 0.5rem 0 0;
-          width: 20rem;
-          height: 100%;
+          width: 20vw;
+          height: 90vh;
           background: white;
           
         }
@@ -89,19 +90,19 @@ export default function FriendBar() {
 
         @keyframes chattingOn-friends {
           from {
-            left: -20rem;
+            left: -20vw;
           }
           to {
-            left: 0rem;
+            left: -0.01vw;
           }
         }
 
         @keyframes chattingOff-friends {
           from {
-            left: 0rem;
+            left: 0.01vw;
           }
           to {
-            left: -20rem;
+            left: -20vw;
           }
         }
 
