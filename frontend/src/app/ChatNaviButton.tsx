@@ -1,18 +1,16 @@
 "use client";
 
-import { setOpen } from "@/redux/features/chattoggle/chattoggleSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { IsOnChatting, SlideWindowState } from "@/recoil/WindowAtom";
+import { useRecoilState } from "recoil";
 import { useEffect, useState } from "react";
 import { TbBrandHipchat } from "react-icons/tb";
 
 export default function ChatNaviButton() {
-  const isOnChatting = useAppSelector((state) => state.chattoggleReducer.value);
-  const setIsOnChatting = useAppDispatch();
-
+  const [isOnChatting, setIsOnChatting] = useRecoilState(IsOnChatting);
   const [buttonDisplay, setButtonDisplay] = useState("button-display-off");
 
   useEffect(() => {
-    if (isOnChatting) {
+    if (isOnChatting !== SlideWindowState.CLOSE) {
       setButtonDisplay("button-display-off");
     } else {
       setButtonDisplay("button-display-on");
@@ -24,7 +22,7 @@ export default function ChatNaviButton() {
       <button
         className={buttonDisplay}
         onClick={() => {
-          setIsOnChatting(setOpen());
+          setIsOnChatting(SlideWindowState.OPEN)
         }}
       >
         <TbBrandHipchat />
