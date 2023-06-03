@@ -7,16 +7,18 @@ export default function DeletePage(){
   const router = useRouter();
   const searchParams = useSearchParams().get("no");
   useEffect(() => {
-    fetch("/api/posting", {
+    fetch(`/api/posting/${searchParams}`, {
       method: "DELETE",
       headers: {
-        no: searchParams as string
-      }
+        'Content-Type': 'application/json',
+    },
     }).then((res) => {
+      // goto("/notice")
       router.push("/notice");
       router.refresh();
     })
     .catch((error) => {
+      console.error(error);
       console.log("delete Page error!");
     })
   },[searchParams, router]);
