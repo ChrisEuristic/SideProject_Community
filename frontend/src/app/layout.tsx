@@ -1,6 +1,5 @@
 // "use client";
 // 추후 클라이언트 컴포넌트 집합에 Redux를 사용할때 주석해제
-import { Providers } from "@/redux/provider";
 import { Gowun_Dodum } from "next/font/google";
 import ChatNaviButton from "./ChatNaviButton";
 import ChatWindow from "./ChatWindow";
@@ -23,12 +22,10 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         <TitleBar />
         <section className="flex w-full h-full">
           {props.children}
-          <Providers>
             <FriendBar />
             <FriendNaviButton />
             <ChatWindow />
             <ChatNaviButton />
-          </Providers>
         </section>
       </body>
     </html>
