@@ -1,30 +1,29 @@
 "use client";
 
-import { setOpen } from "@/redux/features/friends/friendsToggleSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { IsOnFriendBar, SlideWindowState } from "@/recoil/WindowAtom";
+import { useRecoilState } from "recoil";
 import { useEffect, useState } from "react";
 import { FaUserFriends } from "react-icons/fa";
 
 export default function FriendNaviButton() {
-  const isOnChatting = useAppSelector((state) => state.friendsToggleReducer.value);
-  const setIsOnChatting = useAppDispatch();
+  const [isOnFriendsWindow, setIsOnFriendsWindow] = useRecoilState(IsOnFriendBar);
 
   const [buttonDisplay, setButtonDisplay] = useState("button-display-off");
 
   useEffect(() => {
-    if (isOnChatting) {
+    if (isOnFriendsWindow) {
       setButtonDisplay("button-display-off");
     } else {
       setButtonDisplay("button-display-on");
     }
-  }, [isOnChatting]);
+  }, [isOnFriendsWindow]);
 
   return (
     <>
       <button
         className={buttonDisplay}
         onClick={() => {
-          setIsOnChatting(setOpen());
+          setIsOnFriendsWindow(SlideWindowState.OPEN);
         }}
       >
         <FaUserFriends />

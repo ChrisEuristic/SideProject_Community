@@ -1,25 +1,24 @@
 "use client";
 
-import { reset, setOpen, setOpenFix } from "@/redux/features/friends/friendsToggleSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useRecoilState } from "recoil";
+import { IsOnFriendBar, SlideWindowState } from "@/recoil/WindowAtom";
 import { useEffect, useState } from "react";
 import { BsFillPinAngleFill, BsFillPinFill } from "react-icons/bs";
 
 export default function FriendBar() {
-  const isOnFriendsWindow = useAppSelector((state) => state.friendsToggleReducer.value);
-  const setIsOnFriendsWindow = useAppDispatch();
+  const [isOnFriendsWindow, setIsOnFriendsWindow] = useRecoilState(IsOnFriendBar);
   const [navClassName, setNavClassName] = useState("");
   const [spanClassName, setSpanClassName] = useState("");
 
   function friendsWindowFix() {
     if (isOnFriendsWindow === 1) {
-      setIsOnFriendsWindow(setOpenFix());
+      setIsOnFriendsWindow(SlideWindowState.FIXED);
       setSpanClassName("span-anim-friends");
       setTimeout(() => {
         setSpanClassName("");
       }, 1000);
     } else {
-      setIsOnFriendsWindow(setOpen());
+      setIsOnFriendsWindow(SlideWindowState.OPEN);
     }
   }
 
@@ -39,7 +38,7 @@ export default function FriendBar() {
         if (!(e.target.id === "friends-window" || e.target.tagName === "path")) {
           if (isOnFriendsWindow === 1) {
             console.log(isOnFriendsWindow, isOnFriendsWindow === 1);
-            setIsOnFriendsWindow(reset());
+            setIsOnFriendsWindow(SlideWindowState.CLOSE);
           }
         }
       }

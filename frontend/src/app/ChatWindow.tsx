@@ -1,29 +1,24 @@
 "use client";
 
-import {
-  reset,
-  setOpen,
-  setOpenFix,
-} from "@/redux/features/chattoggle/chattoggleSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { IsOnChatting, SlideWindowState } from "@/recoil/WindowAtom";
+import { useRecoilState } from "recoil";
 import { useEffect, useState } from "react";
 import { BsFillPinAngleFill, BsFillPinFill } from "react-icons/bs";
 
 export default function ChatWindow() {
-  const isOnChatting = useAppSelector((state) => state.chattoggleReducer.value);
-  const setIsOnChatting = useAppDispatch();
+  const [isOnChatting, setIsOnChatting] = useRecoilState(IsOnChatting);
   const [navClassName, setNavClassName] = useState("");
   const [spanClassName, setSpanClassName] = useState("");
 
   function chatWindowFix() {
     if (isOnChatting === 1) {
-      setIsOnChatting(setOpenFix());
+      setIsOnChatting(SlideWindowState.FIXED);
       setSpanClassName("span-anim");
       setTimeout(() => {
         setSpanClassName("");
       }, 1000);
     } else {
-      setIsOnChatting(setOpen());
+      setIsOnChatting(SlideWindowState.OPEN);
     }
   }
 
@@ -42,7 +37,7 @@ export default function ChatWindow() {
       if (e.target instanceof HTMLElement) {
         if (!(e.target.id === "chat-window" || e.target.tagName === "path")) {
           if (isOnChatting === 1) {
-            setIsOnChatting(reset());
+            setIsOnChatting(SlideWindowState.CLOSE);
           }
         }
       }

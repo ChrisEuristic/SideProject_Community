@@ -1,5 +1,5 @@
-// "use client";
-// 추후 클라이언트 컴포넌트 집합에 Redux를 사용할때 주석해제
+"use client";
+
 import { Gowun_Dodum } from "next/font/google";
 import ChatNaviButton from "./ChatNaviButton";
 import ChatWindow from "./ChatWindow";
@@ -7,6 +7,7 @@ import FriendBar from "./FriendBar";
 import FriendNaviButton from "./FriendNaviButton";
 import TitleBar from "./TitleBar";
 import "./globals.css";
+import { RecoilRoot } from "recoil";
 
 const inter = Gowun_Dodum({ subsets: ["latin"], weight: "400" });
 
@@ -19,15 +20,24 @@ export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <TitleBar />
-        <section className="flex w-full h-full">
-          {props.children}
+        <section>
+          <RecoilRoot>
+            <TitleBar />
             <FriendBar />
             <FriendNaviButton />
             <ChatWindow />
             <ChatNaviButton />
+          </RecoilRoot>
         </section>
+        {props.children}
       </body>
+      <style jsx>{`
+        section {
+          display: flex;
+          width: 100vw;
+          height: 10vh;
+        }
+      `}</style>
     </html>
   );
 }
