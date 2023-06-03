@@ -5,15 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRecoilState } from "recoil";
 
-// TODO: 타이틀바 클라이언트로 돌렸음. styled jsx로 변환 요구.
 export default function TitleBar() {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoggedInAtom);
 
   return (
     <>
-      <nav className="flex justify-between items-center h-24">
+      <nav>
         <section
-          className="ml-10 flex justify-center items-center w-80 h-24"
+          id="section-logo"
           aria-label="Logo Area"
         >
           <article>
@@ -21,54 +20,90 @@ export default function TitleBar() {
               <button>
                 <Image
                   src="/Logo.svg"
-                  width={592}
-                  height={96}
+                  width={typeof window !== 'undefined' ? window.innerWidth * 0.2 : 1920 * 0.2} // 20vw
+                  height={typeof window !== 'undefined' ? window.innerWidth * 0.2 * 0.162 : 1920 * 0.2 * 0.162}
                   alt="Logo of website"
                 />{" "}
               </button>
             </Link>
           </article>
         </section>
-        <section className="flex w-fil" aria-label="Menu Area">
-          <article className="ml-96 mr-20 text-xl font-bold">
+        <section id="section-menu" aria-label="Menu Area">
+          <article>
             <Link href={"/intro"}>
-              <button>{String(isLoggedIn)}소개</button>
+              <button>소개</button>
             </Link>
           </article>
-          <article className="mx-20 text-xl font-bold">
+          <article>
             <Link href={"/notice"}>
               <button>공지사항</button>
             </Link>
           </article>
-          <article className="ml-20 mr-72 text-xl font-bold">
+          <article>
             <Link href={"/issue"}>
               <button>이슈피드</button>
             </Link>
           </article>
         </section>
-        <section className="flex m" aria-label="Personal Area">
-          <article className="mx-2 font-bold">
+        <section id="section-personal" aria-label="Personal Area">
+          <article>
             <Link href={"/shop"}>
               <button>마켓</button>
             </Link>
           </article>
-          <article className="mx-2 font-bold">
+          <article>
             <Link href={"/payment"}>
               <button>충전하기</button>
             </Link>
           </article>
-          <article className="mx-2 font-bold">
+          <article>
             <Link href={"/profile"}>
               <button>닉네임다섯 [TYPE]</button>
             </Link>
           </article>
-          <article className="ml-2 mr-5">
+          <article>
             <Link href={"/profile"}>
               <button>프로필</button>
             </Link>
           </article>
         </section>
       </nav>
+      <style jsx>{`
+        nav {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 100%;
+          font-weight: bold;
+        }
+
+        #section-logo {
+          width: 20vw;
+          height: 100%;
+          display: flex;
+          margin-left: 1vw;
+          justify-content: center;
+          align-items: center;
+        }
+
+        #section-menu {
+          width: 30vw;
+          height: 100%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 1.25rem;
+        }
+
+        #section-personal {
+          width: 20vw;
+          height: 100%;
+          display: flex;
+          justify-content: space-evenly;
+          align-items: center;
+        }
+      `}</style>
     </>
   );
 }

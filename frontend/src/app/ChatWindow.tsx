@@ -63,11 +63,12 @@ export default function ChatWindow() {
       <style jsx>{`
         nav {
           position: fixed;
-          right: -30rem;
+          bottom: 0;
+          right: -30vw;
           border: solid 1px #000000;
           border-radius: 0.5rem 0 0 0;
-          width: 30rem;
-          height: 100%;
+          width: 30vw;
+          height: 90vh;
           background: white;
         }
 
@@ -87,19 +88,19 @@ export default function ChatWindow() {
 
         @keyframes chattingOn {
           from {
-            right: -30rem;
+            right: -30vw;
           }
           to {
-            right: 0rem;
+            right: -0.01vw;
           }
         }
 
         @keyframes chattingOff {
           from {
-            right: 0rem;
+            right: -0.01vw;
           }
           to {
-            right: -30rem;
+            right: -30vw;
           }
         }
 

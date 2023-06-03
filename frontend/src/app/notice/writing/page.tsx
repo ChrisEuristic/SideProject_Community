@@ -1,90 +1,109 @@
 "use client";
 
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
 
 export default function WritingPage() {
-  const router = useRouter();
-  const titleBox = useRef<HTMLInputElement>(null);
+  const titleBox = useRef<HTMLSpanElement>(null);
   const contentBox = useRef<HTMLTextAreaElement>(null);
+  const router = useRouter();
 
   return (
-    <main style={{ width: "70vw", display: "flex", justifyContent: "center" }}>
+    <main style={{ width: "100vw", display: "flex", justifyContent: "center" }}>
       <div
         style={{
-          width: "50vw",
-          height: "60vh",
-          display: "flex",
-          flexDirection: "column",
-          textAlign: "center",
+          width: "70vw",
         }}
       >
         <h1
           style={{
-            fontSize: "1.5rem",
+            width: "100%",
+            textAlign: "left",
+            fontSize: "1.6rem",
             fontWeight: "bold",
-            margin: "2rem 0 2rem 0",
           }}
         >
-          공지 쓰기
+          공지쓰기
         </h1>
-        <table>
-          <tbody>
-            <tr>
-              <th
-                style={{
-                  border: "1px solid #282828",
-                  height: "3rem",
-                  cursor: "default",
-                }}
-              >
-                제목
-              </th>
-              <td style={{ border: "1px solid #282828", height: "3rem" }}>
-                <input
-                  ref={titleBox}
-                  type="text"
-                  style={{ width: "100%", padding: "0 0.25rem 0 0.25rem" }}
-                />
-              </td>
-            </tr>
-            <tr>
-              <th
-                style={{
-                  border: "1px solid #282828",
-                  height: "30rem",
-                  cursor: "default",
-                }}
-              >
-                내용
-              </th>
-              <td style={{ border: "1px solid #282828", height: "30rem" }}>
-                <textarea
-                  ref={contentBox}
-                  style={{ width: "100%", height: "95%", padding: "0.25rem" }}
-                ></textarea>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <button
-          onClick={() => {
-            submitNotice(
-              titleBox.current?.value as string,
-              contentBox.current?.value as string,
-              router
-            );
-          }}
+        <div
           style={{
-            backgroundColor: "#282828",
-            borderRadius: "0.3rem",
-            marginTop: "1rem",
-            padding: "0.4rem 0.7rem",
-            color: "white",
+            width: "100%",
+            border: "1px solid #282828",
+            margin: "1rem 0",
+          }}
+        ></div>
+        <header
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            padding: "0 0.5rem",
           }}
         >
-          공지 등록하기
-        </button>
+          <span
+            ref={titleBox}
+            contentEditable="true"
+            style={{ fontWeight: "bold", outline: "none", width: "60vw" }}
+          >
+          </span>
+        </header>
+        <div
+          style={{
+            width: "100%",
+            borderBottom: "0.5px solid #28282870",
+            margin: "1rem 0",
+          }}
+        ></div>
+        <div style={{ padding: "0 0.5rem", height: "60vh" }}>
+          <textarea ref={contentBox} style={{ width: "100%", height: "100%" }}>
+          </textarea>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+            justifyContent: "space-between",
+          }}
+        >
+          <div>
+            <Link href={"/notice"}>
+              <button
+                style={{
+                  backgroundColor: "#282828",
+                  borderRadius: "0.3rem",
+                  marginTop: "1rem",
+                  padding: "0.4rem 0.7rem",
+                  color: "white",
+                  justifySelf: "left",
+                }}
+              >
+                목록
+              </button>
+            </Link>
+          </div>
+          <div>
+            <button
+              onClick={() => {
+                submitNotice(
+                  titleBox.current?.textContent as string,
+                  contentBox.current?.value as string,
+                  router,
+                );
+              }}
+              style={{
+                backgroundColor: "#282828",
+                borderRadius: "0.3rem",
+                margin: "0.5rem 0 0 0.5rem",
+                padding: "0.4rem 0.7rem",
+                color: "white",
+              }}
+            >
+              작성 완료
+            </button>
+          </div>
+        </div>
       </div>
     </main>
   );
@@ -97,7 +116,7 @@ export default function WritingPage() {
  * @param content 공지사항 내용
  * @param router 리다이렉트를 위한 라우터
  */
-async function submitNotice(title: string, content: string, router: any) {
+async function submitNotice(title: string, content: string, router: AppRouterInstance) {
   const res = await fetch("/api/posting", {
     mode: "cors",
     method: "POST",
