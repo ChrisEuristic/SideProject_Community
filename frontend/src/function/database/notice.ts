@@ -92,15 +92,26 @@ export async function deleteNoticePosting(noticeId: string) {
 
   try {
     await connection.execute<RowDataPacket[]>(
-      `DELETE FROM NOTICE WHERE ID = ${parseInt(noticeId)}`
+      `DELETE FROM REPLY WHERE POSTINGID = ${noticeId}`
     );
   } catch (e) {
-    console.log("deleteNoticePosting SQL Error");
+    console.log("deleteNoticePosting SQL Error: 댓글 지우기 중 에러");
+    console.error(e);
+  }
+
+  try {
+    await connection.execute<RowDataPacket[]>(
+      `DELETE FROM NOTICE WHERE ID = ${noticeId}`
+    );
+  } catch (e) {
+    console.log("deleteNoticePosting SQL Error: 본문 지우기 중 에러");
     console.error(e);
   }
 
   killConnection(connection);
 }
+
+// !! 댓글 기능
 
 export async function getReply(postingid: string) {
   const connection = await getConnection();
@@ -128,6 +139,21 @@ export async function addReply(reply: Reply) {
       reply.content +
       "')"
   );
+
+  killConnection(connection);
+}
+
+export async function deleteReply(replyID: string) {
+  const connection = await getConnection();
+
+  try {
+    await connection.execute<RowDataPacket[]>(
+      `DELETE FROM REPLY WHERE ID = ${replyID}`
+    );
+  } catch (e) {
+    console.log("deleteNoticePosting SQL Error");
+    console.error(e);
+  }
 
   killConnection(connection);
 }
