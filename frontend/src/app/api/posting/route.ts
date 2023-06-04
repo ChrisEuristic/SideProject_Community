@@ -7,7 +7,8 @@ import { RowDataPacket } from "mysql2";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
-  const content: RowDataPacket[] = await getNoticeAll();
+  const pageNo: string = (request.url.split("?")[1]).split("=")[1];
+  const content: RowDataPacket[][] = await getNoticeAll(pageNo);
   return new NextResponse(JSON.stringify(content), {
     status: 200,
   })
