@@ -17,11 +17,7 @@ export default function Home() {
           height: "70vh",
         }}
       >
-        <div>
-          {JSON.stringify(session?.user)}
-          <button onClick={() => signIn("kakao")}>Sign in</button>
-          <button onClick={() => signOut()}>Sign out</button>
-        </div>
+        대시보드
       </main>
     </>
   );

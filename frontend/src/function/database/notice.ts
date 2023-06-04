@@ -1,6 +1,13 @@
 import { RowDataPacket } from "mysql2";
 import { Connection, createConnection } from "mysql2/promise";
 
+export type Reply = {
+  postingid: string;
+  username: string;
+  userid: string;
+  content: string;
+};
+
 export async function getConnection() {
   return await createConnection({
     host:
@@ -66,10 +73,17 @@ export async function updateNoticePosting(value: {
 }) {
   const connection = await getConnection();
 
-  console.log("SQL >> ", `UPDATE NOTICE SET TITLE = "${value.title}", CONTENT = "${value.content}" WHERE ID = ${parseInt(value.postingNo)}`);
+  console.log(
+    "SQL >> ",
+    `UPDATE NOTICE SET TITLE = "${value.title}", CONTENT = "${
+      value.content
+    }" WHERE ID = ${parseInt(value.postingNo)}`
+  );
 
   await connection.execute<RowDataPacket[]>(
-    `UPDATE NOTICE SET TITLE = "${value.title}", CONTENT = "${value.content}" WHERE ID = ${parseInt(value.postingNo)}`
+    `UPDATE NOTICE SET TITLE = "${value.title}", CONTENT = "${
+      value.content
+    }" WHERE ID = ${parseInt(value.postingNo)}`
   );
 
   killConnection(connection);
@@ -82,11 +96,40 @@ export async function deleteNoticePosting(noticeId: string) {
     await connection.execute<RowDataPacket[]>(
       `DELETE FROM NOTICE WHERE ID = ${parseInt(noticeId)}`
     );
-
-  } catch(e){
+  } catch (e) {
     console.log("deleteNoticePosting SQL Error");
     console.error(e);
   }
+
+  killConnection(connection);
+}
+
+export async function getReply(postingid: string) {
+  const connection = await getConnection();
+
+  const [rows, field] = await connection.execute<RowDataPacket[]>(
+    "SELECT * FROM REPLY WHERE POSTINGID=" + postingid + " ORDER BY ID ASC"
+  );
+
+  killConnection(connection);
+
+  return rows;
+}
+
+export async function addReply(reply: Reply) {
+  const connection = await getConnection();
+
+  await connection.execute<RowDataPacket[]>(
+    "INSERT INTO REPLY(`postingid`,`username`,`userid`,`content`) VALUES(" +
+      reply.postingid +
+      ",'" +
+      reply.username +
+      "','" +
+      reply.userid +
+      "','" +
+      reply.content +
+      "')"
+  );
 
   killConnection(connection);
 }

@@ -1,3 +1,5 @@
+import ReplyList from "@/components/ReplyList";
+import ReplyWriter from "@/components/ReplyWriter";
 import { getNoticeOne } from "@/function/database/notice";
 import Link from "next/link";
 import { AiFillLike } from "react-icons/ai";
@@ -13,7 +15,14 @@ export default async function NoticePostingPage({
   // 2. writing과 비슷한 양식으로 표시.
   // 3. 수정/삭제/목록으로 돌아가기/글쓰기 버튼 추가하기.
   return (
-    <main style={{ width: "100vw", display: "flex", justifyContent: "center" }}>
+    <main
+      style={{
+        width: "100vw",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <div
         style={{
           width: "70vw",
@@ -123,32 +132,37 @@ export default async function NoticePostingPage({
           </div>
           <div>
             <Link href={"/notice/modification/" + params.slug} prefetch={false}>
-            <button
-              style={{
-                backgroundColor: "#282828",
-                borderRadius: "0.3rem",
-                margin: "0.5rem 0 0 0.5rem",
-                padding: "0.4rem 0.7rem",
-                color: "white",
+              <button
+                style={{
+                  backgroundColor: "#282828",
+                  borderRadius: "0.3rem",
+                  margin: "0.5rem 0 0 0.5rem",
+                  padding: "0.4rem 0.7rem",
+                  color: "white",
+                }}
+              >
+                수정
+              </button>
+            </Link>
+            <Link
+              href={{
+                pathname: "/notice/deletion",
+                query: { no: params.slug },
               }}
+              prefetch={false}
             >
-              수정
-            </button></Link>
-            <Link href={{
-              pathname: "/notice/deletion",
-              query: {no: params.slug}
-              }} prefetch={false}>
-            <button
-              style={{
-                backgroundColor: "#282828",
-                borderRadius: "0.3rem",
-                margin: "0.5rem 0 0 0.5rem",
-                padding: "0.4rem 0.7rem",
-                color: "white",
-              }}
-            >
-              삭제
-            </button></Link>
+              <button
+                style={{
+                  backgroundColor: "#282828",
+                  borderRadius: "0.3rem",
+                  margin: "0.5rem 0 0 0.5rem",
+                  padding: "0.4rem 0.7rem",
+                  color: "white",
+                }}
+              >
+                삭제
+              </button>
+            </Link>
             <Link href={"/notice/writing"}>
               <button
                 style={{
@@ -165,6 +179,8 @@ export default async function NoticePostingPage({
           </div>
         </div>
       </div>
+      <ReplyWriter postingID={params.slug} />
+      <ReplyList postingID={params.slug} />
     </main>
   );
 }

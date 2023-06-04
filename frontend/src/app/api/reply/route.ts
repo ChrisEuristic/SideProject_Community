@@ -1,5 +1,4 @@
 import { Reply, addReply, getReply } from "@/function/database/notice";
-import { getURLInform } from "@/function/util/server";
 
 export async function GET(request: Request) {
 
