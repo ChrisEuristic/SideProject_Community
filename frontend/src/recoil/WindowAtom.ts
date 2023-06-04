@@ -13,3 +13,8 @@ export const IsOnFriendBar = atom({
   key: "isOnFriendBar",
   default: SlideWindowState.CLOSE,
 })
+
+export const IsOnProfilePopup = atom({
+  key: "isOnProfilePopup",
+  default: SlideWindowState.CLOSE,
+})

@@ -1,11 +1,14 @@
 "use client";
 
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { IsOnFriendBar, SlideWindowState } from "@/recoil/WindowAtom";
 import { useEffect, useState } from "react";
 import { BsFillPinAngleFill, BsFillPinFill } from "react-icons/bs";
+import LoginPrompt from "@/components/LoginPrompt";
+import { LoggedInAtom } from "@/recoil/SignAtom";
 
 export default function FriendBar() {
+  const isLoggedIn = useRecoilValue(LoggedInAtom);
   const [isOnFriendsWindow, setIsOnFriendsWindow] = useRecoilState(IsOnFriendBar);
   const [navClassName, setNavClassName] = useState("");
   const [spanClassName, setSpanClassName] = useState("");
@@ -60,6 +63,10 @@ export default function FriendBar() {
           </div>
         </button>
         <span className={spanClassName}>멈춰!</span>
+        {/* 여기서부터 친구창 */}
+        <section>
+          {isLoggedIn ? `로그인 됨. 채팅창 표시!` : <LoginPrompt />}
+        </section>
       </nav>
       <style jsx>{`
         nav {
@@ -72,6 +79,13 @@ export default function FriendBar() {
           height: 90vh;
           background: white;
           
+        }
+
+        section {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          height: 85vh;
         }
 
         .toggle-on-friends {

@@ -1,5 +1,6 @@
 export default function ProfilePage(){
   return(
-    <>프로필 페이지</>
+    <>프로필 페이지
+    </>
   );
 }

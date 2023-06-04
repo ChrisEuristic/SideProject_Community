@@ -8,6 +8,7 @@ import FriendNaviButton from "./FriendNaviButton";
 import TitleBar from "./TitleBar";
 import "./globals.css";
 import { RecoilRoot } from "recoil";
+import { NextAuthProvider } from "./providers";
 
 const inter = Gowun_Dodum({ subsets: ["latin"], weight: "400" });
 
@@ -20,16 +21,18 @@ export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <section id="layout">
-          <RecoilRoot>
-            <TitleBar />
-            <FriendBar />
-            <FriendNaviButton />
-            <ChatWindow />
-            <ChatNaviButton />
-          </RecoilRoot>
-        </section>
-        <section id="body">{props.children}</section>
+        <NextAuthProvider>
+          <section id="layout">
+            <RecoilRoot>
+              <TitleBar />
+              <FriendBar />
+              <FriendNaviButton />
+              <ChatWindow />
+              <ChatNaviButton />
+            </RecoilRoot>
+          </section>
+          <section id="body">{props.children}</section>
+        </NextAuthProvider>
       </body>
       <style jsx>{`
         #layout {
@@ -39,7 +42,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         }
 
         #body {
-          display:flex;
+          display: flex;
           justify-content: center;
         }
       `}</style>
