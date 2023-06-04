@@ -1,6 +1,7 @@
 "use client";
 
 import { goto } from "@/function/util/client";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useRef } from "react";
@@ -8,6 +9,7 @@ import { useRef } from "react";
 export default function WritingPage() {
   const titleBox = useRef<HTMLSpanElement>(null);
   const contentBox = useRef<HTMLTextAreaElement>(null);
+  const router = useRouter();
 
   return (
     <main style={{ width: "100vw", display: "flex", justifyContent: "center" }}>
@@ -88,6 +90,7 @@ export default function WritingPage() {
                 submitNotice(
                   titleBox.current?.textContent as string,
                   contentBox.current?.value as string,
+                  router,
                 );
               }}
               style={{
@@ -114,7 +117,7 @@ export default function WritingPage() {
  * @param content 공지사항 내용
  * @param router 리다이렉트를 위한 라우터
  */
-async function submitNotice(title: string, content: string) {
+async function submitNotice(title: string, content: string, router: AppRouterInstance) {
   const res = await fetch("/api/posting", {
     mode: "no-cors",
     method: "POST",
@@ -128,6 +131,7 @@ async function submitNotice(title: string, content: string) {
 
   if (res.status === 200) {
     console.log("공지사항 등록 완료");
-    goto("/notice");
+    router.push("/notice");
+    // goto("/notice");
   }
 }

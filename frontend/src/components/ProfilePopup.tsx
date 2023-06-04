@@ -17,10 +17,8 @@ export default function ProfilePopup() {
 
   async function logOut() {
     signOut({
-      // redirect: false,
       callbackUrl: `http://1.254.141.230:3000/api/auth/logout`,
     })
-    // router.push(`http://1.254.141.230:3000/api/auth/logout`);
   }
 
   useEffect(() => {
@@ -87,6 +85,7 @@ export default function ProfilePopup() {
           to {
             opacity: 0;
             top: 9vh;
+            pointer-events: none;
           }
         }
 
@@ -110,6 +109,7 @@ export default function ProfilePopup() {
             opacity: 1;
             top: 10vh;
             height: 20vh;
+            pointer-events: auto;
           }
         }
       `}</style>

@@ -1,12 +1,15 @@
 "use client";
 
 import { goto } from "@/function/util/client";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useRef } from "react";
 
 export default function Modify({ content, postingNo }: any) {
   const titleBox = useRef<HTMLSpanElement>(null);
   const contentBox = useRef<HTMLTextAreaElement>(null);
+  const router = useRouter();
 
   return (
     <main style={{ width: "100vw", display: "flex", justifyContent: "center" }}>
@@ -118,7 +121,8 @@ export default function Modify({ content, postingNo }: any) {
                 submitNotice(
                   titleBox.current?.textContent as string,
                   contentBox.current?.value as string,
-                  postingNo as string
+                  postingNo as string,
+                  router,
                 );
               }}
               style={{
@@ -148,7 +152,8 @@ export default function Modify({ content, postingNo }: any) {
 async function submitNotice(
   title: string,
   content: string,
-  postingNo: string
+  postingNo: string,
+  router: AppRouterInstance
 ) {
   const res = await fetch("/api/posting", {
     method: "PUT",
@@ -161,7 +166,7 @@ async function submitNotice(
 
   if (res.status === 200) {
     console.log("공지사항 수정 완료");
-    
-    goto("/notice")
+    router.push(`/notice/no/${postingNo}`)
+    router.refresh();
   }
 }

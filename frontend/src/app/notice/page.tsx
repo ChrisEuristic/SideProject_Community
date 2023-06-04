@@ -1,22 +1,39 @@
-import { getNoticeAll } from "@/function/database/notice";
+'use client'
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-export default async function NoticePage() {
-  const content = await getNoticeAll();
+export default function NoticePage() {
 
-  const tbody = [];
+  const [tbody, setTbody] = useState<JSX.Element[]>();
+  useEffect(() => {
+    (async function () {
+      const res = await fetch("/api/posting", {
+        mode: "no-cors",
+      })
 
-  for (let [key, item] of Object.entries(content)) {
-    tbody.push(
-      <tr>
-        <td key={item.id + key} className="border border-gray-800 text-center">{item.id}</td>
-        <td key={item.title + key} className="border border-gray-800 text-center"><Link href={"/notice/no/" + item.id}>{item.title}</Link></td>
-        <td key={item.writer + key} className="border border-gray-800 text-center">{item.writer}</td>
-        <td key={String(item.regidate) + key} className="border border-gray-800 text-center">{String(item.regidate)}</td>
-        <td key={item.visit + key} className="border border-gray-800 text-center">{item.visit}</td>
-      </tr>
-    );
-  }
+      const content: {id:number, title: string, writer: string, visit: number, regidate: string}[] = await res.json();
+      console.log(content);
+      const tempTbody = [];
+
+      for (let [key, item] of Object.entries(content)) {
+        const dateTime = item.regidate.split("T");
+        tempTbody.push(
+          <tr className="h-10">
+            <td key={item.id + key} className="border border-gray-800 text-center">{item.id}</td>
+            <td key={item.title + key} className="border border-gray-800 text-center"><Link href={"/notice/no/" + item.id} prefetch={false}>{item.title}</Link></td>
+            <td key={item.writer + key} className="border border-gray-800 text-center">{item.writer}</td>
+            <td key={String(item.regidate) + key} className="border border-gray-800 text-center">{dateTime[0]} {dateTime[1].split(".")[0]}</td>
+            <td key={item.visit + key} className="border border-gray-800 text-center">{item.visit}</td>
+          </tr>
+        );
+      }
+
+      setTbody(tempTbody);
+    })()
+  }, [])
+
+
 
   return (
     <>

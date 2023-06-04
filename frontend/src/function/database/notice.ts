@@ -70,14 +70,6 @@ export async function updateNoticePosting(value: {
   content: string;
 }) {
   const connection = await getConnection();
-
-  console.log(
-    "SQL >> ",
-    `UPDATE NOTICE SET TITLE = "${value.title}", CONTENT = "${
-      value.content
-    }" WHERE ID = ${parseInt(value.postingNo)}`
-  );
-
   await connection.execute<RowDataPacket[]>(
     `UPDATE NOTICE SET TITLE = "${value.title}", CONTENT = "${
       value.content
@@ -110,6 +102,23 @@ export async function deleteNoticePosting(noticeId: string) {
 
   killConnection(connection);
 }
+
+
+// !! 조회수, 좋아요 기능
+
+/**
+ * 조회수 1 증가
+ * @param postingNo 게시물 번호
+ */
+export async function incrementNoticeVisit(postingNo: string) {
+  const connection = await getConnection();
+
+  await connection.execute<RowDataPacket[]>(
+    `UPDATE NOTICE SET VISIT = VISIT + 1 WHERE ID = ${postingNo}`
+  );
+  killConnection(connection);
+}
+
 
 // !! 댓글 기능
 

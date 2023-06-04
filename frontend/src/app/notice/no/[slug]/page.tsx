@@ -1,6 +1,6 @@
 import ReplyList from "@/components/ReplyList";
 import ReplyWriter from "@/components/ReplyWriter";
-import { getNoticeOne } from "@/function/database/notice";
+import { getNoticeOne, incrementNoticeVisit } from "@/function/database/notice";
 import Link from "next/link";
 import { AiFillLike } from "react-icons/ai";
 
@@ -11,7 +11,7 @@ export default async function NoticePostingPage({
 }) {
   // 1. params.slug 번호로 DB에 검색해서 해당 엔티티 전부 가져오기.
   const content = await getNoticeOne(params.slug);
-  console.log(content);
+  incrementNoticeVisit(params.slug)
   // 2. writing과 비슷한 양식으로 표시.
   // 3. 수정/삭제/목록으로 돌아가기/글쓰기 버튼 추가하기.
   return (

@@ -15,7 +15,6 @@ export default function DeletePage(){
     }).then((res) => {
       // goto("/notice")
       router.push("/notice");
-      router.refresh();
     })
     .catch((error) => {
       console.error(error);
