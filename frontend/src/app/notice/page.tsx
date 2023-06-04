@@ -1,49 +1,121 @@
-'use client'
+"use client";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 
 export default function NoticePage() {
-
   const [tbody, setTbody] = useState<JSX.Element[]>();
-  useEffect(() => {
-    (async function () {
-      const res = await fetch("/api/posting", {
-        mode: "no-cors",
-      })
+  const [pageNo, setPageNo] = useState(1);
+  const [maxPageNo, setMaxPageNo] = useState(1);
+  const [pageNoButton, setPageNoButton] = useState<JSX.Element[]>();
 
-      const content: {id:number, title: string, writer: string, visit: number, regidate: string}[] = await res.json();
-      console.log(content);
+  
+
+  useEffect(() => {
+    if(pageNo < 1 || pageNo > maxPageNo){
+      setPageNo(1);
+    }
+
+    (async function () {
+      const res = await fetch(`/api/posting?pageNo=${pageNo}`, {
+        mode: "no-cors",
+      });
+
+      const result: [{
+        postingQty: number,
+      }[], {
+        id: number;
+        title: string;
+        writer: string;
+        visit: number;
+        regidate: string;
+      }[]] = await res.json();
+
+      const [count, content] = result;
+
+      const [postingCount] = count;
+      const postingQty = postingCount.postingQty;
+
+      const tempPageNoButton = [];
+      setMaxPageNo((Math.ceil(postingQty / 10)));
+      for(let i = 1; i <= maxPageNo; i++){
+        tempPageNoButton.push(
+          <button key={"pageNoButton" + i} style={{margin: "0 0.5vw"}} onClick={() => {setPageNo(i)}}>{i}</button>
+        )
+      }
+      setPageNoButton(tempPageNoButton);
+
       const tempTbody = [];
 
       for (let [key, item] of Object.entries(content)) {
         const dateTime = item.regidate.split("T");
         tempTbody.push(
           <tr className="h-10">
-            <td key={item.id + key} className="border border-gray-800 text-center">{item.id}</td>
-            <td key={item.title + key} className="border border-gray-800 text-center"><Link href={"/notice/no/" + item.id} prefetch={false}>{item.title}</Link></td>
-            <td key={item.writer + key} className="border border-gray-800 text-center">{item.writer}</td>
-            <td key={String(item.regidate) + key} className="border border-gray-800 text-center">{dateTime[0]} {dateTime[1].split(".")[0]}</td>
-            <td key={item.visit + key} className="border border-gray-800 text-center">{item.visit}</td>
+            <td
+              key={item.id + key}
+              className="border border-gray-800 text-center"
+            >
+              {item.id}
+            </td>
+            <td
+              key={item.title + key}
+              className="border border-gray-800 text-center"
+            >
+              <Link href={"/notice/no/" + item.id} prefetch={false}>
+                {item.title}
+              </Link>
+            </td>
+            <td
+              key={item.writer + key}
+              className="border border-gray-800 text-center"
+            >
+              {item.writer}
+            </td>
+            <td
+              key={String(item.regidate) + key}
+              className="border border-gray-800 text-center"
+            >
+              {dateTime[0]} {dateTime[1].split(".")[0]}
+            </td>
+            <td
+              key={item.visit + key}
+              className="border border-gray-800 text-center"
+            >
+              {item.visit}
+            </td>
           </tr>
         );
       }
-
       setTbody(tempTbody);
-    })()
-  }, [])
 
-
+      
+    })();
+  }, [pageNo, maxPageNo]);
 
   return (
     <>
       <main className="w-full flex flex-col items-center">
         <h1 className="text-4xl font-bold">공지사항</h1>
-        
+
         <br />
         <table className="w-8/12">
           <thead>
-            <tr><td colSpan={5} style={{textAlign: "end"}}><Link href={"/notice/writing"}><button style={{borderRadius: "0.25rem", border: "solid 1px #282828", padding: "0.25rem 0.5rem"}}>글쓰기</button></Link></td></tr>
+            <tr>
+              <td colSpan={5} style={{ textAlign: "end" }}>
+                <Link href={"/notice/writing"}>
+                  <button
+                    style={{
+                      borderRadius: "0.25rem",
+                      border: "solid 1px #282828",
+                      padding: "0.25rem 0.5rem",
+                    }}
+                  >
+                    글쓰기
+                  </button>
+                </Link>
+              </td>
+            </tr>
             <tr>
               <th className="border border-gray-800 w-20 h-14">글번호</th>
               <th className="border border-gray-800">제목</th>
@@ -54,7 +126,26 @@ export default function NoticePage() {
           </thead>
           <tbody>{tbody}</tbody>
         </table>
+        <section>
+          <button onClick={() => setPageNo((pre) => pre > 1 ? pre - 1 : 1)}>
+            <GrFormPrevious />
+          </button>
+          {pageNoButton}
+          <button onClick={() => setPageNo((pre) => pre < maxPageNo ? pre + 1 : maxPageNo)}>
+            <GrFormNext />
+          </button>
+        </section>
       </main>
+      <style jsx>{`
+        section {
+          margin-top: 2vh;
+          font-size: 1.25rem;
+        }
+
+        section button {
+          margin: 0 0.5vw;
+        }
+      `}</style>
     </>
   );
 }

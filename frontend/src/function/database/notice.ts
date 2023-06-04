@@ -37,16 +37,19 @@ export async function getNoticeOne(noticeId: string) {
   return rows[0];
 }
 
-export async function getNoticeAll() {
+export async function getNoticeAll(pageNo: string) {
   const connection = await getConnection();
-
-  const [rows, field] = await connection.execute<RowDataPacket[]>(
-    "SELECT * FROM NOTICE ORDER BY ID DESC LIMIT 10"
+  
+  const [count, field1] = await connection.execute<RowDataPacket[]>(
+    "SELECT COUNT(*) as postingQty FROM NOTICE"
   );
-
+  
+  const [rows, field2] = await connection.execute<RowDataPacket[]>(
+    "SELECT * FROM NOTICE ORDER BY ID DESC LIMIT 10 OFFSET " + (parseInt(pageNo) - 1) * 10
+  );
   killConnection(connection);
 
-  return rows;
+  return [count, rows];
 }
 
 export async function addNoticePosting(value: {
