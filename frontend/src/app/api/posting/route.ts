@@ -9,10 +9,12 @@ export async function POST(request: Request) {
   const inReader = await reader?.read();
   const { done, value } = inReader ?? { done: true, value: null };
 
-  console.log(value);
+  console.log("작성된 게시글 >> ", value);
 
   addNoticePosting(JSON.parse(value as string));
-  return NextResponse.redirect(new URL("/notice", request.url));
+  return new NextResponse("공지사항 작성완료", {
+    status: 200,
+  })
 }
 
 export async function PUT(request: Request) {
@@ -22,5 +24,7 @@ export async function PUT(request: Request) {
 
   updateNoticePosting(JSON.parse(value as string));
 
-  return NextResponse.redirect(new URL("/notice", request.url));
+  return new NextResponse("공지사항 수정완료", {
+    status: 200,
+  })
 }

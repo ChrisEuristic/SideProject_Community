@@ -54,7 +54,6 @@ export async function addNoticePosting(value: {
   content: string;
 }) {
   const connection = await getConnection();
-
   await connection.execute<RowDataPacket[]>(
     "INSERT INTO NOTICE(`title`,`content`,`writer`) VALUES('" +
       value.title +
@@ -62,7 +61,6 @@ export async function addNoticePosting(value: {
       value.content +
       "','admin')"
   );
-
   killConnection(connection);
 }
 

@@ -28,8 +28,7 @@ export async function POST(request: Request) {
   `);
   addReply(reply);
 
-  const res = new Response("등록되었습니다.", {
+  return new Response("등록되었습니다.", {
     status: 200,
-  });
-  return res;
+  });;
 }

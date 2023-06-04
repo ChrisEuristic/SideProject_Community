@@ -12,7 +12,7 @@ type Reply = {
 };
 
 export default function ReplyList({ postingID }: { postingID: string }) {
-  const [replys, setReplys] = useState([<></>]);
+  const [replys, setReplys] = useState([]);
 
   useEffect(() => {
     (async function () {
@@ -30,7 +30,7 @@ export default function ReplyList({ postingID }: { postingID: string }) {
             const dateTime = reply.regidate.split("T");
             return (
               <article
-                key={index}
+                key={postingID + "-" + index}
                 style={{
                   display: "flex",
                   width: "100%",
@@ -40,19 +40,19 @@ export default function ReplyList({ postingID }: { postingID: string }) {
                 }}
               >
                 <span
-                  key={index + "username"}
+                  key={postingID + "-" + index + "username"}
                   style={{ display: "inline-block", width: "8vw" }}
                 >
                   {reply.username} [{reply.userid.split("@")[0]}]
                 </span>
                 <span
-                  key={index + "content"}
+                  key={postingID + "-" + index + "content"}
                   style={{ display: "inline-block", width: "40vw" }}
                 >
                   {reply.content}
                 </span>
                 <span
-                  key={index + "regidate"}
+                  key={postingID + "-" + index + "regidate"}
                   style={{
                     display: "inline-block",
                     width: "10vw",
@@ -65,7 +65,6 @@ export default function ReplyList({ postingID }: { postingID: string }) {
             );
           })
         );
-
         console.log(replys);
       }
     })();
