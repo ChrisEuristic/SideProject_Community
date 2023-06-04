@@ -53,16 +53,27 @@ export async function getNoticeAll(pageNo: string) {
 }
 
 export async function addNoticePosting(value: {
+  account: string;
   title: string;
   content: string;
 }) {
   const connection = await getConnection();
+
+  const nickname = await connection.execute<RowDataPacket[]>(
+    "SELECT NICKNAME FROM ADMIN WHERE ACCOUNT='" + value.account + "'"
+  );
+
+  const parsingNickname = JSON.parse(JSON.stringify(nickname))[0][0]
+
   await connection.execute<RowDataPacket[]>(
     "INSERT INTO NOTICE(`title`,`content`,`writer`) VALUES('" +
       value.title +
       "','" +
       value.content +
-      "','admin')"
+      "','" +
+      parsingNickname['NICKNAME'] +
+      // value.account +
+      "')"
   );
   killConnection(connection);
 }

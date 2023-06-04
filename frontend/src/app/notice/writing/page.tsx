@@ -1,15 +1,16 @@
 "use client";
 
-import { goto } from "@/function/util/client";
+import { useSession } from "next-auth/react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useRef } from "react";
 
 export default function WritingPage() {
   const titleBox = useRef<HTMLSpanElement>(null);
   const contentBox = useRef<HTMLTextAreaElement>(null);
   const router = useRouter();
+  const {data: session} = useSession();
 
   return (
     <main style={{ width: "100vw", display: "flex", justifyContent: "center" }}>
@@ -91,6 +92,7 @@ export default function WritingPage() {
                   titleBox.current?.textContent as string,
                   contentBox.current?.value as string,
                   router,
+                  session?.user?.email as string,
                 );
               }}
               style={{
@@ -117,11 +119,12 @@ export default function WritingPage() {
  * @param content 공지사항 내용
  * @param router 리다이렉트를 위한 라우터
  */
-async function submitNotice(title: string, content: string, router: AppRouterInstance) {
+async function submitNotice(title: string, content: string, router: AppRouterInstance, account: string) {
   const res = await fetch("/api/posting", {
     mode: "no-cors",
     method: "POST",
     body: JSON.stringify({
+      account: account,
       title: title,
       content: content,
     }),
