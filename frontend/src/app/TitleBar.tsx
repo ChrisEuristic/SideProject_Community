@@ -1,30 +1,50 @@
 "use client";
 
+import { doInBrowser } from "@/function/util/client";
+import Profile from "../components/Profile";
 import { LoggedInAtom } from "@/recoil/SignAtom";
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
 export default function TitleBar() {
+  const session = useSession();
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoggedInAtom);
+  const [logoSize, setLogoSize] = useState({ width: 362, height: 58});
+
+
+  function login(){
+    signIn("kakao");
+  }
+
+  useEffect(() => {
+    setLogoSize(doInBrowser(() => {
+      return {width: window.innerWidth * 0.2, height: window.innerWidth * 0.2 * 0.162}
+    }))
+  }, [])
+
+  useEffect(() => {
+    if (session.data?.user?.name !== undefined) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [session.data?.user?.name!]);
 
   return (
     <>
       <nav>
-        <section
-          id="section-logo"
-          aria-label="Logo Area"
-        >
+        <section id="section-logo" aria-label="Logo Area">
           <article>
             <Link href={"/"}>
-              <button>
                 <Image
                   src="/Logo.svg"
-                  width={typeof window !== 'undefined' ? window.innerWidth * 0.2 : 1920 * 0.2} // 20vw
-                  height={typeof window !== 'undefined' ? window.innerWidth * 0.2 * 0.162 : 1920 * 0.2 * 0.162}
+                  width={logoSize.width} // 20vw
+                  height={logoSize.height}
                   alt="Logo of website"
                 />{" "}
-              </button>
             </Link>
           </article>
         </section>
@@ -57,14 +77,15 @@ export default function TitleBar() {
             </Link>
           </article>
           <article>
-            <Link href={"/profile"}>
-              <button>닉네임다섯 [TYPE]</button>
-            </Link>
-          </article>
-          <article>
-            <Link href={"/profile"}>
-              <button>프로필</button>
-            </Link>
+            {isLoggedIn ? (
+              <Profile
+                userName={session.data?.user?.name}
+                userType={"[TYPE]"}
+                userImage={session.data?.user?.image}
+              />
+            ) : (
+              <button onClick={login}>로그인</button>
+            )}
           </article>
         </section>
       </nav>

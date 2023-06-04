@@ -38,7 +38,7 @@ export default function FriendNaviButton() {
           border-radius: 50%;
           justify-content: center;
           align-items: center;
-          font-size: 3rem;
+          font-size: 2.5rem;
         }
         button:hover {
           right: 1.05rem;

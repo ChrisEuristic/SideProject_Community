@@ -1,11 +1,14 @@
 "use client";
 
 import { IsOnChatting, SlideWindowState } from "@/recoil/WindowAtom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
 import { BsFillPinAngleFill, BsFillPinFill } from "react-icons/bs";
+import { LoggedInAtom } from "@/recoil/SignAtom";
+import LoginPrompt from "@/components/LoginPrompt";
 
 export default function ChatWindow() {
+  const isLoggedIn = useRecoilValue(LoggedInAtom);
   const [isOnChatting, setIsOnChatting] = useRecoilState(IsOnChatting);
   const [navClassName, setNavClassName] = useState("");
   const [spanClassName, setSpanClassName] = useState("");
@@ -59,6 +62,10 @@ export default function ChatWindow() {
           </div>
         </button>
         <span className={spanClassName}>멈춰!</span>
+        {/* 여기서부터 채팅창 */}
+        <section>
+          {isLoggedIn ? `로그인 됨. 채팅창 표시!` : <LoginPrompt />}
+        </section>
       </nav>
       <style jsx>{`
         nav {
@@ -70,6 +77,13 @@ export default function ChatWindow() {
           width: 30vw;
           height: 90vh;
           background: white;
+        }
+
+        section {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          height: 85vh;
         }
 
         .toggle-on {
