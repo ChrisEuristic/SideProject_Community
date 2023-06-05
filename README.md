@@ -1,5 +1,5 @@
 # SideProject_Community
-개인적인 기록을 위한 웹사이트를 만들어봅니다.
+스킬 점검 및 간단한 유료서비스를 위한 웹사이트 개발.
 
 ## 프로젝트 단계
 
@@ -97,7 +97,7 @@
 ```javascript
 /* Camel Case */
 /* variable, function */
-/* No var, No let */
+/* No var */
 /* 반드시 세미콜론으로 라인 마감 */
 const varName = "camelCase";
 function funcName () {...};
@@ -116,55 +116,21 @@ type TypeName = {...};
 ```
 
 
-## 프로젝트 구조 및 기능 명세
+## 프로젝트 구조
 
-Frontend
-src(root)
-  - app
-      - api
-          - (private)
-        - dashboard
-        - page.tsx
-      - intro
-        - page.tsx (SSR)
-      - issue
-        - page.tsx (SSR + CSR)
-      - notice
-        - writing
-          - page.tsx (CSR)
-        - no/[slug]
-          - page.tsx (SSR)
-        - page.tsx (SSR)
-      - payment
-        - page.tsx (SSR + CSR)
-      - profile
-        - page.tsx
-      - shop
-        - [...slug]
-          - page.tsx (SSR + CSR)
-        - page.tsx (SSR + CSR)
-      - test
-        - page.tsx (SSR + CSR)
-      - page.tsx (SSR)
-      - layout.tsx (SSR)
-      - loading.tsx (CSR)
-      - error.tsx (CSR)
-      - TitleBar.tsx (SSR)
-      - FriendBar.tsx (CSR)
-      - ChatWindow.tsx (CSR)
-      - ChatNaviButton.tsx (CSR)
-  - function
-      - gpt
-          - chat.ts
-      - util
-          - database.ts
-              - ```getConnection(): Promise<Connection>```
-              - ```killConnection(Connection): Promise<void>```
-  
-  - redux
-      - features
-          - chattoggle
-              - chattoggleSlice.ts
-      - hooks.ts
-      - provider.tsx
-      - store.ts
+| Part | Root | level1 | level2 | level3 | level4 | level5 | level6 | level7 | level8 | level9 | level10 |
+|:-----:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Front | src | app | 메인 페이지, Navbar |
+|       |     | app | intro | 소개 페이지 |
+|       |     | app | issue | 이슈피드 페이지 |
+|       |     | app | notice | 공지사항 페이지 |
+|       |     | app | payment | 결제 페이지 |
+|       |     | app | profile | 프로필 페이지 |
+|       |     | app | shop | 마켓 페이지 |
+|       |     | components | 위치 미지정 컴포넌트 |
+|       |     | function | database | DB 함수 |
+|       |     |          | gpt      | Chatbot 기능 |
+|       |     |          | util     | 클라/서버 함수 |
+|       |     | recoil | 아톰 파일 |
+|       |     | test | 테스트 파일 |
+| Back  | src | app |
