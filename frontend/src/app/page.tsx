@@ -22,10 +22,3 @@ export default function Home() {
     </>
   );
 }
-
-
-async function myFunction() {
-	const csrfToken = await getCsrfToken();
-	console.log(csrfToken);
-}
-

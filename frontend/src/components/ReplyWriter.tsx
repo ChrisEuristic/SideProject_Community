@@ -23,7 +23,7 @@ export default function ReplyWriter({ postingID }: { postingID: string }) {
   async function submit(isLike = false) {
     const commentLength = replyContent.current?.value.length ?? 0;
 
-    if (commentLength >= 10 && commentLength < 500) {
+    if (commentLength >= 1 && commentLength < 500) {
       await fetch("/api/reply", {
         method: "POST",
         mode: "no-cors",
@@ -37,7 +37,7 @@ export default function ReplyWriter({ postingID }: { postingID: string }) {
       replyContent.current!.value = "";
       goto(thisPath)
     } else {
-      alert("댓글은 10자 이상, 500자 미만으로 작성해주세요.");
+      alert("댓글은 1자 이상, 500자 미만으로 작성해주세요.");
     }
   }
 

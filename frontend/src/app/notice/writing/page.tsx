@@ -130,8 +130,6 @@ async function submitNotice(title: string, content: string, router: AppRouterIns
     }),
   });
 
-  console.log("status >> ", res.status);
-
   if (res.status === 200) {
     console.log("공지사항 등록 완료");
     router.push("/notice");

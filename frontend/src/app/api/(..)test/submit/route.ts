@@ -3,7 +3,6 @@ import { Configuration } from "openai/dist/configuration";
 import { OpenAIApi } from "openai/dist/api";
 
 export async function POST() {
-  console.log("2번")
   const configuration = new Configuration({
     apiKey: process.env.API_KEY,
   });
@@ -47,8 +46,6 @@ export async function POST() {
   });
 
   const answer2 = response1.data.choices[0]?.message?.content;
-
-  console.log(answer2);
 
   return NextResponse.json(response2.data.choices);
 }

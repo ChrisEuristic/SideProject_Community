@@ -6,8 +6,6 @@ export async function GET(request: Request) {
 
   const reply = await getReply(postingno);
 
-  console.log(reply);
-
   return new Response(JSON.stringify(reply), {
     status: 200,
   });
@@ -20,7 +18,7 @@ export async function POST(request: Request) {
 
   const reply = JSON.parse(value as string) as Reply;
 
-  console.log(`
+  console.debug(`
   ========== 새로운 댓글 ==========
   ${reply.postingid}번 게시글에 대한 댓글
   ${reply.username} [${reply.userid}]

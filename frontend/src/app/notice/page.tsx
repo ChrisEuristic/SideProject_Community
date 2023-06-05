@@ -1,5 +1,7 @@
 "use client";
 
+import { IsAdmin } from "@/recoil/SignAtom";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
@@ -9,11 +11,22 @@ export default function NoticePage() {
   const [pageNo, setPageNo] = useState(1);
   const [maxPageNo, setMaxPageNo] = useState(1);
   const [pageNoButton, setPageNoButton] = useState<JSX.Element[]>();
-
-  
+  const [isAdmin, setIsAdmin] = useState(false);
+  const { data: session } = useSession();
 
   useEffect(() => {
-    if(pageNo < 1 || pageNo > maxPageNo){
+    (async function () {
+      const res = await fetch(`/api/auth/admin?email=${session?.user?.email}`, {
+        mode: "no-cors",
+      });
+      if(res.status === 200) {
+        setIsAdmin(true);
+      }
+    })();
+  }, [session?.user?.email, setIsAdmin]);
+
+  useEffect(() => {
+    if (pageNo < 1 || pageNo > maxPageNo) {
       setPageNo(1);
     }
 
@@ -22,15 +35,18 @@ export default function NoticePage() {
         mode: "no-cors",
       });
 
-      const result: [{
-        postingQty: number,
-      }[], {
-        id: number;
-        title: string;
-        writer: string;
-        visit: number;
-        regidate: string;
-      }[]] = await res.json();
+      const result: [
+        {
+          postingQty: number;
+        }[],
+        {
+          id: number;
+          title: string;
+          writer: string;
+          visit: number;
+          regidate: string;
+        }[]
+      ] = await res.json();
 
       const [count, content] = result;
 
@@ -38,11 +54,19 @@ export default function NoticePage() {
       const postingQty = postingCount.postingQty;
 
       const tempPageNoButton = [];
-      setMaxPageNo((Math.ceil(postingQty / 10)));
-      for(let i = 1; i <= maxPageNo; i++){
+      setMaxPageNo(Math.ceil(postingQty / 10));
+      for (let i = 1; i <= maxPageNo; i++) {
         tempPageNoButton.push(
-          <button key={"pageNoButton" + i} style={{margin: "0 0.5vw"}} onClick={() => {setPageNo(i)}}>{i}</button>
-        )
+          <button
+            key={"pageNoButton" + i}
+            style={{ margin: "0 0.5vw" }}
+            onClick={() => {
+              setPageNo(i);
+            }}
+          >
+            {i}
+          </button>
+        );
       }
       setPageNoButton(tempPageNoButton);
 
@@ -88,8 +112,6 @@ export default function NoticePage() {
         );
       }
       setTbody(tempTbody);
-
-      
     })();
   }, [pageNo, maxPageNo]);
 
@@ -103,17 +125,23 @@ export default function NoticePage() {
           <thead>
             <tr>
               <td colSpan={5} style={{ textAlign: "end" }}>
-                <Link href={"/notice/writing"}>
-                  <button
-                    style={{
-                      borderRadius: "0.25rem",
-                      border: "solid 1px #282828",
-                      padding: "0.25rem 0.5rem",
-                    }}
-                  >
-                    글쓰기
-                  </button>
-                </Link>
+                {isAdmin ? (
+                  <>
+                    <Link href={"/notice/writing"}>
+                      <button
+                        style={{
+                          borderRadius: "0.25rem",
+                          border: "solid 1px #282828",
+                          padding: "0.25rem 0.5rem",
+                        }}
+                      >
+                        글쓰기
+                      </button>
+                    </Link>
+                  </>
+                ) : (
+                  <span></span>
+                )}
               </td>
             </tr>
             <tr>
@@ -127,11 +155,15 @@ export default function NoticePage() {
           <tbody>{tbody}</tbody>
         </table>
         <section>
-          <button onClick={() => setPageNo((pre) => pre > 1 ? pre - 1 : 1)}>
+          <button onClick={() => setPageNo((pre) => (pre > 1 ? pre - 1 : 1))}>
             <GrFormPrevious />
           </button>
           {pageNoButton}
-          <button onClick={() => setPageNo((pre) => pre < maxPageNo ? pre + 1 : maxPageNo)}>
+          <button
+            onClick={() =>
+              setPageNo((pre) => (pre < maxPageNo ? pre + 1 : maxPageNo))
+            }
+          >
             <GrFormNext />
           </button>
         </section>

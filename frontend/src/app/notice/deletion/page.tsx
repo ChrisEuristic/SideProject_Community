@@ -9,16 +9,12 @@ export default function DeletePage(){
   useEffect(() => {
     fetch(`/api/posting/${searchParams}`, {
       method: "DELETE",
-      headers: {
-        'Content-Type': 'application/json',
-    },
     }).then((res) => {
-      // goto("/notice")
       router.push("/notice");
     })
     .catch((error) => {
       console.error(error);
-      console.log("delete Page error!");
+      console.error("delete Page error!");
     })
   },[searchParams, router]);
   

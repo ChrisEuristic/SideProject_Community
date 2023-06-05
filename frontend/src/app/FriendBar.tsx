@@ -40,7 +40,6 @@ export default function FriendBar() {
       if (e.target instanceof HTMLElement) {
         if (!(e.target.id === "friends-window" || e.target.tagName === "path")) {
           if (isOnFriendsWindow === 1) {
-            console.log(isOnFriendsWindow, isOnFriendsWindow === 1);
             setIsOnFriendsWindow(SlideWindowState.CLOSE);
           }
         }
