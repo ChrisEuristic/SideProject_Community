@@ -20,8 +20,11 @@ export async function DELETE(request: Request) {
 
   try {
     await deleteNoticePosting(deleteTarget as string);
+    return new NextResponse("정상 삭제 완료", {status: 200})
   } catch (error) {
     console.error("/api/posting DELETE request Error");
     console.error(error);
+    return new NextResponse("정상 삭제 완료", {status: 400})
+
   }
 }
