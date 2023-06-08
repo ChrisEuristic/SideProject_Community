@@ -29,6 +29,7 @@ export default function HashTagFilter({ type }: { type: string }) {
             border-radius: 1.33vw;
             margin: 0.5vh 0.5vw;
             cursor: pointer;
+            user-select: none;
           }
 
           .true {

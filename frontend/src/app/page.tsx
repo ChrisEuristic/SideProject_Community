@@ -81,8 +81,7 @@ export default function Home() {
   }, [session?.user?.image, session?.user?.name]);
 
   useEffect(() => {
-    // TODO: 피드 내용 실제 렌더링되는 자리.
-    // !: 윗 이펙트에 구현하면 무한루프 문제 있음.
+    // !: 윗 이펙트에 구현하면 무한루프 발생. 절대 이동 금지.
     console.log(feeds);
 
     let tempArr = feeds
