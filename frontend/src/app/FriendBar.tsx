@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { BsFillPinAngleFill, BsFillPinFill } from "react-icons/bs";
 import LoginPrompt from "@/components/LoginPrompt";
 import { LoggedInAtom } from "@/recoil/SignAtom";
+import { checkSubString } from "@/function/util/regexp";
 
 export default function FriendBar() {
   const isLoggedIn = useRecoilValue(LoggedInAtom);
@@ -38,7 +39,7 @@ export default function FriendBar() {
 
     const handleClick = (e: Event) => {
       if (e.target instanceof HTMLElement) {
-        if (!(e.target.id === "friends-window" || e.target.tagName === "path")) {
+        if (!(checkSubString(e.target.className, "friends-window") || e.target.tagName === "path")) {
           if (isOnFriendsWindow === 1) {
             setIsOnFriendsWindow(SlideWindowState.CLOSE);
           }
@@ -55,15 +56,15 @@ export default function FriendBar() {
 
   return (
     <>
-      <nav id="friends-window" className={navClassName}>
-        <button id="friends-fix-button" onClick={friendsWindowFix}>
+      <nav id="friends-window" className={navClassName + " friends-window"}>
+        <button id="friends-fix-button" className="friends-window" onClick={friendsWindowFix}>
           <div>
             {isOnFriendsWindow === 2 ? <BsFillPinFill /> : <BsFillPinAngleFill />}
           </div>
         </button>
         <span className={spanClassName}>멈춰!</span>
         {/* 여기서부터 친구창 */}
-        <section>
+        <section className="friends-window">
           {isLoggedIn ? `로그인 됨. 채팅창 표시!` : <LoginPrompt />}
         </section>
       </nav>
