@@ -1,5 +1,6 @@
 "use client";
 
+import { formatDateTime } from "@/function/util/datetime";
 import { useState, useEffect } from "react";
 
 type Reply = {
@@ -27,7 +28,7 @@ export default function ReplyList({ postingID }: { postingID: string }) {
       if (replyCount >= 1) {
         setReplys(
           replyArr.map((reply: Reply, index: number) => {
-            const dateTime = reply.regidate.split("T");
+            const dateTime = formatDateTime(new Date(reply.regidate));
             return (
               <article
                 key={postingID + "-" + index}
@@ -59,7 +60,7 @@ export default function ReplyList({ postingID }: { postingID: string }) {
                     textAlign: "center",
                   }}
                 >
-                  {dateTime[0]} {dateTime[1].split(".")[0]}
+                  {dateTime}
                 </span>
               </article>
             );
