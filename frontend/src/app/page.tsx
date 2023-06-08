@@ -85,14 +85,22 @@ export default function Home() {
     // !: 윗 이펙트에 구현하면 무한루프 문제 있음.
     console.log(feeds);
 
-    let tempArr = feeds.map((feed, index) => {
-      return (
-        <Feed key={index} userImage={feed.userImage} userName={feed.userName} feedContent={feed.feedContent} regidate={feed.regidate} hashTag={feed.hashTag} />
-      )
-    }).reverse();
+    let tempArr = feeds
+      .map((feed, index) => {
+        return (
+          <Feed
+            key={index}
+            userImage={feed.userImage}
+            userName={feed.userName}
+            feedContent={feed.feedContent}
+            regidate={feed.regidate}
+            hashTag={feed.hashTag}
+          />
+        );
+      })
+      .reverse();
 
     setFeedsView(tempArr);
-
   }, [feeds]);
 
   return (
@@ -103,8 +111,9 @@ export default function Home() {
         </Link>
         <nav>{hashTagFilters}</nav>
         <main>
+          {feedInputBoxView}
           {feedsView}
-          {feedInputBoxView}</main>
+        </main>
       </div>
       <style jsx>{`
         @media (min-width: 1024px) {
