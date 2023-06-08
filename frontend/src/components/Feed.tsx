@@ -1,5 +1,6 @@
 "use client";
 
+import { whatTimesAgo } from "@/function/util/datetime";
 import Image from "next/image";
 
 export default function Feed({
@@ -24,7 +25,7 @@ export default function Feed({
         <section>
           <div>
             <header>{userName}</header>
-            <nav>{regidate}</nav>
+            <nav>{whatTimesAgo(regidate)}</nav>
           </div>
           <article>{feedContent}</article>
           <footer>{hashTag}</footer>
