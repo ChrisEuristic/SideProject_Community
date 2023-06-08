@@ -2,63 +2,131 @@
 
 import { useState, useRef } from "react";
 import { RiSendPlaneFill } from "react-icons/ri";
+import { RxShare2 } from "react-icons/rx";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import {
+  HiOutlineChatBubbleBottomCenterText,
+  HiChatBubbleBottomCenterText,
+} from "react-icons/hi2";
 
 export default function FeedInputBox({ submitFeed }: { submitFeed: Function }) {
-  const [className, setClassName] = useState("");
-  const inputBox = useRef<HTMLInputElement>(null);
+  const [mainClassName, setMainClassName] = useState("");
+  const [heartClassName, setHeartClassName] = useState("");
+  const [chatClassName, setChatClassName] = useState("");
+  const [shareClassName, setShareClassName] = useState("");
+  const [submitClassName, setSubmitClassName] = useState("");
+  const inputBox = useRef<HTMLTextAreaElement>(null);
+
+  function enter(e: any) {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendAction();
+    }
+  }
 
   function sendAction() {
-    submitFeed(inputBox.current?.value);
-    setClassName("send-feed");
+    const feedLength = inputBox.current?.value.length ?? 0;
+
+    if (feedLength >= 5 && feedLength < 500) {
+      submitFeed(inputBox.current?.value);
+      setMainClassName("send-feed");
+      inputBox.current!.value = "";
+    } else {
+      alert("피드는 5자 이상, 500자 미만으로 작성해주세요.");
+    }
   }
   return (
     <>
-      <main className={className}>
-        <input type="text" ref={inputBox}/>
-        <button onClick={sendAction}>
-          <RiSendPlaneFill fontSize={"1.2rem"} />
-        </button>
+      <main className={mainClassName}>
+        <textarea
+          ref={inputBox}
+          onKeyDown={enter}
+          placeholder="아무 말이나 적어"
+        ></textarea>
+        <section>
+          <article>
+            <button className={heartClassName} onMouseOver={() => {setHeartClassName("feed-button-mouseover")}} onMouseLeave={() => {setHeartClassName("feed-button-mouseleave")}}>
+              <AiOutlineHeart fontSize={"1.2rem"} />
+              {/* <AiFillHeart fontSize={"1.2rem"} /> */}
+            </button>
+            <button className={chatClassName} onMouseOver={() => {setChatClassName("feed-button-mouseover")}} onMouseLeave={() => {setChatClassName("feed-button-mouseleave")}}>
+              <HiOutlineChatBubbleBottomCenterText fontSize={"1.2rem"} />
+              {/* <HiChatBubbleBottomCenterText fontSize={"1.2rem"} /> */}
+            </button>
+            <button className={shareClassName} onMouseOver={() => {setShareClassName("feed-button-mouseover")}} onMouseLeave={() => {setShareClassName("feed-button-mouseleave")}}>
+              <RxShare2 />
+            </button>
+          </article>
+          <button className={submitClassName} onMouseOver={() => {setSubmitClassName("feed-button-mouseover")}} onMouseLeave={() => {setSubmitClassName("feed-button-mouseleave")}} onClick={sendAction}>
+            <RiSendPlaneFill fontSize={"1.2rem"} />
+          </button>
+        </section>
       </main>
       <style jsx>{`
         @media (min-width: 1024px) {
           main {
-            position: absolute;
-            bottom: 2vh;
-            right: 25vw;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             width: 50vw;
-            height: 4vh;
+            height: 15vh;
             border: solid 1px #141414;
-            border-radius: 10vw;
+            border-radius: 1vw;
             background-color: white;
-            padding-left: 1vw;
+            padding: 1.5vh 1vw 1vh 1vw;
+            margin: 2vh 0 1vh 0;
           }
-          input {
-            width: 47vw;
+          textarea {
+            width: 48vw;
+            height: 8vh;
+          }
+          section {
+            width: 48vw;
+            height: 2rem;
+            display: flex;
+            justify-content: space-between;
+          }
+          article {
+            width: 6vw;
+            display: flex;
+            justify-content: space-between;
           }
           button {
-            position: absolute;
-            right: 0.5vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
           }
-
-          .send-feed {
-            animation-name: send-action;
+          .feed-button-mouseover {
+            animation-name: feed-button-anim-on;
             animation-duration: 0.5s;
-            animation-timing-function: ease;
             animation-fill-mode: forwards;
           }
-        }
+          
+          .feed-button-mouseleave {
+            animation-name: feed-button-anim-off;
+            animation-duration: 0.5s;
+            animation-fill-mode: forwards;
+          }
 
-        @keyframes send-action {
-          from {
-            width: 50vw;
+          @keyframes feed-button-anim-on {
+            from{
+              background-color: rgba(0, 0, 0, 0);
+            }
+            to {
+              background-color: rgba(0, 0, 0, 0.2);
+            }
           }
-          to {
-            width: 4vh;
+          @keyframes feed-button-anim-off {
+            from{
+              background-color: rgba(0, 0, 0, 0.2);
+            }
+            to {
+              background-color: rgba(0, 0, 0, 0);
+            }
           }
-        }
-      `}</style>
+          `}</style>
     </>
   );
 }
