@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
+import { formatDateTime } from "@/function/util/datetime";
 
 export default function NoticePage() {
   const [tbody, setTbody] = useState<JSX.Element[]>();
@@ -73,7 +74,8 @@ export default function NoticePage() {
       const tempTbody = [];
 
       for (let [key, item] of Object.entries(content)) {
-        const dateTime = item.regidate.split("T");
+        
+        const dateTime = formatDateTime(new Date(item.regidate));
         tempTbody.push(
           <tr className="h-10">
             <td
@@ -100,7 +102,7 @@ export default function NoticePage() {
               key={String(item.regidate) + key}
               className="border border-gray-800 text-center"
             >
-              {dateTime[0]} {dateTime[1].split(".")[0]}
+              {dateTime}
             </td>
             <td
               key={item.visit + key}
