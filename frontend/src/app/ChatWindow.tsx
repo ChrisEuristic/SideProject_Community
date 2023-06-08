@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { BsFillPinAngleFill, BsFillPinFill } from "react-icons/bs";
 import { LoggedInAtom } from "@/recoil/SignAtom";
 import LoginPrompt from "@/components/LoginPrompt";
+import { checkSubString } from "@/function/util/regexp";
 
 export default function ChatWindow() {
   const isLoggedIn = useRecoilValue(LoggedInAtom);
@@ -38,7 +39,7 @@ export default function ChatWindow() {
 
     const handleClick = (e: Event) => {
       if (e.target instanceof HTMLElement) {
-        if (!(e.target.id === "chat-window" || e.target.tagName === "path")) {
+        if (!(checkSubString(e.target.className, "chat-window") || e.target.tagName === "path")) {
           if (isOnChatting === 1) {
             setIsOnChatting(SlideWindowState.CLOSE);
           }
@@ -55,15 +56,15 @@ export default function ChatWindow() {
 
   return (
     <>
-      <nav id="chat-window" className={navClassName}>
-        <button id="chat-fix-button" onClick={chatWindowFix}>
+      <nav id="chat-window" className={navClassName + " chat-window"}>
+        <button id="chat-fix-button" className="chat-window" onClick={chatWindowFix}>
           <div>
             {isOnChatting === 2 ? <BsFillPinFill /> : <BsFillPinAngleFill />}
           </div>
         </button>
         <span className={spanClassName}>멈춰!</span>
         {/* 여기서부터 채팅창 */}
-        <section>
+        <section className="chat-window">
           {isLoggedIn ? `로그인 됨. 채팅창 표시!` : <LoginPrompt />}
         </section>
       </nav>
