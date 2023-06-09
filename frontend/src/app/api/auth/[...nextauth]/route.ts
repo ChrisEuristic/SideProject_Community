@@ -8,7 +8,7 @@ const handler = NextAuth({
       clientSecret: process.env.KAKAO_CLIENT_SECRET!,
     }),
   ],
-  secret: process.env.TOKEN_SECRET
+  secret: process.env.SECRET
 })
 
 export { handler as GET, handler as POST }
