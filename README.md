@@ -1,6 +1,8 @@
 # SideProject_Community
 스킬 점검 및 간단한 유료서비스를 위한 웹사이트 개발.
 
+> [트러블슈팅 정리](https://github.com/ChrisEuristic/SideProject_Community/blob/main/TroubleShooting.md)
+
 ## 프로젝트 단계
 
 > - [x] 1. 프로젝트 기획
@@ -68,7 +70,7 @@
 ## Skill Stack
 
 #### Core
-<img src="https://img.shields.io/badge/-Next.JS 13.4.2-000000?logo=next.js&logoColor=white">  <img src="https://img.shields.io/badge/-TypeScript 5.0.4-3178C6?logo=typescript&logoColor=white">  <img src="https://img.shields.io/badge/-MySQL 8.0-4479A1?logo=mysql&logoColor=white">  <img src="https://img.shields.io/badge/-Node.js 18.16.0-339933?logo=node.js&logoColor=white">  <img src="https://img.shields.io/badge/-Express.js 4.18.2-4479A1?logo=express&logoColor=white"> 
+<img src="https://img.shields.io/badge/-Next.JS 13.4.2-000000?logo=next.js&logoColor=white">  <img src="https://img.shields.io/badge/-TypeScript 5.0.4-3178C6?logo=typescript&logoColor=white">  <img src="https://img.shields.io/badge/-Node.js 18.16.0-339933?logo=node.js&logoColor=white">  <img src="https://img.shields.io/badge/-Express.js 4.18.2-4479A1?logo=express&logoColor=white">  <img src="https://img.shields.io/badge/-MySQL 8.0(Develop)-4479A1?logo=mysql&logoColor=white">  <img src="https://img.shields.io/badge/-postgreSQL(Vercel Production)-4169E1?logo=postgresql&logoColor=white"> 
 
 #### Package Manager
 <img src="https://img.shields.io/badge/-npm-CB3837?logo=npm&logoColor=white">
@@ -77,7 +79,8 @@
 <img src="https://img.shields.io/badge/-Figma-F24E1E?logo=figma&logoColor=white">
 
 #### Status Management
-<img src="https://img.shields.io/badge/-Redux Toolkit-764ABC?logo=redux&logoColor=white">
+<img src="https://img.shields.io/badge/-Recoil-4169E1?logo=relay&logoColor=white">
+<img src="https://img.shields.io/badge/-Redux Toolkit(Before)-764ABC?logo=redux&logoColor=white">
 
 #### UI Kit / Styling
 <img src="https://img.shields.io/badge/-Tailwind 3.3.2-06B6D4?logo=tailwindcss&logoColor=white">  <img src="https://img.shields.io/badge/-React Icons-61DAFB?logo=react&logoColor=white">
