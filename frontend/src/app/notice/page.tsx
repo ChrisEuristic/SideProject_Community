@@ -36,6 +36,9 @@ export default function NoticePage() {
         mode: "no-cors",
       });
 
+      //!!
+      console.log(JSON.stringify(res));
+
       const result: [
         number,
         {
