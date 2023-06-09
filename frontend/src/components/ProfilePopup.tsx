@@ -16,9 +16,16 @@ export default function ProfilePopup() {
     useRecoilState(IsOnProfilePopup);
 
   async function logOut() {
-    signOut({
-      callbackUrl: `http://1.254.141.230:3000/api/auth/logout`,
-    })
+    if (process.env.NODE_ENV === "development") {
+      signOut({
+        callbackUrl: `http://1.254.141.230:3000/api/auth/logout`,
+      });
+    }
+    if (process.env.NODE_ENV === "production") {
+      signOut({
+        callbackUrl: `https://toy-project-community.vercel.app/api/auth/logout`,
+      });
+    }
   }
 
   useEffect(() => {
