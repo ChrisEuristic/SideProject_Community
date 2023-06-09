@@ -2,7 +2,7 @@
 
 import ReplyList from "@/components/ReplyList";
 import ReplyWriter from "@/components/ReplyWriter";
-import { getNoticeOne, incrementNoticeVisit } from "@/function/database/notice";
+import { getNoticeOne, incrementNoticeVisit } from "@/function/database/mysql";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -15,7 +15,7 @@ type Posting = {
   writer: string;
   regidate: string;
   visit: number;
-  like: number;
+  like_count: number;
 };
 
 export default function NoticePostingPage({
