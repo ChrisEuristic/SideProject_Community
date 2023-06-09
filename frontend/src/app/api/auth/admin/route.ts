@@ -1,4 +1,4 @@
-import { getConnection, killConnection } from "@/function/database/notice";
+import { getConnection, killConnection } from "@/function/database/mysql";
 import { RowDataPacket } from "mysql2";
 import { NextResponse } from "next/server";
 
