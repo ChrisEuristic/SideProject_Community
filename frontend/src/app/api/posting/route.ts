@@ -45,6 +45,8 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request) {
   const pageNo: string = (request.url.split("?")[1]).split("=")[1];
   const content = await getNoticeAll(pageNo);
+  //!: 체크
+  console.log(JSON.stringify(content));
   return new NextResponse(JSON.stringify(content), {
     status: 200,
   })

@@ -44,10 +44,9 @@ export async function addNoticePosting(value: {
 }) {
   const connection = await getConnection();
   const nickname =
-    await connection.sql`SELECT NICKNAME FROM ADMIN WHERE ACCOUNT='${value.account}'`;
-  console.log(`nickname 체크 : ${nickname.rows[0]}`);
-  const parsingNickname = JSON.parse(JSON.stringify(nickname.rows))[0][0];
-  await connection.sql`INSERT INTO NOTICE(title, content, writer) VALUES('${value.title}', '${value.content}', '${parsingNickname["NICKNAME"]}')`;
+    await connection.sql`SELECT NICKNAME FROM ADMIN WHERE ACCOUNT=${value.account}`;
+  const parsingNickname = JSON.parse(JSON.stringify(nickname.rows[0]["nickname"]));
+  await connection.sql`INSERT INTO NOTICE(title, content, writer) VALUES(${value.title}, ${value.content}, ${parsingNickname})`;
 }
 
 export async function updateNoticePosting(value: {
@@ -56,9 +55,9 @@ export async function updateNoticePosting(value: {
   content: string;
 }) {
   const connection = await getConnection();
-  await connection.sql`UPDATE NOTICE SET TITLE = "${value.title}", CONTENT = "${
+  await connection.sql`UPDATE NOTICE SET TITLE = ${value.title}, CONTENT = ${
     value.content
-  }" WHERE ID = ${parseInt(value.postingNo)}`;
+  } WHERE ID = ${parseInt(value.postingNo)}`;
 }
 
 export async function deleteNoticePosting(noticeId: string) {
@@ -103,7 +102,7 @@ export async function getReply(postingid: string) {
 
 export async function addReply(reply: Reply) {
   const connection = await getConnection();
-  await connection.sql`INSERT INTO REPLY(postingid, username, userid, content) VALUES(${reply.postingid}, '${reply.username}', '${reply.userid}', '${reply.content}')`;
+  await connection.sql`INSERT INTO REPLY(postingid, username, userid, content) VALUES(${reply.postingid}, ${reply.username}, ${reply.userid}, ${reply.content})`;
 }
 
 export async function deleteReply(replyID: string) {

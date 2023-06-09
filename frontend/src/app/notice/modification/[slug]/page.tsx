@@ -1,4 +1,5 @@
-import { getNoticeOne } from "@/function/database/mysql";
+// import { getNoticeOne } from "@/function/database/mysql";
+import { getNoticeOne } from "@/function/database/postgres";
 import Modify from "../Modify";
 
 export default async function ModifyPage({
