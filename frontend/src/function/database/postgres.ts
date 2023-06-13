@@ -1,5 +1,4 @@
 import { db } from "@vercel/postgres";
-import { QueryResult, QueryResultRow } from "@vercel/postgres";
 
 export type Reply = {
   postingid: string;
