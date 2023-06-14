@@ -1,5 +1,4 @@
-import { getConnection, killConnection } from "@/function/database/mysql";
-import { RowDataPacket } from "mysql2";
+import { getConnection } from "@/function/database/postgres";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -17,11 +16,11 @@ export async function GET(request: Request) {
 }
 
 async function validAdmin(account: string){
+
   const connection = await getConnection();
+
+  const result =
+    await connection.sql`SELECT * FROM ADMIN WHERE ACCOUNT=${account}`;
   
-  const result = await connection.execute<RowDataPacket[]>(
-    "SELECT * FROM ADMIN WHERE ACCOUNT='" + account + "'"
-  );
-  
-  return JSON.parse(JSON.stringify(result))[0][0] ? true : false;
+  return JSON.parse(JSON.stringify(result.rows[0])) ? true : false;
 }
