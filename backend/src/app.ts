@@ -5,6 +5,9 @@ import { Server } from "socket.io";
 import cors from "cors";
 import { feedBuffer, Feed } from "./feedbuffer";
 
+import posting from './api/posting'
+import reply from './api/reply'
+
 const app = express();
 
 const httpsServer = https.createServer({
@@ -14,20 +17,13 @@ const httpsServer = https.createServer({
 
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-
-// app.get("/", (req: Request, res: Response) => {
-//   res.status(200).send(JSON.stringify(feedBuffer));
-// });
+app.use('/posting', posting);
+app.use('/reply', reply);
 
 const server = httpsServer.listen(8086, () => {
   console.log("Server is running on port 8086");
   console.log("1. 해당 서버는 피드, 채팅 서버로 다룬다.");
 });
-
-// const server = app.listen(8086, () => {
-//   console.log("Server is running on port 8086");
-//   console.log("1. 해당 서버는 피드, 채팅 서버로 다룬다.");
-// });
 
 const serverIO = new Server(server, {
   cors: {

@@ -120,7 +120,7 @@ export default function WritingPage() {
  * @param router 리다이렉트를 위한 라우터
  */
 async function submitNotice(title: string, content: string, router: AppRouterInstance, account: string) {
-  const res = await fetch("/api/posting", {
+  const res = await fetch("https://www.eurekasolusion.shop/posting", {
     mode: "no-cors",
     method: "POST",
     body: JSON.stringify({

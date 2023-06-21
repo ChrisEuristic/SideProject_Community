@@ -1,20 +1,19 @@
-// TODO: 서버리스로 진행되던 DB Access 부분 전부 Backend로 변경.
+import express from "express";
+import { Reply, addReply, getReply } from "../function/mysql";
 
-import { Reply, addReply, getReply } from "@/function/database/postgres";
+const router = express.Router();
 
-export async function GET(request: Request) {
-
-  const postingno = (request.url.split("?")[1]).split("=")[1] as string;
+router.get("/", async (req, res) => {
+  const postingno = req.url.split("?")[1].split("=")[1] as string;
 
   const reply = await getReply(postingno);
 
   return new Response(JSON.stringify(reply), {
     status: 200,
   });
-}
-
-export async function POST(request: Request) {
-  const reader = request.body?.pipeThrough(new TextDecoderStream()).getReader();
+});
+router.post("/", async (req, res) => {
+  const reader = req.body?.pipeThrough(new TextDecoderStream()).getReader();
   const inReader = await reader?.read();
   const { done, value } = inReader ?? { done: true, value: null };
 
@@ -31,4 +30,6 @@ export async function POST(request: Request) {
   return new Response("등록되었습니다.", {
     status: 200,
   });
-}
+});
+
+export default router;

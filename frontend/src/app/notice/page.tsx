@@ -31,7 +31,7 @@ export default function NoticePage() {
     }
 
     (async function () {
-      const res = await fetch(`/api/posting?pageNo=${pageNo}`, {
+      const res = await fetch(`https://www.eurekasolusion.shop/posting?pageNo=${pageNo}`, {
         mode: "no-cors",
       });
 

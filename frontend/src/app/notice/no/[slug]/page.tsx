@@ -30,7 +30,7 @@ export default function NoticePostingPage({
 
   useEffect(() => {
     (async function () {
-      const res = await fetch(`/api/posting/${params.slug}`, {
+      const res = await fetch(`https://www.eurekasolusion.shop/posting/${params.slug}`, {
         mode: "no-cors",
       });
       const result: Posting = await res.json();
