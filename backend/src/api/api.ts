@@ -71,6 +71,7 @@ router.get("/reply", async (req, res) => {
   res.status(200).send(JSON.stringify(reply));
 });
 
+// TODO: 댓글 쓰기 오류 잡아야함.
 router.post("/reply", async (req, res) => {
   const reply = req.body as Reply;
   console.debug(`

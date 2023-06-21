@@ -1,5 +1,3 @@
-// TODO: 서버리스로 진행되던 DB Access 부분 전부 Backend로 변경.
-
 import { Reply, addReply, getReply } from "@/function/database/postgres";
 
 export async function GET(request: Request) {

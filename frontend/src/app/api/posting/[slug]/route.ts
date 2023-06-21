@@ -1,5 +1,3 @@
-// TODO: 서버리스로 진행되던 DB Access 부분 전부 Backend로 변경.
-
 import { deleteNoticePosting, getNoticeOne, incrementNoticeVisit } from "@/function/database/postgres";
 import { getURLInform } from "@/function/util/server";
 import { NextResponse } from "next/server";
