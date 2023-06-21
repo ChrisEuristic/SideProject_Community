@@ -3,12 +3,7 @@
  * @param requestURL 
  * @returns 
  */
-export function getURLInform(requestURL: string){
+export function getPostingNo(requestURL: string){
   const urlArr = requestURL.split("/");
-  return {
-    protocol: urlArr[0],
-    origin: urlArr[2],
-    path: "/".concat(urlArr[urlArr.length - 3], "/", urlArr[urlArr.length - 2]),
-    postingNo: urlArr[urlArr.length - 1]
-  }
+  return urlArr[urlArr.length - 1]
 }

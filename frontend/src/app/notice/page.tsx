@@ -31,9 +31,6 @@ export default function NoticePage() {
     (async function () {
       const res = await fetch(`https://www.eurekasolusion.shop/api/posting?pageNo=${pageNo}`);
 
-      //!!
-      console.log(JSON.stringify(res));
-
       const result: [
         number,
         {
