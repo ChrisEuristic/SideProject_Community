@@ -1,5 +1,6 @@
 import { RowDataPacket } from "mysql2";
 import { Connection, createConnection } from "mysql2/promise";
+import dotenv from "dotenv";
 
 export type Reply = {
   postingid: string;
@@ -9,6 +10,8 @@ export type Reply = {
 };
 
 export async function getConnection() {
+  dotenv.config();
+
   return await createConnection({
     host: "localhost",
     port: 3306,
@@ -25,7 +28,7 @@ export async function killConnection(connection: Connection) {
 export async function getNoticeOne(noticeId: string) {
   const connection = await getConnection();
 
-  const [rows, field] = await connection.execute<RowDataPacket[]>(
+  const [rows, field] = await connection.query<RowDataPacket[]>(
     `SELECT * FROM NOTICE WHERE ID = '${noticeId}'`
   );
 
@@ -37,11 +40,11 @@ export async function getNoticeOne(noticeId: string) {
 export async function getNoticeAll(pageNo: string) {
   const connection = await getConnection();
   
-  const [count, field1] = await connection.execute<RowDataPacket[]>(
+  const [count, field1] = await connection.query<RowDataPacket[]>(
     "SELECT COUNT(*) as postingQty FROM NOTICE"
   );
   
-  const [rows, field2] = await connection.execute<RowDataPacket[]>(
+  const [rows, field2] = await connection.query<RowDataPacket[]>(
     "SELECT * FROM NOTICE ORDER BY ID DESC LIMIT 10 OFFSET " + (parseInt(pageNo) - 1) * 10
   );
   killConnection(connection);
@@ -56,13 +59,13 @@ export async function addNoticePosting(value: {
 }) {
   const connection = await getConnection();
 
-  const nickname = await connection.execute<RowDataPacket[]>(
+  const nickname = await connection.query<RowDataPacket[]>(
     "SELECT NICKNAME FROM ADMIN WHERE ACCOUNT='" + value.account + "'"
   );
 
   const parsingNickname = JSON.parse(JSON.stringify(nickname))[0][0]
 
-  await connection.execute<RowDataPacket[]>(
+  await connection.query<RowDataPacket[]>(
     "INSERT INTO NOTICE(`title`,`content`,`writer`) VALUES('" +
       value.title +
       "','" +
@@ -81,7 +84,7 @@ export async function updateNoticePosting(value: {
   content: string;
 }) {
   const connection = await getConnection();
-  await connection.execute<RowDataPacket[]>(
+  await connection.query<RowDataPacket[]>(
     `UPDATE NOTICE SET TITLE = "${value.title}", CONTENT = "${
       value.content
     }" WHERE ID = ${parseInt(value.postingNo)}`
@@ -94,7 +97,7 @@ export async function deleteNoticePosting(noticeId: string) {
   const connection = await getConnection();
 
   try {
-    await connection.execute<RowDataPacket[]>(
+    await connection.query<RowDataPacket[]>(
       `DELETE FROM REPLY WHERE POSTINGID = ${noticeId}`
     );
   } catch (e) {
@@ -103,7 +106,7 @@ export async function deleteNoticePosting(noticeId: string) {
   }
 
   try {
-    await connection.execute<RowDataPacket[]>(
+    await connection.query<RowDataPacket[]>(
       `DELETE FROM NOTICE WHERE ID = ${noticeId}`
     );
   } catch (e) {
@@ -124,7 +127,7 @@ export async function deleteNoticePosting(noticeId: string) {
 export async function incrementNoticeVisit(postingNo: string) {
   const connection = await getConnection();
 
-  await connection.execute<RowDataPacket[]>(
+  await connection.query<RowDataPacket[]>(
     `UPDATE NOTICE SET VISIT = VISIT + 1 WHERE ID = ${postingNo}`
   );
   killConnection(connection);
@@ -136,7 +139,7 @@ export async function incrementNoticeVisit(postingNo: string) {
 export async function getReply(postingid: string) {
   const connection = await getConnection();
 
-  const [rows, field] = await connection.execute<RowDataPacket[]>(
+  const [rows, field] = await connection.query<RowDataPacket[]>(
     "SELECT * FROM REPLY WHERE POSTINGID=" + postingid + " ORDER BY ID ASC"
   );
 
@@ -148,7 +151,7 @@ export async function getReply(postingid: string) {
 export async function addReply(reply: Reply) {
   const connection = await getConnection();
 
-  await connection.execute<RowDataPacket[]>(
+  await connection.query<RowDataPacket[]>(
     "INSERT INTO REPLY(`postingid`,`username`,`userid`,`content`) VALUES(" +
       reply.postingid +
       ",'" +
@@ -167,7 +170,7 @@ export async function deleteReply(replyID: string) {
   const connection = await getConnection();
 
   try {
-    await connection.execute<RowDataPacket[]>(
+    await connection.query<RowDataPacket[]>(
       `DELETE FROM REPLY WHERE ID = ${replyID}`
     );
   } catch (e) {

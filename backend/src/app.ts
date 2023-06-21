@@ -3,22 +3,24 @@ import https from "https";
 import fs from "fs";
 import { Server } from "socket.io";
 import cors from "cors";
+import bodyParser from 'body-parser';
 import { feedBuffer, Feed } from "./feedbuffer";
 
-import posting from './api/posting'
-import reply from './api/reply'
+import api from './api/api'
 
 const app = express();
+
+app.use(express.urlencoded({ extended: true }));
+app.use(cors({
+  origin: ["http://1.254.141.230:3000", "https://toy-project-community.vercel.app"]
+}));
+app.use(bodyParser.json());
+app.use('/api', api);
 
 const httpsServer = https.createServer({
   key: fs.readFileSync('key.pem'),
   cert: fs.readFileSync('cert.pem'),
 }, app);
-
-app.use(express.urlencoded({ extended: true }));
-app.use(cors());
-app.use('/posting', posting);
-app.use('/reply', reply);
 
 const server = httpsServer.listen(8086, () => {
   console.log("Server is running on port 8086");

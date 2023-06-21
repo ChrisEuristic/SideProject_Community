@@ -25,9 +25,7 @@ export default function Profile({ userName, userType, userImage }: any) {
 
   useEffect(() => {
     (async function () {
-      const res = await fetch(`/api/auth/admin?email=${session?.user?.email}`, {
-        mode: "no-cors",
-      });
+      const res = await fetch(`/api/auth/admin?email=${session?.user?.email}`);
       if(res.status === 200) {
         setIsAdmin(true);
       }
