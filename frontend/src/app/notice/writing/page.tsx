@@ -10,7 +10,7 @@ export default function WritingPage() {
   const titleBox = useRef<HTMLSpanElement>(null);
   const contentBox = useRef<HTMLTextAreaElement>(null);
   const router = useRouter();
-  const {data: session} = useSession();
+  const { data: session } = useSession();
 
   return (
     <main style={{ width: "100vw", display: "flex", justifyContent: "center" }}>
@@ -47,8 +47,7 @@ export default function WritingPage() {
             ref={titleBox}
             contentEditable="true"
             style={{ fontWeight: "bold", outline: "none", width: "60vw" }}
-          >
-          </span>
+          ></span>
         </header>
         <div
           style={{
@@ -58,8 +57,10 @@ export default function WritingPage() {
           }}
         ></div>
         <div style={{ padding: "0 0.5rem", height: "60vh" }}>
-          <textarea ref={contentBox} style={{ width: "100%", height: "100%" }}>
-          </textarea>
+          <textarea
+            ref={contentBox}
+            style={{ width: "100%", height: "100%" }}
+          ></textarea>
         </div>
         <div
           style={{
@@ -92,7 +93,7 @@ export default function WritingPage() {
                   titleBox.current?.textContent as string,
                   contentBox.current?.value as string,
                   router,
-                  session?.user?.email as string,
+                  session?.user?.email as string
                 );
               }}
               style={{
@@ -119,10 +120,17 @@ export default function WritingPage() {
  * @param content 공지사항 내용
  * @param router 리다이렉트를 위한 라우터
  */
-async function submitNotice(title: string, content: string, router: AppRouterInstance, account: string) {
-  const res = await fetch("https://www.eurekasolusion.shop/posting", {
-    mode: "no-cors",
+async function submitNotice(
+  title: string,
+  content: string,
+  router: AppRouterInstance,
+  account: string
+) {
+  const res = await fetch("https://www.eurekasolusion.shop/api/posting", {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
       account: account,
       title: title,
@@ -130,7 +138,7 @@ async function submitNotice(title: string, content: string, router: AppRouterIns
     }),
   });
 
-  if (res.status === 200) {
+  if (res.status === 201) {
     console.log("공지사항 등록 완료");
     router.push("/notice");
     router.refresh();

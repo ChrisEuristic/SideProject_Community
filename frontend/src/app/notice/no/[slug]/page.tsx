@@ -30,9 +30,7 @@ export default function NoticePostingPage({
 
   useEffect(() => {
     (async function () {
-      const res = await fetch(`https://www.eurekasolusion.shop/posting/${params.slug}`, {
-        mode: "no-cors",
-      });
+      const res = await fetch(`https://www.eurekasolusion.shop/api/posting/${params.slug}`);
       const result: Posting = await res.json();
       setContent(result as Posting);
     })();
@@ -40,9 +38,7 @@ export default function NoticePostingPage({
 
   useEffect(() => {
     (async function () {
-      const res = await fetch(`/api/auth/admin?email=${session?.user?.email}`, {
-        mode: "no-cors",
-      });
+      const res = await fetch(`/api/auth/admin?email=${session?.user?.email}`);
       if (res.status === 200) {
         setIsAdmin(true);
       }

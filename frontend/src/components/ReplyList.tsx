@@ -17,10 +17,7 @@ export default function ReplyList({ postingID }: { postingID: string }) {
 
   useEffect(() => {
     (async function () {
-      const res = await fetch(`https://www.eurekasolusion.shop/reply?postingno=${postingID}`, {
-        method: "GET",
-        mode: "no-cors",
-      });
+      const res = await fetch(`https://www.eurekasolusion.shop/api/reply?postingno=${postingID}`);
 
       const replyArr = await res.json();
       const replyCount = replyArr.length;
