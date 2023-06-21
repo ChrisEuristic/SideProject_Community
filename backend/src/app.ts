@@ -1,12 +1,16 @@
 import express, { Request, Response } from "express";
-import http from "http";
+import https from "https";
+import fs from "fs";
 import { Server } from "socket.io";
 import cors from "cors";
 import { feedBuffer, Feed } from "./feedbuffer";
 
 const app = express();
 
-const httpServer = http.createServer(app);
+const httpsServer = https.createServer({
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem'),
+}, app);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
@@ -15,10 +19,15 @@ app.use(cors());
 //   res.status(200).send(JSON.stringify(feedBuffer));
 // });
 
-const server = app.listen(8086, () => {
+const server = httpsServer.listen(8086, () => {
   console.log("Server is running on port 8086");
   console.log("1. 해당 서버는 피드, 채팅 서버로 다룬다.");
 });
+
+// const server = app.listen(8086, () => {
+//   console.log("Server is running on port 8086");
+//   console.log("1. 해당 서버는 피드, 채팅 서버로 다룬다.");
+// });
 
 const serverIO = new Server(server, {
   cors: {
