@@ -14,13 +14,10 @@ export default function Home() {
   const openai = new OpenAIApi(configuration);
 
   async function sendChat() {
-    console.log("1번");
     const result = await fetch('/api', {
       method: "POST",
     })
     const answer = await result.json();
-    console.log(answer);
-    console.log(answer[0].message.content);
     setView(answer[0].message.content);
   }
 
@@ -32,7 +29,7 @@ export default function Home() {
     <>
       <button onClick={sendChat}>전송</button>
 
-      <button onClick={printText}>병신</button>
+      <button onClick={printText}>ㅇㅇ</button>
       <p></p>
       {view}
     </>

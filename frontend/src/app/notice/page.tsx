@@ -64,10 +64,6 @@ export default function NoticePage() {
       const tempTbody = [];
 
       for (let [key, item] of Object.entries(content)) {
-        // !: 여기 확인
-        console.log(`key: ${key}`);
-        console.log(`item: ${item}`);
-        console.log(`item.regidate: ${item.regidate}`);
         const dateTime = formatDateTime(new Date(item.regidate));
         tempTbody.push(
           <tr className="h-10">

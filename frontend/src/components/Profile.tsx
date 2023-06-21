@@ -25,7 +25,6 @@ export default function Profile({ userName, userType, userImage }: any) {
 
   useEffect(() => {
     (async function () {
-      alert(session?.user?.email);
       const res = await fetch(`https://www.eurekasolusion.shop/api/admin?email=${session?.user?.email}`);
       if(res.status === 200) {
         setIsAdmin(true);
