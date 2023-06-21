@@ -7,6 +7,9 @@ const router = express.Router();
 
 router.get("/admin", async (req, res) => {
   const account = (req.url.split("?")[1]).split("=")[1];
+  console.log("***********");
+  console.log(account);
+  console.log("***********");
 
   if(await validAdmin(account)){
     res.status(200).send("관리자입니다.");
