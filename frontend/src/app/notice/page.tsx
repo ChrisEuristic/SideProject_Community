@@ -16,7 +16,7 @@ export default function NoticePage() {
 
   useEffect(() => {
     (async function () {
-      const res = await fetch(`/api/auth/admin?email=${session?.user?.email}`);
+      const res = await fetch(`https://www.eurekasolusion.shop/api/admin?email=${session?.user?.email}`);
       if(res.status === 200) {
         setIsAdmin(true);
       }
