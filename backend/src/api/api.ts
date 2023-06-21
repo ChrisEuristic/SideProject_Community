@@ -1,9 +1,19 @@
 import express from 'express';
-import { addNoticePosting, deleteNoticePosting, getNoticeAll, getNoticeOne, incrementNoticeVisit, updateNoticePosting } from '../function/mysql';
+import { addNoticePosting, deleteNoticePosting, getNoticeAll, getNoticeOne, incrementNoticeVisit, updateNoticePosting, validAdmin } from '../function/mysql';
 import { getPostingNo } from '../function/server';
 import { Reply, addReply, getReply } from "../function/mysql";
 
 const router = express.Router();
+
+router.get("/admin", async (req, res) => {
+  const account = (req.url.split("?")[1]).split("=")[1];
+
+  if(await validAdmin(account)){
+    res.status(200).send("관리자입니다.");
+  } else {
+    res.status(202).send("관리자가 아닙니다.");
+  }
+})
 
 router.get("/thisnotice/:slug", async (req, res) => {
   const getTarget = getPostingNo(req.url);
@@ -60,13 +70,9 @@ router.get("/reply", async (req, res) => {
 
   res.status(200).send(JSON.stringify(reply));
 });
+
 router.post("/reply", async (req, res) => {
-  const reader = req.body?.pipeThrough(new TextDecoderStream()).getReader();
-  const inReader = await reader?.read();
-  const { done, value } = inReader ?? { done: true, value: null };
-
-  const reply = JSON.parse(value as string) as Reply;
-
+  const reply = req.body as Reply;
   console.debug(`
   ========== 새로운 댓글 ==========
   ${reply.postingid}번 게시글에 대한 댓글

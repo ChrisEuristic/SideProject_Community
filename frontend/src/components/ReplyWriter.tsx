@@ -35,6 +35,10 @@ export default function ReplyWriter({ postingID }: { postingID: string }) {
       });
       replyContent.current!.value = "";
       goto(thisPath)
+      console.log(postingID,
+        session.data?.user?.name,
+        session.data?.user?.email,
+        replyContent.current?.value,);
     } else {
       alert("댓글은 1자 이상, 500자 미만으로 작성해주세요.");
     }
