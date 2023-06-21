@@ -1,15 +1,35 @@
 "use client";
 
-import { goto } from "@/function/util/client";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export default function Modify({ content, postingNo }: any) {
+export default function Modify({ postingNo }: any) {
+  const [content, setContent] = useState<{
+    title: string;
+    visit: number;
+    content: string;
+  }>();
+  
   const titleBox = useRef<HTMLSpanElement>(null);
   const contentBox = useRef<HTMLTextAreaElement>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    (async function () {
+      const res = await fetch(
+        `https://www.eurekasolusion.shop/api/thisnotice/${postingNo}`
+      );
+      setContent(
+        (await res.json()) as { title: string; visit: number; content: string }
+      );
+    })();
+  }, [postingNo]);
+
+  useEffect(() => {
+    contentBox.current!.value = content?.content!;
+  }, [content])
 
   return (
     <main style={{ width: "100vw", display: "flex", justifyContent: "center" }}>
@@ -47,7 +67,7 @@ export default function Modify({ content, postingNo }: any) {
             contentEditable="true"
             style={{ fontWeight: "bold", outline: "none", width: "60vw" }}
           >
-            {content.title}
+            {content?.title}
           </span>
           <span
             style={{ display: "inline-block", width: "10vw", textAlign: "end" }}
@@ -61,7 +81,7 @@ export default function Modify({ content, postingNo }: any) {
                 fontSize: "0.9rem",
               }}
             >
-              조회 {content.visit}
+              조회 {content?.visit}
             </span>
             <span
               style={{
@@ -88,7 +108,6 @@ export default function Modify({ content, postingNo }: any) {
         ></div>
         <div style={{ padding: "0 0.5rem", height: "60vh" }}>
           <textarea ref={contentBox} style={{ width: "100%", height: "100%" }}>
-            {content.content}
           </textarea>
         </div>
         <div
@@ -122,7 +141,7 @@ export default function Modify({ content, postingNo }: any) {
                   titleBox.current?.textContent as string,
                   contentBox.current?.value as string,
                   postingNo as string,
-                  router,
+                  router
                 );
               }}
               style={{
@@ -166,7 +185,7 @@ async function submitNotice(
 
   if (res.status === 200) {
     console.log("공지사항 수정 완료");
-    router.push(`/notice/no/${postingNo}`)
+    router.push(`/notice/no/${postingNo}`);
     router.refresh();
   }
 }
