@@ -7,7 +7,7 @@ export default function DeletePage(){
   const router = useRouter();
   const searchParams = useSearchParams().get("no");
   useEffect(() => {
-    fetch(`/api/posting/${searchParams}`, {
+    fetch(`https://www.eurekasolusion.shop/posting/${searchParams}`, {
       method: "DELETE",
     }).then((res) => {
       router.push("/notice");

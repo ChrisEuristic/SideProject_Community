@@ -24,7 +24,7 @@ export default function ReplyWriter({ postingID }: { postingID: string }) {
     const commentLength = replyContent.current?.value.length ?? 0;
 
     if (commentLength >= 1 && commentLength < 500) {
-      await fetch("/api/reply", {
+      await fetch("https://www.eurekasolusion.shop/reply", {
         method: "POST",
         mode: "no-cors",
         body: JSON.stringify({
