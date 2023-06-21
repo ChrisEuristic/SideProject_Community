@@ -26,6 +26,9 @@ export default function ReplyWriter({ postingID }: { postingID: string }) {
     if (commentLength >= 1 && commentLength < 500) {
       await fetch("https://www.eurekasolusion.shop/api/reply", {
         method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
         body: JSON.stringify({
           postingid: postingID,
           username: session.data?.user?.name,
@@ -33,12 +36,14 @@ export default function ReplyWriter({ postingID }: { postingID: string }) {
           content: replyContent.current?.value,
         }),
       });
-      replyContent.current!.value = "";
-      goto(thisPath)
-      console.log(postingID,
+      console.log(
+        postingID,
         session.data?.user?.name,
         session.data?.user?.email,
-        replyContent.current?.value,);
+        replyContent.current?.value
+      );
+      replyContent.current!.value = "";
+      goto(thisPath)
     } else {
       alert("댓글은 1자 이상, 500자 미만으로 작성해주세요.");
     }

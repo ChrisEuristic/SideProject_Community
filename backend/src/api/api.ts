@@ -71,17 +71,9 @@ router.get("/reply", async (req, res) => {
   res.status(200).send(JSON.stringify(reply));
 });
 
-// TODO: 댓글 쓰기 오류 잡아야함.
 router.post("/reply", async (req, res) => {
   const reply = req.body as Reply;
-  console.debug(`
-  ========== 새로운 댓글 ==========
-  ${reply.postingid}번 게시글에 대한 댓글
-  ${reply.username} [${reply.userid}]
-  ${reply.content}
-  `);
   addReply(reply);
-
   res.status(200).send("등록되었습니다.");
 });
 
