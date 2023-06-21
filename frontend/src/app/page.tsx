@@ -48,7 +48,9 @@ export default function Home() {
   const [feedInputBoxView, setFeedInputBoxView] = useState<JSX.Element>();
 
   useEffect(() => {
-    const clientIO = socket("http://1.254.141.230:8086");
+    // const clientIO = socket("http://1.254.141.230:8086");
+    const clientIO = socket("http://www.eurekasolusion.shop");
+    // const clientIO = socket("https://www.eurekasolusion.shop");
 
     // 연결 에러 처리
     clientIO.on("connect_error", (error) => {
