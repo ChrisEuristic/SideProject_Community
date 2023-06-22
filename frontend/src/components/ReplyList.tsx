@@ -63,7 +63,6 @@ export default function ReplyList({ postingID }: { postingID: string }) {
             );
           })
         );
-        console.log(replys);
       }
     })();
   }, [postingID]);
