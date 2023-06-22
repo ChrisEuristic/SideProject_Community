@@ -39,7 +39,11 @@ export default function ProfilePopup() {
     <>
       <main
         className={
-          isOnProfilePopup === SlideWindowState.CLOSE ? "anim-off" : "anim-on"
+          isOnProfilePopup === SlideWindowState.INIT
+            ? "init"
+            : isOnProfilePopup === SlideWindowState.CLOSE
+            ? "anim-off"
+            : "anim-on"
         }
       >
         <Link href={"/profile"}>마이 페이지</Link>
@@ -61,6 +65,12 @@ export default function ProfilePopup() {
           animation-duration: 0.25s;
           animation-timing-function: ease;
           animation-fill-mode: forwards;
+        }
+
+        .init {
+          opacity: 0;
+          top: 9vh;
+          pointer-events: none;
         }
 
         .anim-off {
