@@ -12,7 +12,7 @@ import { useRecoilState } from "recoil";
 export default function TitleBar() {
   const session = useSession();
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoggedInAtom);
-  const [logoSize, setLogoSize] = useState({ width: 362, height: 58});
+  const [logoSize, setLogoSize] = useState({ width: 50, height: 58});
 
 
   function login(){
@@ -37,10 +37,10 @@ export default function TitleBar() {
     <>
       <nav>
         <section id="section-logo" aria-label="Logo Area">
-          <article>
+          <article id="section-logo-art">
             <Link href={"/"}>
                 <Image
-                  src="/Logo.svg"
+                  src="/Service Logo.svg"
                   width={logoSize.width} // 20vw
                   height={logoSize.height}
                   alt="Logo of website"
@@ -101,6 +101,14 @@ export default function TitleBar() {
 
         #section-logo {
           width: 20vw;
+          height: 100%;
+          display: flex;
+          margin-left: 1vw;
+          align-items: center;
+        }
+
+        #section-logo-art {
+          width: 6vw;
           height: 100%;
           display: flex;
           margin-left: 1vw;
