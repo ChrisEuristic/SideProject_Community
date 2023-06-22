@@ -65,7 +65,7 @@ export default function FriendBar() {
         <span className={spanClassName}>멈춰!</span>
         {/* 여기서부터 친구창 */}
         <section className="friends-window">
-          {isLoggedIn ? `로그인 됨. 채팅창 표시!` : <LoginPrompt />}
+          {isLoggedIn ? `로그인 됨! 사업자등록 전까지 친구목록 기능 구현 불가` : <LoginPrompt />}
         </section>
       </nav>
       <style jsx>{`
