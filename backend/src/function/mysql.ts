@@ -47,9 +47,8 @@ export async function getNoticeAll(pageNo: string) {
   const [rows, field2] = await connection.query<RowDataPacket[]>(
     "SELECT * FROM NOTICE ORDER BY ID DESC LIMIT 10 OFFSET " + (parseInt(pageNo) - 1) * 10
   );
-  killConnection(connection);
-
-  return [count, rows];
+  killConnection(connection)
+  return [count[0].postingQty, rows];
 }
 
 export async function addNoticePosting(value: {

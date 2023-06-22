@@ -30,7 +30,6 @@ export default function NoticePage() {
 
     (async function () {
       const res = await fetch(`https://www.eurekasolusion.shop/api/posting?pageNo=${pageNo}`);
-
       const result: [
         number,
         {
@@ -42,6 +41,7 @@ export default function NoticePage() {
         }[]
       ] = await res.json();
       
+      console.debug(result);
       const [postingQty, content] = result;
 
       const tempPageNoButton = [];

@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 
 export enum SlideWindowState {
-  INIT, CLOSE, OPEN, FIXED
+  CLOSE, OPEN, FIXED, INIT,
 }
 
 export const IsOnChatting = atom({
