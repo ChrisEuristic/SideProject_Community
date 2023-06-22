@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 
 export enum SlideWindowState {
-  CLOSE, OPEN, FIXED
+  INIT, CLOSE, OPEN, FIXED
 }
 
 export const IsOnChatting = atom({
@@ -16,5 +16,5 @@ export const IsOnFriendBar = atom({
 
 export const IsOnProfilePopup = atom({
   key: "isOnProfilePopup",
-  default: SlideWindowState.CLOSE,
+  default: SlideWindowState.INIT,
 })

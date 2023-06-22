@@ -126,7 +126,6 @@ export default function Home() {
             align-items: center;
             width: 100vw;
             height: 90vh;
-            border: 1px solid #ff0000;
           }
           aside {
             display: flex;

@@ -16,7 +16,7 @@ export default function Profile({ userName, userType, userImage }: any) {
   const { data: session } = useSession();
 
   function popup() {
-    if (isOnProfilePopup === SlideWindowState.CLOSE) {
+    if (isOnProfilePopup === SlideWindowState.CLOSE || isOnProfilePopup === SlideWindowState.INIT) {
       setIsOnProfilePopup(SlideWindowState.OPEN);
     } else {
       setIsOnProfilePopup(SlideWindowState.CLOSE);
