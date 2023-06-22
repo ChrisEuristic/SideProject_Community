@@ -67,11 +67,6 @@ export default function TitleBar() {
         </section>
         <section id="section-personal" aria-label="Personal Area">
           <article>
-            <Link href={"/shop"}>
-              <button>마켓</button>
-            </Link>
-          </article>
-          <article>
             <Link href={"/payment"}>
               <button>충전하기</button>
             </Link>
@@ -100,7 +95,7 @@ export default function TitleBar() {
         }
 
         #section-logo {
-          width: 20vw;
+          width: 15vw;
           height: 100%;
           display: flex;
           margin-left: 1vw;
@@ -126,7 +121,7 @@ export default function TitleBar() {
         }
 
         #section-personal {
-          width: 20vw;
+          width: 15vw;
           height: 100%;
           display: flex;
           justify-content: space-evenly;
