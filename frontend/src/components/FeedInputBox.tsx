@@ -2,18 +2,9 @@
 
 import { useState, useRef } from "react";
 import { RiSendPlaneFill } from "react-icons/ri";
-import { RxShare2 } from "react-icons/rx";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import {
-  HiOutlineChatBubbleBottomCenterText,
-  HiChatBubbleBottomCenterText,
-} from "react-icons/hi2";
 
 export default function FeedInputBox({ submitFeed }: { submitFeed: Function }) {
   const [mainClassName, setMainClassName] = useState("");
-  const [heartClassName, setHeartClassName] = useState("");
-  const [chatClassName, setChatClassName] = useState("");
-  const [shareClassName, setShareClassName] = useState("");
   const [submitClassName, setSubmitClassName] = useState("");
   const inputBox = useRef<HTMLTextAreaElement>(null);
 
@@ -44,19 +35,6 @@ export default function FeedInputBox({ submitFeed }: { submitFeed: Function }) {
           placeholder="아무 말이나 적어"
         ></textarea>
         <section>
-          <article>
-            <button className={heartClassName} onMouseOver={() => {setHeartClassName("feed-button-mouseover")}} onMouseLeave={() => {setHeartClassName("feed-button-mouseleave")}}>
-              <AiOutlineHeart fontSize={"1.2rem"} />
-              {/* <AiFillHeart fontSize={"1.2rem"} /> */}
-            </button>
-            <button className={chatClassName} onMouseOver={() => {setChatClassName("feed-button-mouseover")}} onMouseLeave={() => {setChatClassName("feed-button-mouseleave")}}>
-              <HiOutlineChatBubbleBottomCenterText fontSize={"1.2rem"} />
-              {/* <HiChatBubbleBottomCenterText fontSize={"1.2rem"} /> */}
-            </button>
-            <button className={shareClassName} onMouseOver={() => {setShareClassName("feed-button-mouseover")}} onMouseLeave={() => {setShareClassName("feed-button-mouseleave")}}>
-              <RxShare2 />
-            </button>
-          </article>
           <button className={submitClassName} onMouseOver={() => {setSubmitClassName("feed-button-mouseover")}} onMouseLeave={() => {setSubmitClassName("feed-button-mouseleave")}} onClick={sendAction}>
             <RiSendPlaneFill fontSize={"1.2rem"} />
           </button>
@@ -67,6 +45,7 @@ export default function FeedInputBox({ submitFeed }: { submitFeed: Function }) {
           main {
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
             width: 50vw;
             height: 15vh;
             border: solid 1px #141414;
@@ -83,7 +62,7 @@ export default function FeedInputBox({ submitFeed }: { submitFeed: Function }) {
             width: 48vw;
             height: 2rem;
             display: flex;
-            justify-content: space-between;
+            justify-content: right;
           }
           article {
             width: 6vw;

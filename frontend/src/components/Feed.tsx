@@ -2,6 +2,13 @@
 
 import { whatTimesAgo } from "@/function/util/datetime";
 import Image from "next/image";
+import { useState } from "react";
+import { RxShare2 } from "react-icons/rx";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import {
+  HiOutlineChatBubbleBottomCenterText,
+  HiChatBubbleBottomCenterText,
+} from "react-icons/hi2";
 
 export default function Feed({
   userImage,
@@ -16,6 +23,9 @@ export default function Feed({
   regidate: string;
   hashTag: string;
 }) {
+  const [heartClassName, setHeartClassName] = useState("");
+  const [chatClassName, setChatClassName] = useState("");
+  const [shareClassName, setShareClassName] = useState("");
   return (
     <>
       <main>
@@ -28,7 +38,21 @@ export default function Feed({
             <nav>{whatTimesAgo(regidate)}</nav>
           </div>
           <article>{feedContent}</article>
-          <footer>{hashTag}</footer>
+          <footer>{hashTag}
+          <article>
+            <button className={heartClassName} onMouseOver={() => {setHeartClassName("feed-button-mouseover")}} onMouseLeave={() => {setHeartClassName("feed-button-mouseleave")}}>
+              <AiOutlineHeart fontSize={"1.2rem"} />
+              {/* <AiFillHeart fontSize={"1.2rem"} /> */}
+            </button>
+            <button className={chatClassName} onMouseOver={() => {setChatClassName("feed-button-mouseover")}} onMouseLeave={() => {setChatClassName("feed-button-mouseleave")}}>
+              <HiOutlineChatBubbleBottomCenterText fontSize={"1.2rem"} />
+              {/* <HiChatBubbleBottomCenterText fontSize={"1.2rem"} /> */}
+            </button>
+            <button className={shareClassName} onMouseOver={() => {setShareClassName("feed-button-mouseover")}} onMouseLeave={() => {setShareClassName("feed-button-mouseleave")}}>
+              <RxShare2 />
+            </button>
+          </article>
+          </footer>
         </section>
       </main>
       <style jsx>{`
@@ -56,6 +80,54 @@ export default function Feed({
 
         header {
           font-weight: bold;
+        }
+
+        footer {
+          display: flex;
+          justify-content: space-between;
+        }
+
+        footer > article {
+          width: 5vw;
+          display: flex;
+          justify-content: space-between;
+        }
+
+        button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 2rem;
+          height: 2rem;
+          border-radius: 50%;
+        }
+        .feed-button-mouseover {
+          animation-name: feed-button-anim-on;
+          animation-duration: 0.5s;
+          animation-fill-mode: forwards;
+        }
+        
+        .feed-button-mouseleave {
+          animation-name: feed-button-anim-off;
+          animation-duration: 0.5s;
+          animation-fill-mode: forwards;
+        }
+
+        @keyframes feed-button-anim-on {
+          from{
+            background-color: rgba(0, 0, 0, 0);
+          }
+          to {
+            background-color: rgba(0, 0, 0, 0.2);
+          }
+        }
+        @keyframes feed-button-anim-off {
+          from{
+            background-color: rgba(0, 0, 0, 0.2);
+          }
+          to {
+            background-color: rgba(0, 0, 0, 0);
+          }
         }
       `}</style>
     </>
