@@ -16,6 +16,10 @@ import { Reply, addReply, getReply } from "../function/mysql";
 
 const router = express.Router();
 
+router.get("/", async (req, res) => {
+  res.send("Hello World!!! here is /api");
+});
+
 router.get("/admin", async (req, res) => {
   const account = req.url.split("?")[1].split("=")[1];
 
