@@ -147,6 +147,18 @@ export async function getReply(postingid: string) {
   return rows;
 }
 
+export async function getReplyCount(postingid: string) {
+  const connection = await getConnection();
+
+  const [rows, field] = await connection.query<RowDataPacket[]>(
+    "SELECT COUNT(*) as replyCount FROM REPLY WHERE POSTINGID=" + postingid
+  );
+
+  killConnection(connection);
+
+  return rows[0];
+}
+
 export async function addReply(reply: Reply) {
   const connection = await getConnection();
 
