@@ -193,6 +193,62 @@ export async function deleteReply(replyID: string) {
 }
 
 
+// !! 좋아요 기능
+
+export async function getLikeCount(postingid: string) {
+  const connection = await getConnection();
+
+  const [rows, field] = await connection.query<RowDataPacket[]>(
+    "SELECT COUNT(*) as likeCount FROM notice_like WHERE POSTINGID=" + postingid
+  );
+
+  killConnection(connection);
+
+  return rows[0];
+}
+
+export async function getIsLikeThis(postingid: string, userid: string) {
+  const connection = await getConnection();
+
+  const [rows, field] = await connection.query<RowDataPacket[]>(
+    `SELECT * FROM notice_like WHERE ID=${postingid} AND memberid='${userid}'`
+  );
+
+  killConnection(connection);
+
+  return rows[0];
+}
+
+export async function addLike(postingid: string, userid: string) {
+  const connection = await getConnection();
+
+  await connection.query<RowDataPacket[]>(
+    "INSERT INTO notice_like(`postingid`,`memberid`) VALUES(" +
+      postingid +
+      ",'" +
+      userid +
+      "')"
+  );
+
+  killConnection(connection);
+}
+
+export async function removeLike(postingid: string, userid: string) {
+  const connection = await getConnection();
+
+  try {
+    await connection.query<RowDataPacket[]>(
+      `DELETE FROM notice_like WHERE postingid = ${postingid} and memberid = '${userid}'`
+    );
+  } catch (e) {
+    console.log("deleteNoticePosting SQL Error");
+    console.error(e);
+  }
+
+  killConnection(connection);
+}
+
+
 // !: 어드민 계정 검증
 
 export async function validAdmin(account: string){
