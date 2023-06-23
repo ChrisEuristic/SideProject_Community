@@ -13,7 +13,8 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: ["http://1.254.141.230:3000", "https://whoamiservice.vercel.app"]
+  // origin: ["http://1.254.141.230:3000", "https://whoamiservice.vercel.app"]
+  origin: "*",
 }));
 app.use(bodyParser.json());
 app.get("/", (req, res) => {
