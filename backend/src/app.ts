@@ -16,6 +16,9 @@ app.use(cors({
   origin: ["http://1.254.141.230:3000", "https://whoamiservice.vercel.app"]
 }));
 app.use(bodyParser.json());
+app.get("/", (req, res) => {
+  res.status(200).send("Hello World");
+})
 app.use('/api', api);
 
 // const httpsServer = https.createServer({
