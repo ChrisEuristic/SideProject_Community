@@ -33,8 +33,8 @@ const httpServer = http.createServer(app);
 //   console.log("1. 해당 서버는 피드, 채팅 서버로 다룬다.");
 // });
 
-const server = httpServer.listen(80, () => {
-  console.log("Server is running on port 80");
+const server = httpServer.listen(8086, () => {
+  console.log("Server is running on port 8086");
   console.log("1. This server is Feed & Chat server.");
 });
 
