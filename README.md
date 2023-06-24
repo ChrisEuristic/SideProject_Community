@@ -1,4 +1,4 @@
-# SideProject_Community
+# SideProject Who-ami
 스킬 점검 및 간단한 유료서비스를 위한 웹사이트 개발.
 
 > [트러블슈팅 정리](https://github.com/ChrisEuristic/SideProject_Community/blob/main/TroubleShooting.md)
