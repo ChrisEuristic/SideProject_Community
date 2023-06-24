@@ -15,9 +15,9 @@ export async function getConnection() {
   return await createConnection({
     host: "localhost",
     port: 3306,
-    user: "Accesser",
-    password: "Asdaz080808!",
-    database: "whoami",
+    user: process.env.DB_ID,
+    password: process.env.DB_PW,
+    database: process.env.DB_NAME,
   });
 }
 
