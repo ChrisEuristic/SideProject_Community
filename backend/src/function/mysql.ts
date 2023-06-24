@@ -252,12 +252,13 @@ export async function removeLike(postingid: string, userid: string) {
 // !: 어드민 계정 검증
 
 export async function validAdmin(account: string){
-
+  console.debug("2번 지점");
   const connection = await getConnection();
-  
+  console.debug("3번 지점");
   const [rows, field] = await connection.query<RowDataPacket[]>(
     `use whoami; SELECT * FROM ADMIN WHERE ACCOUNT='${account}';`
     );
+    console.debug("4번 지점");
   killConnection(connection);
   return rows[0] ? true : false;
 }

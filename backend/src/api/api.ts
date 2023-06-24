@@ -21,6 +21,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/admin", async (req, res) => {
+  console.debug("1번 지점");
   const account = req.url.split("?")[1].split("=")[1];
 
   if (await validAdmin(account)) {
