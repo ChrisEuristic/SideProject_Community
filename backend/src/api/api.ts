@@ -10,6 +10,7 @@ import {
   incrementNoticeVisit,
   updateNoticePosting,
   validAdmin,
+  testFunction,
 } from "../function/mysql";
 import { getPostingNo } from "../function/server";
 import { Reply, addReply, getReply } from "../function/mysql";
@@ -17,11 +18,11 @@ import { Reply, addReply, getReply } from "../function/mysql";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  res.send("Hello World!!! here is /api");
+  const test = await testFunction();
+  res.send("Hello World!!! here is /api test : " + test);
 });
 
 router.get("/admin", async (req, res) => {
-  console.debug("1번 지점");
   const account = req.url.split("?")[1].split("=")[1];
 
   if (await validAdmin(account)) {

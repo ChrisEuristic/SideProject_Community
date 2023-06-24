@@ -15,10 +15,26 @@ export async function getConnection() {
   return await createConnection({
     host: "localhost",
     port: 3306,
-    user: process.env.DB_ID,
-    password: process.env.DB_PW,
-    database: process.env.DB_NAME,
+    user: "Accesser",
+    password: "Asdaz080808!",
+    database: "whoami",
   });
+}
+
+export async function testFunction() {
+  const connection = await createConnection({
+    host: "localhost",
+    port: 3306,
+    user: "Accesser",
+    password: "Asdaz080808!",
+    database: "whoami",
+  });
+
+  const [rows, field] = await connection.query<RowDataPacket[]>(
+    `SELECT * FROM ADMIN`
+  );
+  killConnection(connection);
+  return rows[0];
 }
 
 export async function killConnection(connection: Connection) {
