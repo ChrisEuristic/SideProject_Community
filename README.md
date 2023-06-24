@@ -70,7 +70,7 @@
 ## Skill Stack
 
 #### Core
-<img src="https://img.shields.io/badge/-Next.JS 13.4.2-000000?logo=next.js&logoColor=white">  <img src="https://img.shields.io/badge/-TypeScript 5.0.4-3178C6?logo=typescript&logoColor=white">  <img src="https://img.shields.io/badge/-Node.js 18.16.0-339933?logo=node.js&logoColor=white">  <img src="https://img.shields.io/badge/-Express.js 4.18.2-4479A1?logo=express&logoColor=white">  <img src="https://img.shields.io/badge/-MySQL 8.0(Develop)-4479A1?logo=mysql&logoColor=white">  <img src="https://img.shields.io/badge/-postgreSQL(Vercel Production)-4169E1?logo=postgresql&logoColor=white"> 
+<img src="https://img.shields.io/badge/-Next.JS 13.4.2-000000?logo=next.js&logoColor=white">  <img src="https://img.shields.io/badge/-TypeScript 5.0.4-3178C6?logo=typescript&logoColor=white">  <img src="https://img.shields.io/badge/-Node.js 18.16.0-339933?logo=node.js&logoColor=white">  <img src="https://img.shields.io/badge/-Express.js 4.18.2-4479A1?logo=express&logoColor=white">  <img src="https://img.shields.io/badge/-MySQL 8.0-4479A1?logo=mysql&logoColor=white">  <img src="https://img.shields.io/badge/-postgreSQL(Vercel Test)-4169E1?logo=postgresql&logoColor=white"> 
 
 #### Package Manager
 <img src="https://img.shields.io/badge/-npm-CB3837?logo=npm&logoColor=white">
