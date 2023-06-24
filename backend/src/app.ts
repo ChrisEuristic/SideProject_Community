@@ -19,22 +19,23 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use('/api', api);
 
-// const httpsServer = https.createServer({
-//   key: fs.readFileSync('key.pem'),
-//   cert: fs.readFileSync('cert.pem'),
-// }, app);
+const httpsServer = https.createServer({
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem'),
+}, app);
 
-const httpServer = http.createServer(app);
+// const httpServer = http.createServer(app);
 
-// const server = httpsServer.listen(8086, () => {
-//   console.log("Server is running on port 8086");
-//   console.log("1. 해당 서버는 피드, 채팅 서버로 다룬다.");
+const server = httpsServer.listen(443, () => {
+  console.log("Server is running on port 8086");
+  console.log("1. 해당 서버는 피드, 채팅 서버로 다룬다.");
+});
+
+// const server = httpServer.listen(80, () => {
+//   console.log("Server is running on port 80");
+//   console.log("1. This server is Feed & Chat server.");
 // });
 
-const server = httpServer.listen(80, () => {
-  console.log("Server is running on port 80");
-  console.log("1. This server is Feed & Chat server.");
-});
 
 const serverIO = new Server(server, {
   cors: {
