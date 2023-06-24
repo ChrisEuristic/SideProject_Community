@@ -20,8 +20,8 @@ app.use(bodyParser.json());
 app.use('/api', api);
 
 const httpsServer = https.createServer({
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem'),
+  key: fs.readFileSync('/etc/letsencrypt/live/eurekasolusion.shop/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/eurekasolusion.shop/fullchain.pem'),
 }, app);
 
 // const httpServer = http.createServer(app);
