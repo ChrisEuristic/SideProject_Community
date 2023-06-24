@@ -27,7 +27,7 @@ const httpsServer = https.createServer({
 // const httpServer = http.createServer(app);
 
 const server = httpsServer.listen(443, () => {
-  console.log("Server is running on port 8086");
+  console.log("Server is running on port 443");
   console.log("1. 해당 서버는 피드, 채팅 서버로 다룬다.");
 });
 
