@@ -73,7 +73,7 @@ export async function addNoticePosting(value: {
     const parsingNickname = JSON.parse(JSON.stringify(nickname))[0][0]
   
     await connection.query<RowDataPacket[]>(
-      "INSERT INTO notice(`title`,`content`,`writer`) VALUES(?, ?, ?)", [value.title, value.content, parsingNickname['NICKNAME']]
+      "INSERT INTO notice(`title`,`content`,`writer`) VALUES(?, ?, ?)", [value.title, value.content, parsingNickname['nickname']]
     );
     killConnection(connection);
   } catch (error) {
