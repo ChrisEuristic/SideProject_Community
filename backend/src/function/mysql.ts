@@ -256,7 +256,7 @@ export async function validAdmin(account: string){
   const connection = await getConnection();
   
   const [rows, field] = await connection.query<RowDataPacket[]>(
-    `SELECT * FROM ADMIN WHERE ACCOUNT='${account}'`
+    `use whoami; SELECT * FROM ADMIN WHERE ACCOUNT='${account}';`
     );
   killConnection(connection);
   return rows[0] ? true : false;
