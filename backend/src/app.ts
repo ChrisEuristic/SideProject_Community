@@ -17,9 +17,6 @@ app.use(cors({
   origin: "*",
 }));
 app.use(bodyParser.json());
-app.get("/", (req, res) => {
-  res.status(200).send("Hello World");
-})
 app.use('/api', api);
 
 // const httpsServer = https.createServer({
