@@ -258,7 +258,7 @@ export async function validAdmin(account: string){
   const connection = await getConnection();
   console.debug("3번 지점");
   const [rows, field] = await connection.execute<RowDataPacket[]>(
-    "SELECT * FROM ADMIN WHERE ACCOUNT=?", [account]
+    "SELECT * FROM admin WHERE account=?", [account]
     );
     console.debug("4번 지점");
   killConnection(connection);
