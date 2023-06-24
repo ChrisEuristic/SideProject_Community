@@ -40,17 +40,22 @@ export async function getNoticeOne(noticeId: number) {
 }
 
 export async function getNoticeAll(pageNo: string) {
-  const connection = await getConnection();
-  
-  const [count, field1] = await connection.query<RowDataPacket[]>(
-    "SELECT COUNT(*) as postingQty FROM notice"
-  );
-  
-  const [rows, field2] = await connection.query<RowDataPacket[]>(
-    "SELECT * FROM notice ORDER BY id DESC LIMIT 10 OFFSET ?", [(parseInt(pageNo) - 1) * 10]
-  );
-  killConnection(connection)
-  return [count[0].postingQty, rows];
+  try {
+    const connection = await getConnection();
+    
+    const [count, field1] = await connection.query<RowDataPacket[]>(
+      "SELECT COUNT(*) as postingQty FROM notice"
+    );
+    
+    const [rows, field2] = await connection.query<RowDataPacket[]>(
+      "SELECT * FROM notice ORDER BY id DESC LIMIT 10 OFFSET ?", [(parseInt(pageNo) - 1) * 10]
+    );
+    killConnection(connection)
+    return [count[0].postingQty, rows];
+  } catch (error) {
+    console.error("Debug Point! >> ", error);
+    return [-1, []];
+  }
 }
 
 export async function addNoticePosting(value: {
@@ -58,18 +63,22 @@ export async function addNoticePosting(value: {
   title: string;
   content: string;
 }) {
-  const connection = await getConnection();
-
-  const nickname = await connection.query<RowDataPacket[]>(
-    "SELECT nickname FROM admin WHERE account=?", [value.account]
-  );
-
-  const parsingNickname = JSON.parse(JSON.stringify(nickname))[0][0]
-
-  await connection.query<RowDataPacket[]>(
-    "INSERT INTO notice(`title`,`content`,`writer`) VALUES(?, ?, ?)", [value.title, value.content, parsingNickname['NICKNAME']]
-  );
-  killConnection(connection);
+  try {
+    const connection = await getConnection();
+  
+    const nickname = await connection.query<RowDataPacket[]>(
+      "SELECT nickname FROM admin WHERE account=?", [value.account]
+    );
+  
+    const parsingNickname = JSON.parse(JSON.stringify(nickname))[0][0]
+  
+    await connection.query<RowDataPacket[]>(
+      "INSERT INTO notice(`title`,`content`,`writer`) VALUES(?, ?, ?)", [value.title, value.content, parsingNickname['NICKNAME']]
+    );
+    killConnection(connection);
+  } catch (error) {
+    console.error("Debug Point! >> ", error);
+  }
 }
 
 export async function updateNoticePosting(value: {
