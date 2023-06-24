@@ -21,21 +21,7 @@ export async function getConnection() {
   });
 }
 
-export async function testFunction() {
-  const connection = await createConnection({
-    host: "localhost",
-    port: 3306,
-    user: "Accesser",
-    password: "Asdaz080808!",
-    database: "whoami",
-  });
 
-  const [rows, field] = await connection.query<RowDataPacket[]>(
-    `SELECT * FROM ADMIN`
-  );
-  killConnection(connection);
-  return rows[0];
-}
 
 export async function killConnection(connection: Connection) {
   await connection.end();

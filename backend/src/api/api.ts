@@ -10,7 +10,6 @@ import {
   incrementNoticeVisit,
   updateNoticePosting,
   validAdmin,
-  testFunction,
 } from "../function/mysql";
 import { getPostingNo } from "../function/server";
 import { Reply, addReply, getReply } from "../function/mysql";
@@ -18,17 +17,21 @@ import { Reply, addReply, getReply } from "../function/mysql";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const test = await testFunction();
-  res.send("Hello World!!! here is /api test : " + test);
+  res.send("Hello World!!! here is /api");
 });
 
 router.get("/admin", async (req, res) => {
-  const account = req.url.split("?")[1].split("=")[1];
-
-  if (await validAdmin(account)) {
-    res.status(200).send("관리자입니다.");
-  } else {
-    res.status(202).send("관리자가 아닙니다.");
+  try {
+    const account = req.query.email;
+  
+    if (await validAdmin(account as string)) {
+      res.status(200).send("관리자입니다.");
+    } else {
+      res.status(202).send("관리자가 아닙니다.");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error!");
   }
 });
 
