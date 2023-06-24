@@ -37,7 +37,7 @@ router.get("/admin", async (req, res) => {
 
 router.get("/thisnotice/:slug", async (req, res) => {
   const getTarget = getPostingNo(req.url);
-  const content = await getNoticeOne(getTarget);
+  const content = await getNoticeOne(parseInt(getTarget));
   res.status(200).send(JSON.stringify(content));
 });
 
@@ -61,8 +61,8 @@ router.get("/posting/:slug", async (req, res) => {
   const getTarget = getPostingNo(req.url);
 
   try {
-    incrementNoticeVisit(getTarget);
-    const result = await getNoticeOne(getTarget as string);
+    incrementNoticeVisit(parseInt(getTarget));
+    const result = await getNoticeOne(parseInt(getTarget));
     res.status(200).send(JSON.stringify(result));
   } catch (error) {
     console.error("게시물 불러오는 중 에러", error);
@@ -74,7 +74,7 @@ router.delete("/posting/:slug", async (req, res) => {
   const deleteTarget = getPostingNo(req.url);
 
   try {
-    await deleteNoticePosting(deleteTarget as string);
+    await deleteNoticePosting(parseInt(deleteTarget));
     res.status(200).send("정상 삭제 완료");
   } catch (error) {
     console.error("/api/posting DELETE request Error");
@@ -86,7 +86,7 @@ router.delete("/posting/:slug", async (req, res) => {
 router.get("/reply", async (req, res) => {
   const postingno = req.url.split("?")[1].split("=")[1] as string;
 
-  const reply = await getReply(postingno);
+  const reply = await getReply(parseInt(postingno));
 
   res.status(200).send(JSON.stringify(reply));
 });
@@ -100,14 +100,14 @@ router.post("/reply", async (req, res) => {
 router.get("/replycount", async (req, res) => {
   const postingno = req.url.split("?")[1].split("=")[1] as string;
 
-  const { replyCount } = await getReplyCount(postingno);
+  const { replyCount } = await getReplyCount(parseInt(postingno));
   res.status(200).send(JSON.stringify(replyCount));
 });
 
 router.get("/likecount", async (req, res) => {
   const postingno = req.url.split("?")[1].split("=")[1] as string;
 
-  const { likeCount } = await getLikeCount(postingno);
+  const { likeCount } = await getLikeCount(parseInt(postingno));
   res.status(200).send(JSON.stringify(likeCount));
 });
 
@@ -116,7 +116,7 @@ router.get("/islikethis", async (req, res) => {
   const postingno = splitText[1];
   const userid = splitText[3];
 
-  const { isLikeThis } = await getIsLikeThis(postingno, userid);
+  const { isLikeThis } = await getIsLikeThis(parseInt(postingno), userid);
   res.status(200).send(JSON.stringify(isLikeThis));
 });
 
