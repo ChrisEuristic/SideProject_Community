@@ -92,7 +92,7 @@
 <img src="https://img.shields.io/badge/-Webpack-8DD6F9?logo=webpack&logoColor=white">
 
 #### Deploying
-<img src="https://img.shields.io/badge/-Vercel-000000?logo=vercel&logoColor=white">
+<img src="https://img.shields.io/badge/-Vercel-000000?logo=vercel&logoColor=white"> <img src="https://img.shields.io/badge/-Amazon AWS-232F3E?logo=amazonaws&logoColor=white">
 
 ---
 
@@ -136,4 +136,9 @@ type TypeName = {...};
 |       |     |          | util     | 클라/서버 함수 |
 |       |     | recoil | 아톰 파일 |
 |       |     | test | 테스트 파일 |
-| Back  | src | app |
+| Back  | src | 서버 파일 |
+| Back  | src | Feed 버퍼 파일 |
+| Back  | src | api | api 파일 |
+| Back  | src | function | MySQL 함수 파일 |
+| Back  | src | function | 유틸리티 함수 파일 |
+| Back  | src | test | 테스트파일 |
