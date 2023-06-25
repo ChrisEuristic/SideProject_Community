@@ -61,7 +61,6 @@ export default function NoticePostingPage({
       );
 
       setIsLikeThis(await res.json());
-      alert(isLikeThis);
     })();
   }, [params.slug, session?.user?.email, isLikeThis]);
 
@@ -185,8 +184,12 @@ export default function NoticePostingPage({
                     method: "DELETE",
                   })
                 } else {
-                  fetch(`https://www.eurekasolusion.shop/api/islikethis?postingno=${params.slug}&userid=${session?.user?.email}`, {
+                  fetch(`https://www.eurekasolusion.shop/api/islikethis`, {
                     method: "POST",
+                    body: JSON.stringify({
+                      postingno: params.slug,
+                      userid: session?.user?.email,
+                    }),
                   })
                 }
               }}
