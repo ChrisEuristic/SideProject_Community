@@ -204,6 +204,10 @@ export async function getLikeCount(postingid: number) {
 export async function getIsLikeThis(postingid: number, userid: string) {
   const connection = await getConnection();
 
+  console.debug("getIsLikeThis func check >> mysql.ts 207");
+  console.debug(postingid, typeof postingid);
+  console.debug(userid, typeof userid);
+
   const [rows, field] = await connection.query<RowDataPacket[]>(
     "SELECT * FROM notice_like WHERE id=? AND memberid=?", [postingid, userid]
   );
