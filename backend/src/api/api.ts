@@ -112,7 +112,7 @@ router.get("/likecount", async (req, res) => {
 });
 
 router.get("/islikethis", async (req, res) => {
-  const splitText = req.url.split("?")[1].split("=|&") as string[];
+  const splitText = req.url.split("?")[1].split(/[=&]/) as string[];
   const postingno = splitText[1];
   const userid = splitText[3];
 
