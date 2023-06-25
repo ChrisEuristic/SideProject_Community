@@ -21,8 +21,6 @@ export async function getConnection() {
   });
 }
 
-
-
 export async function killConnection(connection: Connection) {
   await connection.end();
 }
@@ -31,7 +29,8 @@ export async function getNoticeOne(noticeId: number) {
   const connection = await getConnection();
 
   const [rows, field] = await connection.query<RowDataPacket[]>(
-    "SELECT * FROM notice WHERE id = ?", [noticeId]
+    "SELECT * FROM notice WHERE id = ?",
+    [noticeId]
   );
 
   killConnection(connection);
@@ -42,15 +41,16 @@ export async function getNoticeOne(noticeId: number) {
 export async function getNoticeAll(pageNo: string) {
   try {
     const connection = await getConnection();
-    
+
     const [count, field1] = await connection.query<RowDataPacket[]>(
       "SELECT COUNT(*) as postingQty FROM notice"
     );
-    
+
     const [rows, field2] = await connection.query<RowDataPacket[]>(
-      "SELECT * FROM notice ORDER BY id DESC LIMIT 10 OFFSET ?", [(parseInt(pageNo) - 1) * 10]
+      "SELECT * FROM notice ORDER BY id DESC LIMIT 10 OFFSET ?",
+      [(parseInt(pageNo) - 1) * 10]
     );
-    killConnection(connection)
+    killConnection(connection);
     return [count[0].postingQty, rows];
   } catch (error) {
     console.error("Debug Point! >> ", error);
@@ -65,15 +65,17 @@ export async function addNoticePosting(value: {
 }) {
   try {
     const connection = await getConnection();
-  
+
     const nickname = await connection.query<RowDataPacket[]>(
-      "SELECT nickname FROM admin WHERE account=?", [value.account]
+      "SELECT nickname FROM admin WHERE account=?",
+      [value.account]
     );
-  
-    const parsingNickname = JSON.parse(JSON.stringify(nickname))[0][0]
-  
+
+    const parsingNickname = JSON.parse(JSON.stringify(nickname))[0][0];
+
     await connection.query<RowDataPacket[]>(
-      "INSERT INTO notice(`title`,`content`,`writer`) VALUES(?, ?, ?)", [value.title, value.content, parsingNickname['nickname']]
+      "INSERT INTO notice(`title`,`content`,`writer`) VALUES(?, ?, ?)",
+      [value.title, value.content, parsingNickname["nickname"]]
     );
     killConnection(connection);
   } catch (error) {
@@ -88,7 +90,8 @@ export async function updateNoticePosting(value: {
 }) {
   const connection = await getConnection();
   await connection.query<RowDataPacket[]>(
-    "UPDATE notice SET title = ?, content = ? WHERE id = ?", [value.title, value.content, value.postingNo]
+    "UPDATE notice SET title = ?, content = ? WHERE id = ?",
+    [value.title, value.content, value.postingNo]
   );
 
   killConnection(connection);
@@ -99,7 +102,8 @@ export async function deleteNoticePosting(noticeId: number) {
 
   try {
     await connection.query<RowDataPacket[]>(
-      "DELETE FROM reply WHERE postingid = ?", [noticeId]
+      "DELETE FROM reply WHERE postingid = ?",
+      [noticeId]
     );
   } catch (e) {
     console.log("deleteNoticePosting SQL Error: 댓글 지우기 중 에러");
@@ -107,9 +111,9 @@ export async function deleteNoticePosting(noticeId: number) {
   }
 
   try {
-    await connection.query<RowDataPacket[]>(
-      "DELETE FROM notice WHERE id = ?", [noticeId]
-    );
+    await connection.query<RowDataPacket[]>("DELETE FROM notice WHERE id = ?", [
+      noticeId,
+    ]);
   } catch (e) {
     console.log("deleteNoticePosting SQL Error: 본문 지우기 중 에러");
     console.error(e);
@@ -117,7 +121,6 @@ export async function deleteNoticePosting(noticeId: number) {
 
   killConnection(connection);
 }
-
 
 // !! 조회수, 좋아요 기능
 
@@ -129,11 +132,11 @@ export async function incrementNoticeVisit(postingNo: number) {
   const connection = await getConnection();
 
   await connection.query<RowDataPacket[]>(
-    "UPDATE notice SET visit = visit + 1 WHERE id = ?", [postingNo]
+    "UPDATE notice SET visit = visit + 1 WHERE id = ?",
+    [postingNo]
   );
   killConnection(connection);
 }
-
 
 // !! 댓글 기능
 
@@ -141,7 +144,8 @@ export async function getReply(postingid: number) {
   const connection = await getConnection();
 
   const [rows, field] = await connection.query<RowDataPacket[]>(
-    "SELECT * FROM reply WHERE postingid=? ORDER BY id ASC", [postingid]
+    "SELECT * FROM reply WHERE postingid=? ORDER BY id ASC",
+    [postingid]
   );
 
   killConnection(connection);
@@ -153,7 +157,8 @@ export async function getReplyCount(postingid: number) {
   const connection = await getConnection();
 
   const [rows, field] = await connection.query<RowDataPacket[]>(
-    "SELECT COUNT(*) as replyCount FROM reply WHERE postingid=?", [postingid]
+    "SELECT COUNT(*) as replyCount FROM reply WHERE postingid=?",
+    [postingid]
   );
 
   killConnection(connection);
@@ -165,7 +170,8 @@ export async function addReply(reply: Reply) {
   const connection = await getConnection();
 
   await connection.query<RowDataPacket[]>(
-    "INSERT INTO reply(`postingid`,`username`,`userid`,`content`) VALUES(?, ?, ?, ?)", [reply.postingid, reply.username, reply.userid, reply.content]
+    "INSERT INTO reply(`postingid`,`username`,`userid`,`content`) VALUES(?, ?, ?, ?)",
+    [reply.postingid, reply.username, reply.userid, reply.content]
   );
 
   killConnection(connection);
@@ -175,9 +181,9 @@ export async function deleteReply(replyID: number) {
   const connection = await getConnection();
 
   try {
-    await connection.query<RowDataPacket[]>(
-      "DELETE FROM reply WHERE id = ?", [replyID]
-    );
+    await connection.query<RowDataPacket[]>("DELETE FROM reply WHERE id = ?", [
+      replyID,
+    ]);
   } catch (e) {
     console.log("deleteNoticePosting SQL Error");
     console.error(e);
@@ -186,14 +192,14 @@ export async function deleteReply(replyID: number) {
   killConnection(connection);
 }
 
-
 // !! 좋아요 기능
 
 export async function getLikeCount(postingid: number) {
   const connection = await getConnection();
 
   const [rows, field] = await connection.query<RowDataPacket[]>(
-    "SELECT COUNT(*) as likeCount FROM notice_like WHERE postingid=?", [postingid]
+    "SELECT COUNT(*) as likeCount FROM notice_like WHERE postingid=?",
+    [postingid]
   );
 
   killConnection(connection);
@@ -201,22 +207,30 @@ export async function getLikeCount(postingid: number) {
   return rows[0];
 }
 
+/**
+ * userid 사용자가 postingid 게시물에 좋아요를 눌렀나?
+ * @param postingid 
+ * @param userid 
+ * @returns boolean
+ */
 export async function getIsLikeThis(postingid: number, userid: string) {
   try {
     const connection = await getConnection();
-  
+
     const [rows, field] = await connection.query<RowDataPacket[]>(
-      "SELECT * FROM notice_like WHERE postingid=? AND memberid=?", [postingid, userid]
+      "SELECT * FROM notice_like WHERE postingid=? AND memberid=?",
+      [postingid, userid]
     );
 
-    console.debug(rows);
-  
     killConnection(connection);
-  
-    return rows[0];
+
+    if (rows.length !== 0) return true;
+    else return false;
+
+
   } catch (error) {
     console.error("Debug Point! >> ", error);
-    return {isLikeThis: "temp value"};
+    return false;
   }
 }
 
@@ -224,7 +238,8 @@ export async function addLike(postingid: number, userid: string) {
   const connection = await getConnection();
 
   await connection.query<RowDataPacket[]>(
-    "INSERT INTO notice_like(`postingid`,`memberid`) VALUES(?, ?)", [postingid, userid]
+    "INSERT INTO notice_like(`postingid`,`memberid`) VALUES(?, ?)",
+    [postingid, userid]
   );
 
   killConnection(connection);
@@ -235,7 +250,8 @@ export async function removeLike(postingid: number, userid: string) {
 
   try {
     await connection.query<RowDataPacket[]>(
-      "DELETE FROM notice_like WHERE postingid = ? and memberid = ?", [postingid, userid]
+      "DELETE FROM notice_like WHERE postingid = ? and memberid = ?",
+      [postingid, userid]
     );
   } catch (e) {
     console.log("deleteNoticePosting SQL Error");
@@ -245,14 +261,14 @@ export async function removeLike(postingid: number, userid: string) {
   killConnection(connection);
 }
 
-
 // !: 어드민 계정 검증
 
-export async function validAdmin(account: string){
+export async function validAdmin(account: string) {
   const connection = await getConnection();
   const [rows, field] = await connection.query<RowDataPacket[]>(
-    "SELECT * FROM admin WHERE account=?", [account]
-    );
+    "SELECT * FROM admin WHERE account=?",
+    [account]
+  );
   killConnection(connection);
   return rows[0] ? true : false;
 }
