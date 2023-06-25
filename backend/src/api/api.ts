@@ -122,8 +122,9 @@ router.get("/islikethis", async (req, res) => {
 });
 
 router.post("/islikethis", async (req, res) => {
-  const postingno = req.query.postingno as string;
-  const userid = req.query.userid as string;
+  console.debug(req.body);
+  const postingno = req.body.postingno as string;
+  const userid = req.body.userid as string;
   await addLike(parseInt(postingno), userid);
   res.status(201).send("Liked");
 });
