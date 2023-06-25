@@ -202,19 +202,22 @@ export async function getLikeCount(postingid: number) {
 }
 
 export async function getIsLikeThis(postingid: number, userid: string) {
-  const connection = await getConnection();
+  try {
+    const connection = await getConnection();
+  
+    const [rows, field] = await connection.query<RowDataPacket[]>(
+      "SELECT * FROM notice_like WHERE postingid=? AND memberid=?", [postingid, userid]
+    );
 
-  console.debug("getIsLikeThis func check >> mysql.ts 207");
-  console.debug(postingid, typeof postingid);
-  console.debug(userid, typeof userid);
-
-  const [rows, field] = await connection.query<RowDataPacket[]>(
-    "SELECT * FROM notice_like WHERE id=? AND memberid=?", [postingid, userid]
-  );
-
-  killConnection(connection);
-
-  return rows[0];
+    console.debug(rows);
+  
+    killConnection(connection);
+  
+    return rows[0];
+  } catch (error) {
+    console.error("Debug Point! >> ", error);
+    return {isLikeThis: "temp value"};
+  }
 }
 
 export async function addLike(postingid: number, userid: string) {
