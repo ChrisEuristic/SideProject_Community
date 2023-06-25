@@ -12,7 +12,7 @@ export async function GET(request: Request) {
   if (process.env.NODE_ENV === "production") {
     return NextResponse.redirect(
       new URL(
-        `https://kauth.kakao.com/oauth/logout?client_id=${process.env.KAKAO_CLIENT_ID}&logout_redirect_uri=https://toy-project-community.vercel.app`,
+        `https://kauth.kakao.com/oauth/logout?client_id=${process.env.KAKAO_CLIENT_ID}&logout_redirect_uri=https://whoamiservice.vercel.app`,
         request.url
       )
     );
