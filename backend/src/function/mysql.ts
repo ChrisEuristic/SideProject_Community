@@ -3,7 +3,7 @@ import { Connection, createConnection } from "mysql2/promise";
 import dotenv from "dotenv";
 
 export type Reply = {
-  postingid: string;
+  postingid: number;
   username: string;
   userid: string;
   content: string;
@@ -21,15 +21,17 @@ export async function getConnection() {
   });
 }
 
+
+
 export async function killConnection(connection: Connection) {
   await connection.end();
 }
 
-export async function getNoticeOne(noticeId: string) {
+export async function getNoticeOne(noticeId: number) {
   const connection = await getConnection();
 
   const [rows, field] = await connection.query<RowDataPacket[]>(
-    `SELECT * FROM NOTICE WHERE ID = '${noticeId}'`
+    "SELECT * FROM notice WHERE id = ?", [noticeId]
   );
 
   killConnection(connection);
@@ -38,17 +40,22 @@ export async function getNoticeOne(noticeId: string) {
 }
 
 export async function getNoticeAll(pageNo: string) {
-  const connection = await getConnection();
-  
-  const [count, field1] = await connection.query<RowDataPacket[]>(
-    "SELECT COUNT(*) as postingQty FROM NOTICE"
-  );
-  
-  const [rows, field2] = await connection.query<RowDataPacket[]>(
-    "SELECT * FROM NOTICE ORDER BY ID DESC LIMIT 10 OFFSET " + (parseInt(pageNo) - 1) * 10
-  );
-  killConnection(connection)
-  return [count[0].postingQty, rows];
+  try {
+    const connection = await getConnection();
+    
+    const [count, field1] = await connection.query<RowDataPacket[]>(
+      "SELECT COUNT(*) as postingQty FROM notice"
+    );
+    
+    const [rows, field2] = await connection.query<RowDataPacket[]>(
+      "SELECT * FROM notice ORDER BY id DESC LIMIT 10 OFFSET ?", [(parseInt(pageNo) - 1) * 10]
+    );
+    killConnection(connection)
+    return [count[0].postingQty, rows];
+  } catch (error) {
+    console.error("Debug Point! >> ", error);
+    return [-1, []];
+  }
 }
 
 export async function addNoticePosting(value: {
@@ -56,48 +63,43 @@ export async function addNoticePosting(value: {
   title: string;
   content: string;
 }) {
-  const connection = await getConnection();
-
-  const nickname = await connection.query<RowDataPacket[]>(
-    "SELECT NICKNAME FROM ADMIN WHERE ACCOUNT='" + value.account + "'"
-  );
-
-  const parsingNickname = JSON.parse(JSON.stringify(nickname))[0][0]
-
-  await connection.query<RowDataPacket[]>(
-    "INSERT INTO NOTICE(`title`,`content`,`writer`) VALUES('" +
-      value.title +
-      "','" +
-      value.content +
-      "','" +
-      parsingNickname['NICKNAME'] +
-      // value.account +
-      "')"
-  );
-  killConnection(connection);
+  try {
+    const connection = await getConnection();
+  
+    const nickname = await connection.query<RowDataPacket[]>(
+      "SELECT nickname FROM admin WHERE account=?", [value.account]
+    );
+  
+    const parsingNickname = JSON.parse(JSON.stringify(nickname))[0][0]
+  
+    await connection.query<RowDataPacket[]>(
+      "INSERT INTO notice(`title`,`content`,`writer`) VALUES(?, ?, ?)", [value.title, value.content, parsingNickname['nickname']]
+    );
+    killConnection(connection);
+  } catch (error) {
+    console.error("Debug Point! >> ", error);
+  }
 }
 
 export async function updateNoticePosting(value: {
-  postingNo: string;
+  postingNo: number;
   title: string;
   content: string;
 }) {
   const connection = await getConnection();
   await connection.query<RowDataPacket[]>(
-    `UPDATE NOTICE SET TITLE = "${value.title}", CONTENT = "${
-      value.content
-    }" WHERE ID = ${parseInt(value.postingNo)}`
+    "UPDATE notice SET title = ?, content = ? WHERE id = ?", [value.title, value.content, value.postingNo]
   );
 
   killConnection(connection);
 }
 
-export async function deleteNoticePosting(noticeId: string) {
+export async function deleteNoticePosting(noticeId: number) {
   const connection = await getConnection();
 
   try {
     await connection.query<RowDataPacket[]>(
-      `DELETE FROM REPLY WHERE POSTINGID = ${noticeId}`
+      "DELETE FROM reply WHERE postingid = ?", [noticeId]
     );
   } catch (e) {
     console.log("deleteNoticePosting SQL Error: 댓글 지우기 중 에러");
@@ -106,7 +108,7 @@ export async function deleteNoticePosting(noticeId: string) {
 
   try {
     await connection.query<RowDataPacket[]>(
-      `DELETE FROM NOTICE WHERE ID = ${noticeId}`
+      "DELETE FROM notice WHERE id = ?", [noticeId]
     );
   } catch (e) {
     console.log("deleteNoticePosting SQL Error: 본문 지우기 중 에러");
@@ -123,11 +125,11 @@ export async function deleteNoticePosting(noticeId: string) {
  * 조회수 1 증가
  * @param postingNo 게시물 번호
  */
-export async function incrementNoticeVisit(postingNo: string) {
+export async function incrementNoticeVisit(postingNo: number) {
   const connection = await getConnection();
 
   await connection.query<RowDataPacket[]>(
-    `UPDATE NOTICE SET VISIT = VISIT + 1 WHERE ID = ${postingNo}`
+    "UPDATE notice SET visit = visit + 1 WHERE id = ?", [postingNo]
   );
   killConnection(connection);
 }
@@ -135,11 +137,11 @@ export async function incrementNoticeVisit(postingNo: string) {
 
 // !! 댓글 기능
 
-export async function getReply(postingid: string) {
+export async function getReply(postingid: number) {
   const connection = await getConnection();
 
   const [rows, field] = await connection.query<RowDataPacket[]>(
-    "SELECT * FROM REPLY WHERE POSTINGID=" + postingid + " ORDER BY ID ASC"
+    "SELECT * FROM reply WHERE postingid=? ORDER BY id ASC", [postingid]
   );
 
   killConnection(connection);
@@ -147,11 +149,11 @@ export async function getReply(postingid: string) {
   return rows;
 }
 
-export async function getReplyCount(postingid: string) {
+export async function getReplyCount(postingid: number) {
   const connection = await getConnection();
 
   const [rows, field] = await connection.query<RowDataPacket[]>(
-    "SELECT COUNT(*) as replyCount FROM REPLY WHERE POSTINGID=" + postingid
+    "SELECT COUNT(*) as replyCount FROM reply WHERE postingid=?", [postingid]
   );
 
   killConnection(connection);
@@ -163,26 +165,18 @@ export async function addReply(reply: Reply) {
   const connection = await getConnection();
 
   await connection.query<RowDataPacket[]>(
-    "INSERT INTO REPLY(`postingid`,`username`,`userid`,`content`) VALUES(" +
-      reply.postingid +
-      ",'" +
-      reply.username +
-      "','" +
-      reply.userid +
-      "','" +
-      reply.content +
-      "')"
+    "INSERT INTO reply(`postingid`,`username`,`userid`,`content`) VALUES(?, ?, ?, ?)", [reply.postingid, reply.username, reply.userid, reply.content]
   );
 
   killConnection(connection);
 }
 
-export async function deleteReply(replyID: string) {
+export async function deleteReply(replyID: number) {
   const connection = await getConnection();
 
   try {
     await connection.query<RowDataPacket[]>(
-      `DELETE FROM REPLY WHERE ID = ${replyID}`
+      "DELETE FROM reply WHERE id = ?", [replyID]
     );
   } catch (e) {
     console.log("deleteNoticePosting SQL Error");
@@ -195,11 +189,11 @@ export async function deleteReply(replyID: string) {
 
 // !! 좋아요 기능
 
-export async function getLikeCount(postingid: string) {
+export async function getLikeCount(postingid: number) {
   const connection = await getConnection();
 
   const [rows, field] = await connection.query<RowDataPacket[]>(
-    "SELECT COUNT(*) as likeCount FROM notice_like WHERE POSTINGID=" + postingid
+    "SELECT COUNT(*) as likeCount FROM notice_like WHERE postingid=?", [postingid]
   );
 
   killConnection(connection);
@@ -207,11 +201,11 @@ export async function getLikeCount(postingid: string) {
   return rows[0];
 }
 
-export async function getIsLikeThis(postingid: string, userid: string) {
+export async function getIsLikeThis(postingid: number, userid: string) {
   const connection = await getConnection();
 
   const [rows, field] = await connection.query<RowDataPacket[]>(
-    `SELECT * FROM notice_like WHERE ID=${postingid} AND memberid='${userid}'`
+    "SELECT * FROM notice_like WHERE id=? AND memberid=?", [postingid, userid]
   );
 
   killConnection(connection);
@@ -219,26 +213,22 @@ export async function getIsLikeThis(postingid: string, userid: string) {
   return rows[0];
 }
 
-export async function addLike(postingid: string, userid: string) {
+export async function addLike(postingid: number, userid: string) {
   const connection = await getConnection();
 
   await connection.query<RowDataPacket[]>(
-    "INSERT INTO notice_like(`postingid`,`memberid`) VALUES(" +
-      postingid +
-      ",'" +
-      userid +
-      "')"
+    "INSERT INTO notice_like(`postingid`,`memberid`) VALUES(?, ?)", [postingid, userid]
   );
 
   killConnection(connection);
 }
 
-export async function removeLike(postingid: string, userid: string) {
+export async function removeLike(postingid: number, userid: string) {
   const connection = await getConnection();
 
   try {
     await connection.query<RowDataPacket[]>(
-      `DELETE FROM notice_like WHERE postingid = ${postingid} and memberid = '${userid}'`
+      "DELETE FROM notice_like WHERE postingid = ? and memberid = ?", [postingid, userid]
     );
   } catch (e) {
     console.log("deleteNoticePosting SQL Error");
@@ -252,11 +242,9 @@ export async function removeLike(postingid: string, userid: string) {
 // !: 어드민 계정 검증
 
 export async function validAdmin(account: string){
-
   const connection = await getConnection();
-  
   const [rows, field] = await connection.query<RowDataPacket[]>(
-    `SELECT * FROM ADMIN WHERE ACCOUNT='${account}'`
+    "SELECT * FROM admin WHERE account=?", [account]
     );
   killConnection(connection);
   return rows[0] ? true : false;
