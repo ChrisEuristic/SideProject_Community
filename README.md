@@ -1,4 +1,4 @@
-# SideProject_Community
+# SideProject Who-ami
 스킬 점검 및 간단한 유료서비스를 위한 웹사이트 개발.
 
 > [트러블슈팅 정리](https://github.com/ChrisEuristic/SideProject_Community/blob/main/TroubleShooting.md)
@@ -70,7 +70,7 @@
 ## Skill Stack
 
 #### Core
-<img src="https://img.shields.io/badge/-Next.JS 13.4.2-000000?logo=next.js&logoColor=white">  <img src="https://img.shields.io/badge/-TypeScript 5.0.4-3178C6?logo=typescript&logoColor=white">  <img src="https://img.shields.io/badge/-Node.js 18.16.0-339933?logo=node.js&logoColor=white">  <img src="https://img.shields.io/badge/-Express.js 4.18.2-4479A1?logo=express&logoColor=white">  <img src="https://img.shields.io/badge/-MySQL 8.0(Develop)-4479A1?logo=mysql&logoColor=white">  <img src="https://img.shields.io/badge/-postgreSQL(Vercel Production)-4169E1?logo=postgresql&logoColor=white"> 
+<img src="https://img.shields.io/badge/-Next.JS 13.4.2-000000?logo=next.js&logoColor=white">  <img src="https://img.shields.io/badge/-TypeScript 5.0.4-3178C6?logo=typescript&logoColor=white">  <img src="https://img.shields.io/badge/-Node.js 18.16.0-339933?logo=node.js&logoColor=white">  <img src="https://img.shields.io/badge/-Express.js 4.18.2-4479A1?logo=express&logoColor=white">  <img src="https://img.shields.io/badge/-MySQL 8.0-4479A1?logo=mysql&logoColor=white">  <img src="https://img.shields.io/badge/-postgreSQL(Vercel Test)-4169E1?logo=postgresql&logoColor=white"> 
 
 #### Package Manager
 <img src="https://img.shields.io/badge/-npm-CB3837?logo=npm&logoColor=white">
@@ -92,7 +92,7 @@
 <img src="https://img.shields.io/badge/-Webpack-8DD6F9?logo=webpack&logoColor=white">
 
 #### Deploying
-<img src="https://img.shields.io/badge/-Vercel-000000?logo=vercel&logoColor=white">
+<img src="https://img.shields.io/badge/-Vercel-000000?logo=vercel&logoColor=white"> <img src="https://img.shields.io/badge/-Amazon AWS-232F3E?logo=amazonaws&logoColor=white">
 
 ---
 
@@ -136,4 +136,9 @@ type TypeName = {...};
 |       |     |          | util     | 클라/서버 함수 |
 |       |     | recoil | 아톰 파일 |
 |       |     | test | 테스트 파일 |
-| Back  | src | app |
+| Back  | src | 서버 파일 |
+| Back  | src | Feed 버퍼 파일 |
+| Back  | src | api | api 파일 |
+| Back  | src | function | MySQL 함수 파일 |
+| Back  | src | function | 유틸리티 함수 파일 |
+| Back  | src | test | 테스트파일 |
