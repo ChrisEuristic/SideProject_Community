@@ -16,19 +16,28 @@ import { Reply, addReply, getReply } from "../function/mysql";
 
 const router = express.Router();
 
-router.get("/admin", async (req, res) => {
-  const account = req.url.split("?")[1].split("=")[1];
+router.get("/", async (req, res) => {
+  res.send("Hello World!!! here is /api");
+});
 
-  if (await validAdmin(account)) {
-    res.status(200).send("관리자입니다.");
-  } else {
-    res.status(202).send("관리자가 아닙니다.");
+router.get("/admin", async (req, res) => {
+  try {
+    const account = req.query.email;
+  
+    if (await validAdmin(account as string)) {
+      res.status(200).send("관리자입니다.");
+    } else {
+      res.status(202).send("관리자가 아닙니다.");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error!");
   }
 });
 
 router.get("/thisnotice/:slug", async (req, res) => {
   const getTarget = getPostingNo(req.url);
-  const content = await getNoticeOne(getTarget);
+  const content = await getNoticeOne(parseInt(getTarget));
   res.status(200).send(JSON.stringify(content));
 });
 
@@ -52,8 +61,8 @@ router.get("/posting/:slug", async (req, res) => {
   const getTarget = getPostingNo(req.url);
 
   try {
-    incrementNoticeVisit(getTarget);
-    const result = await getNoticeOne(getTarget as string);
+    incrementNoticeVisit(parseInt(getTarget));
+    const result = await getNoticeOne(parseInt(getTarget));
     res.status(200).send(JSON.stringify(result));
   } catch (error) {
     console.error("게시물 불러오는 중 에러", error);
@@ -65,7 +74,7 @@ router.delete("/posting/:slug", async (req, res) => {
   const deleteTarget = getPostingNo(req.url);
 
   try {
-    await deleteNoticePosting(deleteTarget as string);
+    await deleteNoticePosting(parseInt(deleteTarget));
     res.status(200).send("정상 삭제 완료");
   } catch (error) {
     console.error("/api/posting DELETE request Error");
@@ -77,7 +86,7 @@ router.delete("/posting/:slug", async (req, res) => {
 router.get("/reply", async (req, res) => {
   const postingno = req.url.split("?")[1].split("=")[1] as string;
 
-  const reply = await getReply(postingno);
+  const reply = await getReply(parseInt(postingno));
 
   res.status(200).send(JSON.stringify(reply));
 });
@@ -91,14 +100,14 @@ router.post("/reply", async (req, res) => {
 router.get("/replycount", async (req, res) => {
   const postingno = req.url.split("?")[1].split("=")[1] as string;
 
-  const { replyCount } = await getReplyCount(postingno);
+  const { replyCount } = await getReplyCount(parseInt(postingno));
   res.status(200).send(JSON.stringify(replyCount));
 });
 
 router.get("/likecount", async (req, res) => {
   const postingno = req.url.split("?")[1].split("=")[1] as string;
 
-  const { likeCount } = await getLikeCount(postingno);
+  const { likeCount } = await getLikeCount(parseInt(postingno));
   res.status(200).send(JSON.stringify(likeCount));
 });
 
@@ -110,8 +119,7 @@ router.get("/islikethis", async (req, res) => {
   console.debug("splitText >> ", splitText);
   console.debug("postingno >> ", postingno);
   console.debug("userid >> ", userid);
-
-  const { isLikeThis } = await getIsLikeThis(postingno, userid);
+  const { isLikeThis } = await getIsLikeThis(parseInt(postingno), userid);
   res.status(200).send(JSON.stringify(isLikeThis));
 });
 

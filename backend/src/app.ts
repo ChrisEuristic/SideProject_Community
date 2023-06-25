@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import http from "http";
 import https from "https";
 import fs from "fs";
 import { Server } from "socket.io";
@@ -12,20 +13,29 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: ["http://1.254.141.230:3000", "https://toy-project-community.vercel.app"]
+  // origin: ["http://1.254.141.230:3000", "https://whoamiservice.vercel.app"]
+  origin: "*",
 }));
 app.use(bodyParser.json());
 app.use('/api', api);
 
 const httpsServer = https.createServer({
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem'),
+  key: fs.readFileSync('/etc/letsencrypt/live/eurekasolusion.shop/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/eurekasolusion.shop/fullchain.pem'),
 }, app);
 
-const server = httpsServer.listen(8086, () => {
-  console.log("Server is running on port 8086");
+// const httpServer = http.createServer(app);
+
+const server = httpsServer.listen(443, () => {
+  console.log("Server is running on port 443");
   console.log("1. 해당 서버는 피드, 채팅 서버로 다룬다.");
 });
+
+// const server = httpServer.listen(80, () => {
+//   console.log("Server is running on port 80");
+//   console.log("1. This server is Feed & Chat server.");
+// });
+
 
 const serverIO = new Server(server, {
   cors: {
