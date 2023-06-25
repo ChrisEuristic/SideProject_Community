@@ -205,7 +205,7 @@ export async function getIsLikeThis(postingid: number, userid: string) {
   const connection = await getConnection();
 
   const [rows, field] = await connection.query<RowDataPacket[]>(
-    "SELECT * FROM notice_like WHERE ID=? AND memberid=?", [postingid, userid]
+    "SELECT * FROM notice_like WHERE id=? AND memberid=?", [postingid, userid]
   );
 
   killConnection(connection);
