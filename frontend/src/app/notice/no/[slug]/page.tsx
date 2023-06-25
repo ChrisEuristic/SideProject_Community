@@ -34,9 +34,12 @@ export default function NoticePostingPage({
   // 댓글이 몇개인가?
   useEffect(() => {
     (async function () {
+      console.debug(`1-1번 테스트`);
       const res = await fetch(`https://www.eurekasolusion.shop/api/replycount?postingno=${params.slug}`);
-
+      console.debug(`1-2번 테스트`);
+      
       setReplyCount(await res.json())
+      console.debug(`1-3번 테스트`);
     }
     )();
   },[params.slug])
@@ -44,9 +47,12 @@ export default function NoticePostingPage({
   // 좋아요가 몇 개인가?
   useEffect(() => {
     (async function () {
+      console.debug(`2-1번 테스트`);
       const res = await fetch(`https://www.eurekasolusion.shop/api/likecount?postingno=${params.slug}`);
-
+      console.debug(`2-2번 테스트`);
+      
       setLikeCount(await res.json())
+      console.debug(`2-3번 테스트`);
     }
     )();
   },[params.slug, isLikeThis])
@@ -54,9 +60,12 @@ export default function NoticePostingPage({
   // 좋아요를 누른 상태인가?
   useEffect(() => {
     (async function () {
+      console.debug(`3-1번 테스트`);
       const res = await fetch(`https://www.eurekasolusion.shop/api/islikethis?postingno=${params.slug}&userid=${session?.user?.email}`);
-
+      console.debug(`3-2번 테스트`);
+      
       setIsLikeThis(await res.json())
+      console.debug(`3-3번 테스트`);
       alert(isLikeThis);
     }
     )();

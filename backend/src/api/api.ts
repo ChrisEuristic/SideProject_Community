@@ -116,6 +116,9 @@ router.get("/islikethis", async (req, res) => {
   const postingno = splitText[1];
   const userid = splitText[3];
 
+  console.debug("splitText >> ", splitText);
+  console.debug("postingno >> ", postingno);
+  console.debug("userid >> ", userid);
   const { isLikeThis } = await getIsLikeThis(parseInt(postingno), userid);
   res.status(200).send(JSON.stringify(isLikeThis));
 });
