@@ -26,7 +26,7 @@ export default function NoticePostingPage({
   const [isAdmin, setIsAdmin] = useState(false);
   const { data: session } = useSession();
   const [content, setContent] = useState<Posting>();
-  const [isLikeThis, setIsLikeThis] = useState();
+  const [isLikeThis, setIsLikeThis] = useState<boolean>();
   const [likeCount, setLikeCount] = useState();
   const [replyCount, setReplyCount] = useState();
   // 1. params.slug 번호로 DB에 검색해서 해당 엔티티 전부 가져오기.
@@ -34,46 +34,42 @@ export default function NoticePostingPage({
   // 댓글이 몇개인가?
   useEffect(() => {
     (async function () {
-      console.debug(`1-1번 테스트`);
-      const res = await fetch(`https://www.eurekasolusion.shop/api/replycount?postingno=${params.slug}`);
-      console.debug(`1-2번 테스트`);
-      
-      setReplyCount(await res.json())
-      console.debug(`1-3번 테스트`);
-    }
-    )();
-  },[params.slug])
+      const res = await fetch(
+        `https://www.eurekasolusion.shop/api/replycount?postingno=${params.slug}`
+      );
+
+      setReplyCount(await res.json());
+    })();
+  }, [params.slug]);
 
   // 좋아요가 몇 개인가?
   useEffect(() => {
     (async function () {
-      console.debug(`2-1번 테스트`);
-      const res = await fetch(`https://www.eurekasolusion.shop/api/likecount?postingno=${params.slug}`);
-      console.debug(`2-2번 테스트`);
-      
-      setLikeCount(await res.json())
-      console.debug(`2-3번 테스트`);
-    }
-    )();
-  },[params.slug, isLikeThis])
+      const res = await fetch(
+        `https://www.eurekasolusion.shop/api/likecount?postingno=${params.slug}`
+      );
+
+      setLikeCount(await res.json());
+    })();
+  }, [params.slug, isLikeThis]);
 
   // 좋아요를 누른 상태인가?
   useEffect(() => {
     (async function () {
-      console.debug(`3-1번 테스트`);
-      const res = await fetch(`https://www.eurekasolusion.shop/api/islikethis?postingno=${params.slug}&userid=${session?.user?.email}`);
-      console.debug(`3-2번 테스트`);
-      
-      setIsLikeThis(await res.json())
-      console.debug(`3-3번 테스트`);
+      const res = await fetch(
+        `https://www.eurekasolusion.shop/api/islikethis?postingno=${params.slug}&userid=${session?.user?.email}`
+      );
+
+      setIsLikeThis(await res.json());
       alert(isLikeThis);
-    }
-    )();
-  },[params.slug, session?.user?.email, isLikeThis])
+    })();
+  }, [params.slug, session?.user?.email, isLikeThis]);
 
   useEffect(() => {
     (async function () {
-      const res = await fetch(`https://www.eurekasolusion.shop/api/posting/${params.slug}`);
+      const res = await fetch(
+        `https://www.eurekasolusion.shop/api/posting/${params.slug}`
+      );
       const result: Posting = await res.json();
       setContent(result as Posting);
     })();
@@ -81,7 +77,9 @@ export default function NoticePostingPage({
 
   useEffect(() => {
     (async function () {
-      const res = await fetch(`https://www.eurekasolusion.shop/api/admin?email=${session?.user?.email}`);
+      const res = await fetch(
+        `https://www.eurekasolusion.shop/api/admin?email=${session?.user?.email}`
+      );
       if (res.status === 200) {
         setIsAdmin(true);
       }
@@ -168,17 +166,29 @@ export default function NoticePostingPage({
           {content?.content}
           <div style={{ width: "100%", textAlign: "center", margin: "2rem 0" }}>
             <button
-              style={{
+              style={isLikeThis ? {
                 backgroundColor: "#282828",
                 borderRadius: "0.3rem",
                 marginTop: "0.5rem",
                 padding: "0.4rem 0.7rem",
                 color: "white",
+              } : {
+                backgroundColor: "white",
+                borderRadius: "0.3rem",
+                marginTop: "0.5rem",
+                padding: "0.4rem 0.7rem",
+                color: "#282828",
               }}
               onClick={() => {
-                // 현재 좋아요 상태인가? true/false
-                // true: removeLike
-                // false: addLike
+                if(isLikeThis){
+                  fetch(`https://www.eurekasolusion.shop/api/islikethis?postingno=${params.slug}&userid=${session?.user?.email}`, {
+                    method: "DELETE",
+                  })
+                } else {
+                  fetch(`https://www.eurekasolusion.shop/api/islikethis?postingno=${params.slug}&userid=${session?.user?.email}`, {
+                    method: "POST",
+                  })
+                }
               }}
             >
               <AiFillLike />

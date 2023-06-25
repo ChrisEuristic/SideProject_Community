@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  addLike,
   addNoticePosting,
   deleteNoticePosting,
   getIsLikeThis,
@@ -8,6 +9,7 @@ import {
   getNoticeOne,
   getReplyCount,
   incrementNoticeVisit,
+  removeLike,
   updateNoticePosting,
   validAdmin,
 } from "../function/mysql";
@@ -115,12 +117,22 @@ router.get("/islikethis", async (req, res) => {
   const splitText = req.url.split("?")[1].split(/[=&]/) as string[];
   const postingno = splitText[1];
   const userid = splitText[3];
-
-  console.debug("splitText >> ", splitText);
-  console.debug("postingno >> ", postingno);
-  console.debug("userid >> ", userid);
-  const { isLikeThis } = await getIsLikeThis(parseInt(postingno), userid);
+  const isLikeThis = await getIsLikeThis(parseInt(postingno), userid);
   res.status(200).send(JSON.stringify(isLikeThis));
+});
+
+router.post("/islikethis", async (req, res) => {
+  const postingno = req.query.postingno as string;
+  const userid = req.query.userid as string;
+  await addLike(parseInt(postingno), userid);
+  res.status(201).send("Liked");
+});
+
+router.delete("/islikethis", async (req, res) => {
+  const postingno = req.query.postingno as string;
+  const userid = req.query.userid as string;
+  await removeLike(parseInt(postingno), userid);
+  res.status(200).send("UnLiked");
 });
 
 export default router;
