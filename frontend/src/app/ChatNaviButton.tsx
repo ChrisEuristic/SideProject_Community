@@ -4,6 +4,7 @@ import { IsOnChatting, SlideWindowState } from "@/recoil/WindowAtom";
 import { useRecoilState } from "recoil";
 import { useEffect, useState } from "react";
 import { TbBrandHipchat } from "react-icons/tb";
+import { HiOutlineChatBubbleBottomCenterText } from "react-icons/hi2";
 
 export default function ChatNaviButton() {
   const [isOnChatting, setIsOnChatting] = useRecoilState(IsOnChatting);
@@ -22,10 +23,11 @@ export default function ChatNaviButton() {
       <button
         className={buttonDisplay}
         onClick={() => {
-          setIsOnChatting(SlideWindowState.OPEN)
+          setIsOnChatting(SlideWindowState.OPEN);
         }}
       >
-        <TbBrandHipchat />
+        <HiOutlineChatBubbleBottomCenterText />
+        {/* <HiChatBubbleBottomCenterText */}
       </button>
       <style jsx>{`
         button {
