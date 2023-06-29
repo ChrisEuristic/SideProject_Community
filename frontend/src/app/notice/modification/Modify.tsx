@@ -171,8 +171,16 @@ async function submitNotice(
   postingNo: string,
   router: AppRouterInstance
 ) {
+  console.debug({
+    postingNo: postingNo,
+    title: title,
+    content: content,
+  });
   const res = await fetch("https://www.eurekasolusion.shop/api/posting", {
     method: "PUT",
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({
       postingNo: postingNo,
       title: title,
