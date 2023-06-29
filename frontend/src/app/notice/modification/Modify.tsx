@@ -179,7 +179,7 @@ async function submitNotice(
   const res = await fetch("https://www.eurekasolusion.shop/api/posting", {
     method: "PUT",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       postingNo: postingNo,

@@ -2,11 +2,10 @@
 
 import ReplyList from "@/components/ReplyList";
 import ReplyWriter from "@/components/ReplyWriter";
-import { getNoticeOne, incrementNoticeVisit } from "@/function/database/mysql";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { AiFillLike } from "react-icons/ai";
+import NoticeLikeButton from "./NoticeLikeButton";
 
 type Posting = {
   id: number;
@@ -26,8 +25,8 @@ export default function NoticePostingPage({
   const [isAdmin, setIsAdmin] = useState(false);
   const { data: session } = useSession();
   const [content, setContent] = useState<Posting>();
-  const [isLikeThis, setIsLikeThis] = useState<boolean>();
   const [likeCount, setLikeCount] = useState();
+  const [isLikeThis, setIsLikeThis] = useState<boolean>();
   const [replyCount, setReplyCount] = useState();
   // 1. params.slug 번호로 DB에 검색해서 해당 엔티티 전부 가져오기.
 
@@ -42,27 +41,22 @@ export default function NoticePostingPage({
     })();
   }, [params.slug]);
 
-  // 좋아요가 몇 개인가?
+  // 좋아요가 몇 개인가? & 좋아요가 눌려있는가?
   useEffect(() => {
     (async function () {
-      const res = await fetch(
+      const countResponse = await fetch(
         `https://www.eurekasolusion.shop/api/likecount?postingno=${params.slug}`
       );
 
-      setLikeCount(await res.json());
-    })();
-  }, [params.slug, isLikeThis]);
+      setLikeCount(await countResponse.json());
 
-  // 좋아요를 누른 상태인가?
-  useEffect(() => {
-    (async function () {
-      const res = await fetch(
+      const isLikeResponse = await fetch(
         `https://www.eurekasolusion.shop/api/islikethis?postingno=${params.slug}&userid=${session?.user?.email}`
       );
 
-      setIsLikeThis(await res.json());
+      setIsLikeThis(await isLikeResponse.json());
     })();
-  }, [params.slug, session?.user?.email, isLikeThis]);
+  }, [params.slug, session?.user?.email]);
 
   useEffect(() => {
     (async function () {
@@ -147,7 +141,7 @@ export default function NoticePostingPage({
                 fontSize: "0.9rem",
               }}
             >
-              추천 {0}
+              추천 {likeCount}
             </span>
             <span style={{ paddingLeft: "0.5rem", fontSize: "0.9rem" }}>
               댓글 {replyCount}
@@ -164,45 +158,7 @@ export default function NoticePostingPage({
         <div style={{ padding: "0 0.5rem" }}>
           {content?.content}
           <div style={{ width: "100%", textAlign: "center", margin: "2rem 0" }}>
-            <button
-              style={
-                isLikeThis
-                  ? {
-                      backgroundColor: "#282828",
-                      borderRadius: "0.3rem",
-                      marginTop: "0.5rem",
-                      padding: "0.4rem 0.7rem",
-                      color: "white",
-                    }
-                  : {
-                      backgroundColor: "white",
-                      borderRadius: "0.3rem",
-                      marginTop: "0.5rem",
-                      padding: "0.4rem 0.7rem",
-                      color: "#282828",
-                    }
-              }
-              onClick={() => {
-                if (isLikeThis) {
-                  fetch(
-                    `https://www.eurekasolusion.shop/api/islikethis?postingno=${params.slug}&userid=${session?.user?.email}`,
-                    {
-                      method: "DELETE",
-                    }
-                  );
-                } else {
-                  fetch(`https://www.eurekasolusion.shop/api/islikethis`, {
-                    method: "POST",
-                    body: JSON.stringify({
-                      postingno: params.slug,
-                      userid: session?.user?.email,
-                    }),
-                  });
-                }
-              }}
-            >
-              <AiFillLike />
-            </button>
+            <NoticeLikeButton postingNo={params.slug} userID={session?.user?.email ?? "NotFound ID"} isLikeThis={isLikeThis ?? false} setIsLikeThis={setIsLikeThis} />
           </div>
         </div>
         <div
