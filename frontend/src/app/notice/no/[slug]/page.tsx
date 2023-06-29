@@ -165,24 +165,31 @@ export default function NoticePostingPage({
           {content?.content}
           <div style={{ width: "100%", textAlign: "center", margin: "2rem 0" }}>
             <button
-              style={isLikeThis ? {
-                backgroundColor: "#282828",
-                borderRadius: "0.3rem",
-                marginTop: "0.5rem",
-                padding: "0.4rem 0.7rem",
-                color: "white",
-              } : {
-                backgroundColor: "white",
-                borderRadius: "0.3rem",
-                marginTop: "0.5rem",
-                padding: "0.4rem 0.7rem",
-                color: "#282828",
-              }}
+              style={
+                isLikeThis
+                  ? {
+                      backgroundColor: "#282828",
+                      borderRadius: "0.3rem",
+                      marginTop: "0.5rem",
+                      padding: "0.4rem 0.7rem",
+                      color: "white",
+                    }
+                  : {
+                      backgroundColor: "white",
+                      borderRadius: "0.3rem",
+                      marginTop: "0.5rem",
+                      padding: "0.4rem 0.7rem",
+                      color: "#282828",
+                    }
+              }
               onClick={() => {
-                if(isLikeThis){
-                  fetch(`https://www.eurekasolusion.shop/api/islikethis?postingno=${params.slug}&userid=${session?.user?.email}`, {
-                    method: "DELETE",
-                  })
+                if (isLikeThis) {
+                  fetch(
+                    `https://www.eurekasolusion.shop/api/islikethis?postingno=${params.slug}&userid=${session?.user?.email}`,
+                    {
+                      method: "DELETE",
+                    }
+                  );
                 } else {
                   fetch(`https://www.eurekasolusion.shop/api/islikethis`, {
                     method: "POST",
@@ -190,7 +197,7 @@ export default function NoticePostingPage({
                       postingno: params.slug,
                       userid: session?.user?.email,
                     }),
-                  })
+                  });
                 }
               }}
             >
