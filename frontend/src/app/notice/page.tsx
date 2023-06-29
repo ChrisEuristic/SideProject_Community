@@ -41,7 +41,6 @@ export default function NoticePage() {
         }[]
       ] = await res.json();
       
-      console.debug(result);
       const [postingQty, content] = result;
 
       const tempPageNoButton = [];

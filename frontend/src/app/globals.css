@@ -5,6 +5,7 @@
 body {
   width: 100vw;
   height: 90vh;
+  white-space: pre-wrap;
 }
 
 textarea {
