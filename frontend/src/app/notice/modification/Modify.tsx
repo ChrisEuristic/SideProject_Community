@@ -6,11 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export default function Modify({ postingNo }: any) {
-  const [content, setContent] = useState<{
-    title: string;
-    visit: number;
-    content: string;
-  }>();
+  const [content, setContent] = useState<[{ title: string; visit: number; content: string }, number]>();
   
   const titleBox = useRef<HTMLSpanElement>(null);
   const contentBox = useRef<HTMLTextAreaElement>(null);
@@ -21,14 +17,15 @@ export default function Modify({ postingNo }: any) {
       const res = await fetch(
         `https://www.eurekasolusion.shop/api/thisnotice/${postingNo}`
       );
+      // console.debug(await res.json());
       setContent(
-        (await res.json()) as { title: string; visit: number; content: string }
+        (await res.json()) as [{ title: string; visit: number; content: string }, number]
       );
     })();
   }, [postingNo]);
 
   useEffect(() => {
-    contentBox.current!.value = content?.content!;
+    contentBox.current!.value = content?.[0]?.content!;
   }, [content])
 
   return (
@@ -67,7 +64,7 @@ export default function Modify({ postingNo }: any) {
             contentEditable="true"
             style={{ fontWeight: "bold", outline: "none", width: "60vw" }}
           >
-            {content?.title}
+            {content?.[0]?.title}
           </span>
           <span
             style={{ display: "inline-block", width: "10vw", textAlign: "end" }}
@@ -81,7 +78,7 @@ export default function Modify({ postingNo }: any) {
                 fontSize: "0.9rem",
               }}
             >
-              조회 {content?.visit}
+              조회 {content?.[0]?.visit}
             </span>
             <span
               style={{
@@ -95,7 +92,7 @@ export default function Modify({ postingNo }: any) {
               추천 {0}
             </span>
             <span style={{ paddingLeft: "0.5rem", fontSize: "0.9rem" }}>
-              댓글 {0}
+              댓글 {content?.[1]}
             </span>
           </span>
         </header>
