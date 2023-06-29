@@ -56,7 +56,6 @@ router.post("/posting", async (req, res) => {
 });
 
 router.put("/posting", async (req, res) => {
-  console.debug(req.body);
   updateNoticePosting(req.body);
   res.status(200).send("공지사항 수정완료");
 });
@@ -124,7 +123,6 @@ router.get("/islikethis", async (req, res) => {
 });
 
 router.post("/islikethis", async (req, res) => {
-  console.debug(req.body);
   const postingno = req.body.postingno as string;
   const userid = req.body.userid as string;
   await addLike(parseInt(postingno), userid);

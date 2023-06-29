@@ -36,12 +36,6 @@ export default function ReplyWriter({ postingID }: { postingID: string }) {
           content: replyContent.current?.value,
         }),
       });
-      console.log(
-        postingID,
-        session.data?.user?.name,
-        session.data?.user?.email,
-        replyContent.current?.value
-      );
       replyContent.current!.value = "";
       goto(thisPath)
     } else {

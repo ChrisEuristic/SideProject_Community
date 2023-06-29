@@ -139,7 +139,6 @@ async function submitNotice(
   });
 
   if (res.status === 201) {
-    console.log("공지사항 등록 완료");
     router.push("/notice");
     router.refresh();
     // goto("/notice");

@@ -17,7 +17,6 @@ export default function Modify({ postingNo }: any) {
       const res = await fetch(
         `https://www.eurekasolusion.shop/api/thisnotice/${postingNo}`
       );
-      // console.debug(await res.json());
       setContent(
         (await res.json()) as [{ title: string; visit: number; content: string }, number]
       );
@@ -171,15 +170,10 @@ async function submitNotice(
   postingNo: string,
   router: AppRouterInstance
 ) {
-  console.debug({
-    postingNo: postingNo,
-    title: title,
-    content: content,
-  });
   const res = await fetch("https://www.eurekasolusion.shop/api/posting", {
     method: "PUT",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       postingNo: postingNo,
@@ -189,7 +183,6 @@ async function submitNotice(
   });
 
   if (res.status === 200) {
-    console.log("공지사항 수정 완료");
     router.push(`/notice/no/${postingNo}`);
     router.refresh();
   }
