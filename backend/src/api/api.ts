@@ -40,7 +40,8 @@ router.get("/admin", async (req, res) => {
 router.get("/thisnotice/:slug", async (req, res) => {
   const getTarget = getPostingNo(req.url);
   const content = await getNoticeOne(parseInt(getTarget));
-  res.status(200).send(JSON.stringify(content));
+  const { replyCount } = await getReplyCount(parseInt(getTarget));
+  res.status(200).send(JSON.stringify([content, replyCount]));
 });
 
 router.get("/posting", async (req, res) => {
