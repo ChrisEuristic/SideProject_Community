@@ -34,16 +34,16 @@ export default function Home() {
     })
   );
 
-  const [feeds, setFeeds] = useState([
+  const [feeds, setFeeds] = useState<
     {
-      feedID: "",
-      userImage: "",
-      userName: "",
-      feedContent: "",
-      regidate: "",
-      hashTag: "",
-    },
-  ]);
+      feedID: string;
+      userImage: string;
+      userName: string;
+      feedContent: string;
+      regidate: string;
+      hashTag: string;
+    }[]
+  >();
   const [feedsView, setFeedsView] = useState<JSX.Element[]>();
   const [feedInputBoxView, setFeedInputBoxView] = useState<JSX.Element>();
 
@@ -87,22 +87,24 @@ export default function Home() {
     // !: 윗 이펙트에 구현하면 무한루프 발생. 절대 이동 금지.
     console.log(feeds);
 
-    let tempArr = feeds
-      .map((feed, index) => {
-        return (
-          <Feed
-            key={index}
-            userImage={feed.userImage}
-            userName={feed.userName}
-            feedContent={feed.feedContent}
-            regidate={feed.regidate}
-            hashTag={feed.hashTag}
-          />
-        );
-      })
-      .reverse();
+    if (feeds) {
+      let tempArr = feeds
+        .map((feed, index) => {
+          return (
+            <Feed
+              key={index}
+              userImage={feed.userImage}
+              userName={feed.userName}
+              feedContent={feed.feedContent}
+              regidate={feed.regidate}
+              hashTag={feed.hashTag}
+            />
+          );
+        })
+        .reverse();
 
-    setFeedsView(tempArr);
+      setFeedsView(tempArr);
+    }
   }, [feeds]);
 
   return (
