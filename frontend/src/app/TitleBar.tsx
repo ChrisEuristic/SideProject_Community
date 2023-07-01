@@ -38,7 +38,7 @@ export default function TitleBar() {
       <nav>
         <section id="section-logo" aria-label="Logo Area">
           <article id="section-logo-art">
-            <Link href={"/"}>
+            <Link href={"/"} style={{display: "flex", alignItems: "center"}}>
                 <Image
                   src="/Service Logo Wide.svg"
                   width={logoSize.width} // 20vw
