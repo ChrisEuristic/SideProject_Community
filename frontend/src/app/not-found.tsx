@@ -1,8 +1,9 @@
-'use client';
-import { useRouter } from "next/navigation";
-
-export default function NotFound () {
-  const router = useRouter();
-  router.push("/");
-  router.refresh();
+import Link from 'next/link'
+ 
+export default function NotFound() {
+  return (
+    <div>
+      <h2>Not Found</h2>
+    </div>
+  )
 }
