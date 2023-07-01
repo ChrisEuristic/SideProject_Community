@@ -1,29 +1,22 @@
 "use client";
 
-import { doInBrowser } from "@/function/util/client";
 import Profile from "../components/Profile";
 import { LoggedInAtom } from "@/recoil/SignAtom";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRecoilState } from "recoil";
+import styles from './titlebar.module.css';
 
 export default function TitleBar() {
   const session = useSession();
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoggedInAtom);
-  const [logoSize, setLogoSize] = useState({ width: 500, height: 200});
 
 
   function login(){
     signIn("kakao");
   }
-
-  useEffect(() => {
-    setLogoSize(doInBrowser(() => {
-      return {width: window.innerWidth * 0.2, height: window.innerWidth * 0.2 * 0.162}
-    }))
-  }, [])
 
   useEffect(() => {
     if (session.data?.user?.name !== undefined) {
@@ -35,20 +28,20 @@ export default function TitleBar() {
 
   return (
     <>
-      <nav>
-        <section id="section-logo" aria-label="Logo Area">
-          <article id="section-logo-art">
+      <nav className={styles.nav}>
+        <section className={styles.sectionLogo} aria-label="Logo Area">
+          <article className={styles.sectionLogoArt}>
             <Link href={"/"} style={{display: "flex", alignItems: "center"}}>
                 <Image
                   src="/Service Logo Wide.svg"
-                  width={logoSize.width} // 20vw
-                  height={logoSize.height}
+                  width={1000}
+                  height={1000}
                   alt="Logo of website"
-                />{" "}
+                />
             </Link>
           </article>
         </section>
-        <section id="section-menu" aria-label="Menu Area">
+        <section className={styles.sectionMenu} aria-label="Menu Area">
           <article>
             <Link href={"/intro"}>
               <button>소개</button>
@@ -65,13 +58,13 @@ export default function TitleBar() {
             </Link>
           </article>
         </section>
-        <section id="section-personal" aria-label="Personal Area">
-          <article>
+        <section className={styles.sectionPersonal} aria-label="Personal Area">
+          <article className={styles.payment}>
             <Link href={"/payment"}>
               <button>충전하기</button>
             </Link>
           </article>
-          <article>
+          <article className={styles.profile}>
             {isLoggedIn ? (
               <Profile
                 userName={session.data?.user?.name}
@@ -84,50 +77,6 @@ export default function TitleBar() {
           </article>
         </section>
       </nav>
-      <style jsx>{`
-        nav {
-          width: 100%;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          height: 100%;
-          font-weight: bold;
-        }
-
-        #section-logo {
-          width: 20vw;
-          height: 100%;
-          display: flex;
-          margin-left: 1vw;
-          align-items: center;
-        }
-
-        #section-logo-art {
-          width: 15vw;
-          height: 100%;
-          display: flex;
-          margin-left: 1vw;
-          justify-content: center;
-          align-items: center;
-        }
-
-        #section-menu {
-          width: 30vw;
-          height: 100%;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          font-size: 1.25rem;
-        }
-
-        #section-personal {
-          width: 20vw;
-          height: 100%;
-          display: flex;
-          justify-content: space-evenly;
-          align-items: center;
-        }
-      `}</style>
     </>
   );
 }

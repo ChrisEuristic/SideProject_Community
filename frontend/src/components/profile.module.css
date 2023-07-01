@@ -1,0 +1,98 @@
+@media (min-width: 768px) {
+  .button {
+    display: flex;
+    width: 10vw;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  .userImage {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid #141414;
+    border-radius: 50%;
+    box-sizing: border-box;
+    overflow: hidden;
+    min-width: 40px;
+    min-height: 40px;
+  }
+  .adminName {
+    background-color: #ff6666;
+    color: white;
+    padding: 0 0.5vw;
+    border-radius: 3px;
+    animation-name: admin-blink;
+    animation-duration: 0.3s;
+    animation-iteration-count: infinite;
+  }
+  .adminImage {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 2px solid #ff6666;
+    border-radius: 50%;
+    box-sizing: border-box;
+    overflow: hidden;
+    min-width: 40px;
+    min-height: 40px;
+    animation-name: admin-blink;
+    animation-duration: 0.3s;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes admin-blink {
+    from {
+      box-shadow: #ff6666 0px 0px 10px;
+    }
+    50% {
+      box-shadow: #ff6666 0px 0px 2px;
+    }
+    to {
+      box-shadow: #ff6666 0px 0px 10px;
+    }
+  }
+}
+
+@media (max-width: 1320px) {
+  .adminName {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .button {
+    display: flex;
+    width: 10vw;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  .userImage {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid #141414;
+    border-radius: 50%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .adminImage {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 2px solid #ff6666;
+    border-radius: 50%;
+    box-sizing: border-box;
+    overflow: hidden;
+    animation-name: admin-blink;
+    animation-duration: 0.3s;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes admin-blink {
+    from {
+      box-shadow: #ff6666 0px 0px 10px;
+    }
+    50% {
+      box-shadow: #ff6666 0px 0px 2px;
+    }
+    to {
+      box-shadow: #ff6666 0px 0px 10px;
+    }
+  }
+}
