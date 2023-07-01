@@ -1,0 +1,147 @@
+@media (min-width: 768px) {
+  .main {
+    padding: 50px 1rem;
+    width: 80vw;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 4rem;
+  }
+
+  .section {
+    padding: 1rem;
+    margin-top: 1rem;
+    width: 80vw;
+    max-width: 600px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .link1 {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: 3rem;
+    border-radius: 3rem;
+    color: #282828;
+    background-color: #c5e2e2;
+    font-weight: bold;
+  }
+
+  .link2 {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: 3rem;
+    border-radius: 3rem;
+    color: #282828;
+    background-color: #f6d2c2;
+    font-weight: bold;
+  }
+
+  .link3 {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: 3rem;
+    border-radius: 3rem;
+    color: white;
+    background-color: #282828;
+    font-weight: bold;
+  }
+
+  .description {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.2rem;
+  }
+
+  .tip {
+    font-size: .9rem;
+    color: #28282880;
+  }
+}
+
+@media (max-width: 767px) {
+  .main {
+    padding: 50px 1rem;
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 25px;
+  }
+
+  .section {
+    padding: 1rem;
+    margin-top: 25px;
+    width: 80vw;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .link1 {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: 3rem;
+    border-radius: 3rem;
+    color: #282828;
+    background-color: #c5e2e2;
+    font-weight: bold;
+  }
+
+  .link2 {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: 3rem;
+    border-radius: 3rem;
+    color: #282828;
+    background-color: #f6d2c2;
+    font-weight: bold;
+  }
+
+  .link3 {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: 3rem;
+    border-radius: 3rem;
+    color: white;
+    background-color: #282828;
+    font-weight: bold;
+  }
+
+  .description {
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  .tip {
+    font-size: .8rem;
+    color: #28282880;
+  }
+}
