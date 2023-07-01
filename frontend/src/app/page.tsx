@@ -84,26 +84,30 @@ export default function Home() {
   }, [session?.user?.image, session?.user?.name]);
 
   useEffect(() => {
-    // !: 윗 이펙트에 구현하면 무한루프 발생. 절대 이동 금지.
-    console.log(feeds);
-
     if (feeds) {
-      let tempArr = feeds
-        .map((feed, index) => {
-          return (
-            <Feed
-              key={index}
-              userImage={feed.userImage}
-              userName={feed.userName}
-              feedContent={feed.feedContent}
-              regidate={feed.regidate}
-              hashTag={feed.hashTag}
-            />
-          );
-        })
-        .reverse();
+      // !: 윗 이펙트에 구현하면 무한루프 발생. 절대 이동 금지.
+      console.log(feeds);
 
-      setFeedsView(tempArr);
+      if (feeds) {
+        let tempArr = feeds
+          .map((feed, index) => {
+            return (
+              <Feed
+                key={feed.feedID}
+                userImage={feed.userImage}
+                userName={feed.userName}
+                feedContent={feed.feedContent}
+                regidate={feed.regidate}
+                hashTag={feed.hashTag}
+              />
+            );
+          })
+          .reverse();
+
+          
+
+        setFeedsView(tempArr);
+      }
     }
   }, [feeds]);
 
