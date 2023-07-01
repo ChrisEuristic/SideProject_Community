@@ -2,7 +2,7 @@
 
 import { whatTimesAgo } from "@/function/util/datetime";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { RxShare2 } from "react-icons/rx";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import {
@@ -26,11 +26,18 @@ export default function Feed({
   const [heartClassName, setHeartClassName] = useState("");
   const [chatClassName, setChatClassName] = useState("");
   const [shareClassName, setShareClassName] = useState("");
+  const photoSize = useRef({width: 50, height: 50});
   return (
     <>
       <main>
         <aside>
-          <Image src={userImage} alt="user-profile-photo" style={{width:"5vh", height: "5vh", borderRadius: "50%"}} />{" "}
+          <Image
+            src={userImage}
+            alt="user-profile-photo"
+            width={50}
+            height={50}
+            style={{ borderRadius: "50%", maxWidth: `${photoSize.current.width}px`, maxHeight: `${photoSize.current.height}px`}}
+          />
         </aside>
         <section>
           <div>
@@ -38,20 +45,45 @@ export default function Feed({
             <nav>{whatTimesAgo(regidate)}</nav>
           </div>
           <article>{feedContent}</article>
-          <footer>{hashTag}
-          <article>
-            <button className={heartClassName} onMouseOver={() => {setHeartClassName("feed-button-mouseover")}} onMouseLeave={() => {setHeartClassName("feed-button-mouseleave")}}>
-              <AiOutlineHeart fontSize={"1.2rem"} />
-              {/* <AiFillHeart fontSize={"1.2rem"} /> */}
-            </button>
-            <button className={chatClassName} onMouseOver={() => {setChatClassName("feed-button-mouseover")}} onMouseLeave={() => {setChatClassName("feed-button-mouseleave")}}>
-              <HiOutlineChatBubbleBottomCenterText fontSize={"1.2rem"} />
-              {/* <HiChatBubbleBottomCenterText fontSize={"1.2rem"} /> */}
-            </button>
-            <button className={shareClassName} onMouseOver={() => {setShareClassName("feed-button-mouseover")}} onMouseLeave={() => {setShareClassName("feed-button-mouseleave")}}>
-              <RxShare2 />
-            </button>
-          </article>
+          <footer>
+            {hashTag}
+            <article>
+              <button
+                className={heartClassName}
+                onMouseOver={() => {
+                  setHeartClassName("feed-button-mouseover");
+                }}
+                onMouseLeave={() => {
+                  setHeartClassName("feed-button-mouseleave");
+                }}
+              >
+                <AiOutlineHeart fontSize={"1.2rem"} />
+                {/* <AiFillHeart fontSize={"1.2rem"} /> */}
+              </button>
+              <button
+                className={chatClassName}
+                onMouseOver={() => {
+                  setChatClassName("feed-button-mouseover");
+                }}
+                onMouseLeave={() => {
+                  setChatClassName("feed-button-mouseleave");
+                }}
+              >
+                <HiOutlineChatBubbleBottomCenterText fontSize={"1.2rem"} />
+                {/* <HiChatBubbleBottomCenterText fontSize={"1.2rem"} /> */}
+              </button>
+              <button
+                className={shareClassName}
+                onMouseOver={() => {
+                  setShareClassName("feed-button-mouseover");
+                }}
+                onMouseLeave={() => {
+                  setShareClassName("feed-button-mouseleave");
+                }}
+              >
+                <RxShare2 />
+              </button>
+            </article>
           </footer>
         </section>
       </main>
@@ -60,7 +92,7 @@ export default function Feed({
           width: 50vw;
           height: 10vh;
           display: flex;
-          align-items: center; 
+          align-items: center;
           border: solid 1px #141414;
           border-radius: 1vw;
           margin: 1vh 0;
@@ -106,7 +138,7 @@ export default function Feed({
           animation-duration: 0.5s;
           animation-fill-mode: forwards;
         }
-        
+
         .feed-button-mouseleave {
           animation-name: feed-button-anim-off;
           animation-duration: 0.5s;
@@ -114,7 +146,7 @@ export default function Feed({
         }
 
         @keyframes feed-button-anim-on {
-          from{
+          from {
             background-color: rgba(0, 0, 0, 0);
           }
           to {
@@ -122,7 +154,7 @@ export default function Feed({
           }
         }
         @keyframes feed-button-anim-off {
-          from{
+          from {
             background-color: rgba(0, 0, 0, 0.2);
           }
           to {
