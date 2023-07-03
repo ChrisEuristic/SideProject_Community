@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import styles from "./styles.module.css";
+import SlideBar from "./components/SlideBar";
 
 export default function TestPage() {
   return (
@@ -34,6 +35,7 @@ export default function TestPage() {
             </Link>
           </article>
         </section>
+        <SlideBar />
       </main>
     </>
   );
