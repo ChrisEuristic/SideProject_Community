@@ -1,4 +1,10 @@
 .range {
+  -webkit-appearance: none;
+  appearance: none;
   width: 500px;
-  height: 200px;
+  background: linear-gradient(to right, #28282870 0%, #28282870 50%, #ececec 50%, #ececec 100%);
+  border-radius: 8px;
+  outline: none;
+  transition: background 450ms ease-in;
+  accent-color: #282828;
 }

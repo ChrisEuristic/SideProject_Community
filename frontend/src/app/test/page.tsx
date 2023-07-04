@@ -36,6 +36,7 @@ export default function TestPage() {
           </article>
         </section>
         <SlideBar />
+        <SlideBar />
       </main>
     </>
   );
