@@ -3,7 +3,15 @@
 import { Dispatch, SetStateAction } from "react";
 import styles from "./sliderbar.module.css";
 
-export default function SlideBar({ setValue }: { setValue: Dispatch<SetStateAction<number>> }) {
+export default function SlideBar({
+  setValue,
+  leftText = "그렇지 않다",
+  rightText = "그렇다",
+}: {
+  setValue: Dispatch<SetStateAction<number>>;
+  leftText?: string;
+  rightText?: string;
+}) {
   const handlingSlider = (
     slider: EventTarget & HTMLInputElement,
     sliderValue: number
@@ -17,7 +25,7 @@ export default function SlideBar({ setValue }: { setValue: Dispatch<SetStateActi
     }%, rgb(236, 236, 236) ${
       sliderValue + rangeError
     }%, rgb(236, 236, 236) 100%)`;
-    setValue(sliderValue)
+    setValue(sliderValue);
   };
 
   return (
@@ -30,6 +38,10 @@ export default function SlideBar({ setValue }: { setValue: Dispatch<SetStateActi
           handlingSlider(e.target, Number(e.target.value));
         }}
       />
+      <div className={styles.div}>
+        <span>{leftText}</span>
+        <span>{rightText}</span>
+      </div>
     </>
   );
 }

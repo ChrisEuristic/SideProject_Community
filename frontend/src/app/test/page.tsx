@@ -7,20 +7,6 @@ import {useEffect, useRef, useState} from "react";
 
 export default function TestPage() {
 
-  const [E, setE] = useState(50);
-  const [S, setS] = useState(50);
-  const [T, setT] = useState(50);
-  const [J, setJ] = useState(50);
-  const [A, setA] = useState(50);
-
-  useEffect(() => {
-    console.debug(`E : ${E}`);
-    console.debug(`S : ${S}`);
-    console.debug(`T : ${T}`);
-    console.debug(`J : ${J}`);
-    console.debug(`A : ${A}`);
-  }, [E, S, T, J, A])
-
   return (
     <>
       <main className={styles.main}>
@@ -63,15 +49,6 @@ export default function TestPage() {
             </Link>
           </article>
         </section>
-        <SlideBar setValue={setE} />
-        <div></div>
-        <SlideBar setValue={setS} />
-        <div></div>
-        <SlideBar setValue={setT} />
-        <div></div>
-        <SlideBar setValue={setJ} />
-        <div></div>
-        <SlideBar setValue={setA} />
       </main>
     </>
   );

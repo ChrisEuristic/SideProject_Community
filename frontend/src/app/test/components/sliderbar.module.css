@@ -8,3 +8,9 @@
   transition: background 450ms ease-in;
   accent-color: #282828;
 }
+
+.div {
+  width: 500px;
+  display: flex;
+  justify-content: space-between;
+}
