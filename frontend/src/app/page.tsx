@@ -119,7 +119,7 @@ export default function Home() {
         </Link>
         <nav>{hashTagFilters}</nav>
         <main>
-          {feedInputBoxView}
+          { typeof session?.user?.email !== "undefined" ? feedInputBoxView : undefined}
           {feedsView}
         </main>
       </div>
